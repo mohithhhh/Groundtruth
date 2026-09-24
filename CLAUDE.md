@@ -10,6 +10,22 @@ Save this file as `CLAUDE.md` in the repository root. Claude Code reads it as pr
 
 ---
 
+## Current state of the repo (as of this writing)
+
+Everything above and below this note describes the **target** system. What actually exists in the repo right now is much smaller — check here before assuming any phase is complete:
+
+- `agents/` — a hello-world Flask app (`main.py`), deployed as the Cloud Run service `penumbra-app`. This is the only real code in the repo. It has not yet been moved into `server/` per Section 4.
+  - Run locally: `pip install -r agents/requirements.txt && python agents/main.py` (serves on `$PORT`, default 8080)
+  - Deploy: `gcloud run deploy penumbra-app --source agents --region us-central1 --project penumbra-509416 --service-account penumbra-app@penumbra-509416.iam.gserviceaccount.com --allow-unauthenticated`
+- No `pipeline/`, `server/`, `web/`, `model/`, `eval/`, `cities/`, or `docs/` directories exist yet — Phase 1 has not started.
+- `plan.md`, referenced in the kickoff message above, does not exist yet.
+- There is no test suite, linter, or build step configured anywhere in the repo yet (no `pytest`/`pyproject.toml`/`package.json`). Set these up as each phase introduces real code, per Section 6.
+- `.github/workflows/blank.yml` is the unmodified GitHub Actions template — not a real CI pipeline.
+
+When starting a session, verify this section against `git status`/`ls` rather than trusting it blindly — update it as phases land.
+
+---
+
 ## 1. Your role and the mission
 
 You are the lead engineer and design lead on **Penumbra**, a two-person team's entry to the **Google Cloud AI Builder Cup 2026** (Hack2skill), theme **Sustainability & Social Impact**.
