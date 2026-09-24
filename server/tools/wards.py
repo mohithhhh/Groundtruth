@@ -180,3 +180,34 @@ def nearby_facilities(store: ToolResultStore, city_id: str, ward_key: str, type:
         counts[r["type"]] += 1
     data = {"counts": counts, "facilities": rows}
     return store.record("nearby_facilities", {"city_id": city_id, "ward_key": ward_key, "type": type}, data)
+
+
+_RASTER_BUCKET = "gs://penumbra-509416-penumbra/rasters"
+_LIVE_LAYERS = {"lst", "ndvi", "built"}
+_LIVE_YEARS = {2016, 2025}
+
+
+def live_regionstats(store: ToolResultStore, ward_key: str, layer: str, year: int) -> dict:
+    """The one call in the app that recomputes a figure live from the
+    exported Earth Engine raster via BigQuery's ST_REGIONSTATS, rather than
+    reading the precomputed ward_metrics table -- for the demo. layer and
+    year are checked against a small allow-list before being used to build
+    the gs:// URI, so this stays a fixed, non-arbitrary set of raster
+    files, consistent with "no free-form SQL from the model."""
+    if layer not in _LIVE_LAYERS:
+        raise ValueError(f"layer must be one of {sorted(_LIVE_LAYERS)}")
+    if year not in _LIVE_YEARS:
+        raise ValueError(f"year must be one of {sorted(_LIVE_YEARS)}")
+    raster_uri = f"{_RASTER_BUCKET}/{layer}_{year}.tif"
+    sql = f"""
+    SELECT ST_REGIONSTATS(geometry, @raster_uri) AS stats
+    FROM `{_T}.wards_clean`
+    WHERE ward_key = @ward_key
+    """
+    params = [
+        bigquery.ScalarQueryParameter("raster_uri", "STRING", raster_uri),
+        bigquery.ScalarQueryParameter("ward_key", "STRING", ward_key),
+    ]
+    rows = run_query(sql, params)
+    data = rows[0]["stats"] if rows else None
+    return store.record("live_regionstats", {"ward_key": ward_key, "layer": layer, "year": year}, data)

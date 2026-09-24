@@ -21,11 +21,21 @@ _client = bigquery.Client(project=PROJECT)
 _executor = ThreadPoolExecutor(max_workers=2)
 
 
+class ToolCallLimitExceeded(Exception):
+    pass
+
+
 class ToolResultStore:
-    def __init__(self):
+    """max_calls guards a single /api/ask request against runaway tool use
+    (CLAUDE.md: "at most 8 tool calls per question")."""
+
+    def __init__(self, max_calls: int = 8):
         self._results: dict[str, dict] = {}
+        self._max_calls = max_calls
 
     def record(self, tool_name: str, params: dict, data) -> dict:
+        if len(self._results) >= self._max_calls:
+            raise ToolCallLimitExceeded(f"exceeded {self._max_calls} tool calls for this question")
         tool_result_id = str(uuid.uuid4())
         entry = {
             "tool_result_id": tool_result_id,
@@ -42,6 +52,42 @@ class ToolResultStore:
         """In-process lookup only -- valid for the lifetime of this request/
         session. Use fetch_from_bigquery for a cross-instance-safe lookup."""
         return self._results.get(tool_result_id)
+
+    def trace(self, start_time: float) -> list[dict]:
+        """A real sequence of steps with durations, built from actual tool
+        calls in the order they happened (Python dicts preserve insertion
+        order) -- for the Ask page's "how this answer was made" panel."""
+        steps = []
+        previous_time = start_time
+        first_call_time = next(iter(self._results.values()), {}).get("created_at", start_time)
+        steps.append({"step": 1, "description": "Planned the steps", "duration_s": round(first_call_time - start_time, 3)})
+        for i, entry in enumerate(self._results.values(), start=2):
+            steps.append({
+                "step": i,
+                "description": _describe_tool_call(entry["tool_name"], entry["params"]),
+                "duration_s": round(entry["created_at"] - previous_time, 3),
+            })
+            previous_time = entry["created_at"]
+        return steps
+
+
+def _describe_tool_call(tool_name: str, params: dict) -> str:
+    if tool_name == "rank_wards":
+        scope = f"in {params['corporation']} corporation" if params.get("corporation") else "citywide"
+        return f"Ranked wards by {params['metric']} ({scope})"
+    if tool_name == "get_ward_metrics":
+        return f"Looked up metrics for {params['ward_key']}"
+    if tool_name == "find_ward":
+        return f"Searched for a ward matching '{params['name_query']}'"
+    if tool_name == "compare_years":
+        return f"Compared {params['metric']} between {params['year_a']} and {params['year_b']}"
+    if tool_name == "corporation_summary":
+        return f"Summarized {params['corporation']} corporation"
+    if tool_name == "nearby_facilities":
+        return f"Looked up facilities near {params['ward_key']}"
+    if tool_name == "live_regionstats":
+        return f"Recomputed {params['layer']} live for {params['ward_key']}"
+    return f"Called {tool_name}"
 
 
 def _write_to_bigquery(entry: dict) -> None:

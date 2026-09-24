@@ -56,6 +56,17 @@ def test_corporation_summary_ward_count(store):
     assert result["data"]["ward_count"] == 50
 
 
+def test_live_regionstats_rejects_unknown_layer(store):
+    with pytest.raises(ValueError):
+        wards.live_regionstats(store, KNOWN_WARD, "not_a_layer", 2025)
+
+
+def test_live_regionstats_matches_precomputed_mean(store):
+    result = wards.live_regionstats(store, KNOWN_WARD, "lst", 2025)
+    precomputed = wards.get_ward_metrics(store, "bengaluru", KNOWN_WARD, 2025)["data"]
+    assert result["data"]["mean"] == pytest.approx(precomputed["lst_mean_c"])
+
+
 def test_nearby_facilities_counts_match_list(store):
     result = wards.nearby_facilities(store, "bengaluru", KNOWN_WARD)
     data = result["data"]
