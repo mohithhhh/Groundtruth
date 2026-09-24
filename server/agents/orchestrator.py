@@ -16,6 +16,7 @@ from google.adk.agents.llm_agent import Agent
 
 from server.agents.schemas import Answer
 from server.store import ToolResultStore
+from server.tools import interventions as interventions_tools
 from server.tools import wards as wards_tools
 
 MODEL_ID = os.environ.get("MODEL_ID", "gemini-2.5-flash")
@@ -84,9 +85,20 @@ def _bind_tools(store: ToolResultStore):
         must be one of: lst, ndvi, built. year must be 2016 or 2025."""
         return wards_tools.live_regionstats(store, ward_key, layer, year)
 
+    def recommend_interventions(city_id: str, ward_key: str, year: int = 2025) -> dict:
+        """Recommend applicable heat-reducing interventions for one ward
+        (tree canopy, lake/wetland buffer restoration, pocket parks, cool
+        roofs, permeable paving), each with an assumed cost and, where the
+        cooling model supports it, a modeled surface-temperature effect
+        range citing a real published source. Some interventions have no
+        quantified cooling effect (cool roofs, permeable paving) -- say so
+        plainly rather than implying a number that doesn't exist."""
+        return interventions_tools.recommend_interventions(store, city_id, ward_key, year)
+
     return [
         get_ward_metrics, find_ward, rank_wards, compare_years,
         corporation_summary, nearby_facilities, live_regionstats,
+        recommend_interventions,
     ]
 
 

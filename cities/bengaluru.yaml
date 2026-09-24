@@ -1,0 +1,119 @@
+# City pack for Bengaluru: intervention catalog + the guidance documents
+# each intervention cites. Kept as one small, inspectable file rather than
+# a vector index -- CLAUDE.md asks for retrieval to be "simple and
+# inspectable," and five interventions citing four documents doesn't need
+# more than that.
+#
+# Every cost is assumption: true (no cost_source) -- these are placeholder
+# planning-grade estimates, not sourced quotes, and must display as
+# "assumed cost" in the product until replaced with real BBMP/vendor
+# figures. See docs/DECISIONS.md for how each citation was verified.
+
+city_id: bengaluru
+currency: INR
+
+guidance_documents:
+  - id: wri_bcap_proceedings_2022
+    title: "Strengthening Climate Action and Resilience Planning for Bengaluru (Conference Proceedings)"
+    publisher: WRI India
+    url: "https://wri-india.org/sites/default/files/Climate%20Action%20and%20Resilience%20Plan%20for%20Bengaluru%2025th%20Nov.pdf"
+    date: "2022-07"
+  - id: epa_cool_roofs_compendium
+    title: "Reducing Urban Heat Islands: Compendium of Strategies -- Cool Roofs"
+    publisher: US EPA
+    url: "https://www.epa.gov/sites/default/files/2014-08/documents/coolroofscompendium_ch4.pdf"
+    date: "2014-08"
+  - id: epa_cool_pavements_compendium
+    title: "Reducing Urban Heat Islands: Compendium of Strategies -- Cool Pavements"
+    publisher: US EPA
+    url: "https://www.epa.gov/sites/default/files/2014-08/documents/coolpavescompendium_ch5.pdf"
+    date: "2014-08"
+
+interventions:
+  - id: tree_canopy
+    name: "Tree canopy planting"
+    unit: "1,000 trees planted"
+    applicability_rule: "ndvi_mean < 0.35"
+    model_pathway:
+      type: modeled
+      description: "Assumed to raise ward-mean NDVI by 0.05 per 1,000 trees planted (a stated assumption -- real conversion depends on species, spacing and survival rate, which we don't have ward-level data for). That NDVI change is then run through the cooling model's NDVI coefficient, which IS a stable, usable, held-out-validated effect (see model/README.md)."
+      ndvi_delta_per_unit: 0.05
+    cost:
+      amount_inr_per_unit: 4000
+      assumption: true
+      note: "Per 1,000 trees, covering sapling + 3-year establishment maintenance. Not sourced from a vendor or BBMP quote -- a placeholder order-of-magnitude estimate."
+    citations:
+      - id: wri_bcap_proceedings_2022
+        page: 19
+        quote: "Incorporate green and blue spaces effectively into all levels of plans and infrastructure projects for the city: This is to ensure that the functions of micro-climate regulation, namely, preventing urban heat islands... are addressed."
+
+  - id: lake_wetland_buffer
+    name: "Lake and wetland buffer restoration"
+    unit: "1 hectare of buffer restored"
+    applicability_rule: "true"  # applicable wherever a water body exists nearby; the planner tool checks this
+    model_pathway:
+      type: modeled
+      description: "Assumed to raise NDVI to 0.3 (from degraded/bare) within the restored hectare. Ward-level NDVI shift is area-weighted: (restored_area_m2 * 0.3) / ward_area_m2, then run through the cooling model's NDVI coefficient."
+      ndvi_gain_in_treated_area: 0.3
+      treated_area_m2: 10000
+    cost:
+      amount_inr_per_unit: 5000000
+      assumption: true
+      note: "Per hectare, civil + planting works. Real Bengaluru lake rejuvenation projects have run into crores per lake for several hectares -- this is an order-of-magnitude placeholder, not a specific project's costing."
+    citations:
+      - id: wri_bcap_proceedings_2022
+        page: 19
+        quote: "Green and blue spaces include lakes and wetlands, ponds, wells, tanks, parks, wooded groves, avenue trees, and urban forests."
+
+  - id: pocket_parks
+    name: "Pocket parks (converting small paved/bare plots to green space)"
+    unit: "1 pocket park (approx. 500 sq m)"
+    applicability_rule: "built_frac > 0.6"
+    model_pathway:
+      type: modeled
+      description: "Assumed to raise NDVI to 0.4 (from paved/bare) within the 500 sq m plot. Ward-level NDVI shift is area-weighted: (500 * 0.4) / ward_area_m2, then run through the cooling model's NDVI coefficient."
+      ndvi_gain_in_treated_area: 0.4
+      treated_area_m2: 500
+    cost:
+      amount_inr_per_unit: 1500000
+      assumption: true
+      note: "Per park, land already public/vacant. Order-of-magnitude placeholder for a small park's landscaping and amenities."
+    citations:
+      - id: wri_bcap_proceedings_2022
+        page: 20
+        quote: "Several spaces in cities that are often ignored in ecosystem conservation... barren spaces, unused spaces such as the areas below flyovers, open spaces near bus stands, empty plots... should be considered for urban greening efforts."
+
+  - id: cool_roofs
+    name: "Cool / reflective roof coatings"
+    unit: "1,000 sq m of roof coated"
+    applicability_rule: "built_frac > 0.6"
+    model_pathway:
+      type: not_modeled
+      description: "Cool roofs change roof albedo, not NDVI or Dynamic World's built-fraction classification -- our cooling model has no covariate this intervention touches. Its ward-level satellite-measured LST effect is NOT QUANTIFIED here. The cited figure below is a roof-surface-level fact from EPA's compendium, not a ward-average LST reduction, and must not be presented as one."
+    cited_fact:
+      text: "Cool roofing products can remain approximately 50 to 60F (28-33C) cooler than traditional materials during peak summer weather."
+      unit: "roof surface temperature, peak summer"
+    cost:
+      amount_inr_per_unit: 150000
+      assumption: true
+      note: "Approx. Rs150/sq m for reflective coating. Not sourced from a vendor quote."
+    citations:
+      - id: epa_cool_roofs_compendium
+        page: 4
+        quote: "Cool roofing products are made of highly reflective and emissive materials that can remain approximately 50 to 60F (28-33C) cooler than traditional materials during peak summer weather."
+
+  - id: permeable_paving
+    name: "Permeable paving"
+    unit: "1,000 sq m of pavement replaced"
+    applicability_rule: "built_frac > 0.6"
+    model_pathway:
+      type: not_modeled
+      description: "Permeable paving changes surface permeability, not NDVI or built-fraction classification -- no covariate in our model captures this. EPA's own compendium describes the surface-temperature effect of permeable pavement as complex and uncertain, with no confident quantified figure -- so unlike cool roofs, there isn't even a clean single-surface number to cite here. Ward-level LST effect is NOT QUANTIFIED."
+    cost:
+      amount_inr_per_unit: 1200000
+      assumption: true
+      note: "Approx. Rs1,200/sq m for permeable pavers, higher than standard concrete. Not sourced from a vendor quote."
+    citations:
+      - id: epa_cool_pavements_compendium
+        page: 12
+        quote: "When dry, the extent to which permeable pavements can influence temperatures is more complex and uncertain... More research is needed to better understand the impacts of permeable pavement on air temperatures and urban heat island conditions."
