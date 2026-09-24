@@ -6,9 +6,14 @@
 -- stdDev, sum. No percentile/quantile statistic exists, so the 90th
 -- percentile of LST from CLAUDE.md step 3 is skipped (see docs/DECISIONS.md).
 --
--- valid_pixel_frac uses the LST layer's pixel count (30m pixels = 900 m2)
--- against the ward's full area, since LST is the primary quality signal for
--- the risk score.
+-- valid_pixel_frac uses the LST layer's returned `.area` (the true clipped
+-- overlap area between valid pixels and the ward polygon) against the
+-- ward's full area. An earlier version used `.count * 900`, assuming every
+-- counted pixel contributes a full 900 sq m -- but `.count` counts any
+-- pixel touching the ward at full weight, including boundary pixels only
+-- partially inside it, which inflated every ward's fraction (up to 1.27,
+-- i.e. impossible) for small/irregular wards. `.area` already accounts for
+-- partial pixel overlap and is the correct field. See docs/DECISIONS.md.
 
 CREATE OR REPLACE TABLE `penumbra-509416.penumbra.ward_metrics` AS
 WITH stats_2016 AS (
@@ -33,13 +38,13 @@ combined AS (
   SELECT 'bengaluru' AS city_id, ward_key, 2016 AS year,
     lst.mean AS lst_mean_c, lst.max AS lst_max_c, ndvi.mean AS ndvi_mean,
     built.mean AS built_frac, lst.count AS valid_pixel_count,
-    SAFE_DIVIDE(lst.count * 900, area_km2 * 1e6) AS valid_pixel_frac
+    SAFE_DIVIDE(lst.area, area_km2 * 1e6) AS valid_pixel_frac
   FROM stats_2016
   UNION ALL
   SELECT 'bengaluru' AS city_id, ward_key, 2025 AS year,
     lst.mean AS lst_mean_c, lst.max AS lst_max_c, ndvi.mean AS ndvi_mean,
     built.mean AS built_frac, lst.count AS valid_pixel_count,
-    SAFE_DIVIDE(lst.count * 900, area_km2 * 1e6) AS valid_pixel_frac
+    SAFE_DIVIDE(lst.area, area_km2 * 1e6) AS valid_pixel_frac
   FROM stats_2025
 )
 SELECT * FROM combined;
@@ -59,7 +64,8 @@ SELECT year,
   COUNTIF(lst_mean_c IS NULL) AS null_lst,
   COUNTIF(ndvi_mean IS NULL) AS null_ndvi,
   COUNTIF(built_frac IS NULL) AS null_built,
-  COUNTIF(valid_pixel_frac IS NULL OR valid_pixel_frac < 0.5) AS low_coverage
+  COUNTIF(valid_pixel_frac IS NULL OR valid_pixel_frac < 0.5) AS low_coverage,
+  COUNTIF(valid_pixel_frac > 1.02) AS impossible_over_one
 FROM `penumbra-509416.penumbra.ward_metrics`
 GROUP BY year
 ORDER BY year;
