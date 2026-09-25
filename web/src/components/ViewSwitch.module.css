@@ -1,0 +1,40 @@
+.switch {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 3px;
+  background: color-mix(in srgb, var(--panel) 94%, transparent);
+  border-radius: var(--r-panel);
+  box-shadow: var(--shade);
+}
+
+.option {
+  min-height: 34px;
+  padding: 0 var(--s-3);
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-2);
+  font-size: var(--step--1);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+
+.option:hover:not(:disabled) {
+  color: var(--text);
+}
+
+.on {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.on:hover:not(:disabled) {
+  color: var(--bg);
+}
+
+.option:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

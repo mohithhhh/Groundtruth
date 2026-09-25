@@ -1,0 +1,138 @@
+/* "Shade" design tokens -- CLAUDE.md Section 9.
+   The interface is cool and shaded; heat colors appear only where they
+   encode data. Light is the default; dark follows prefers-color-scheme
+   unless the reader picks one, which sets [data-theme]. */
+
+:root {
+  /* Base palette */
+  --mist: #e9eeea;
+  --leaf-paper: #f7f9f6;
+  --rain-tree: #17302c;
+  --lichen: #5c6f69;
+  --canopy: #2e6a4e;
+  --monsoon: #2f5f84;
+  --hairline: #cad3ce;
+
+  /* Roles */
+  --bg: var(--mist);
+  --panel: var(--leaf-paper);
+  --text: var(--rain-tree);
+  --text-2: var(--lichen);
+  --accent: var(--canopy);
+  --link: var(--monsoon);
+  --focus: var(--monsoon);
+  --on-accent: #f7f9f6;
+  --ward-stroke: var(--leaf-paper);
+  --corp-stroke: var(--rain-tree);
+  --no-data: #d6ddd9;
+  --canopy-wash: rgba(46, 106, 78, 0.09);
+  --monsoon-wash: rgba(47, 95, 132, 0.09);
+  --warn-wash: rgba(177, 0, 38, 0.07);
+
+  /* Heat ramp: ColorBrewer YlOrRd, 7 bins, light to dark -- unchanged in dark mode */
+  --heat-1: #ffffb2;
+  --heat-2: #fed976;
+  --heat-3: #feb24c;
+  --heat-4: #fd8d3c;
+  --heat-5: #fc4e2a;
+  --heat-6: #e31a1c;
+  --heat-7: #b10026;
+
+  /* Change since baseline: cooling in monsoon blues, warming in heat tones */
+  --change-1: #2f5f84;
+  --change-2: #8fb3cc;
+  --change-3: #e4eae6;
+  --change-4: #fdb27a;
+  --change-5: #d7301f;
+
+  /* Green cover (NDVI) -- ColorBrewer Greens, light to dark */
+  --green-1: #f7fcf5;
+  --green-2: #e5f5e0;
+  --green-3: #c7e9c0;
+  --green-4: #a1d99b;
+  --green-5: #74c476;
+  --green-6: #31a354;
+  --green-7: #006d2c;
+
+  /* Type */
+  --font-display: "Geologica", "Hanken Grotesk", system-ui, sans-serif;
+  --font-body: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-kn: "Noto Sans Kannada", "Hanken Grotesk", system-ui, sans-serif;
+  --step--2: 0.8125rem;
+  --step--1: 0.875rem;
+  --step-0: 1rem;
+  --step-1: 1.125rem;
+  --step-2: 1.375rem;
+  --step-3: 1.75rem;
+  --step-4: 2.25rem;
+  --step-5: 3rem;
+
+  /* Space */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+
+  /* Shape: radius follows hierarchy, not one radius everywhere */
+  --r-chip: 4px;
+  --r-panel: 10px;
+  --r-round: 999px;
+
+  /* Depth comes from shade, only for things floating over the map */
+  --shade: 0 12px 32px rgba(23, 48, 44, 0.1);
+  --shade-strong: 0 18px 48px rgba(23, 48, 44, 0.16);
+
+  --topbar-h: 56px;
+  --t-fast: 160ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12211e;
+    --panel: #1a2e2a;
+    --text: #e6eeea;
+    --text-2: #9db2aa;
+    --accent: #5fb38a;
+    --link: #7fb1d8;
+    --focus: #7fb1d8;
+    --on-accent: #12211e;
+    --hairline: #2c433e;
+    --ward-stroke: #12211e;
+    --corp-stroke: #e6eeea;
+    --no-data: #2c433e;
+    --canopy-wash: rgba(95, 179, 138, 0.12);
+    --monsoon-wash: rgba(127, 177, 216, 0.12);
+    --warn-wash: rgba(252, 78, 42, 0.12);
+    --shade: 0 12px 32px rgba(0, 0, 0, 0.35);
+    --shade-strong: 0 18px 48px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #12211e;
+  --panel: #1a2e2a;
+  --text: #e6eeea;
+  --text-2: #9db2aa;
+  --accent: #5fb38a;
+  --link: #7fb1d8;
+  --focus: #7fb1d8;
+  --on-accent: #12211e;
+  --hairline: #2c433e;
+  --ward-stroke: #12211e;
+  --corp-stroke: #e6eeea;
+  --no-data: #2c433e;
+  --canopy-wash: rgba(95, 179, 138, 0.12);
+  --monsoon-wash: rgba(127, 177, 216, 0.12);
+  --warn-wash: rgba(252, 78, 42, 0.12);
+  --shade: 0 12px 32px rgba(0, 0, 0, 0.35);
+  --shade-strong: 0 18px 48px rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
+}

@@ -1,0 +1,133 @@
+.drawer {
+  position: fixed;
+  right: var(--s-5);
+  bottom: var(--s-5);
+  z-index: 60;
+  width: min(420px, calc(100vw - 2 * var(--s-4)));
+  max-height: min(70vh, 560px);
+  overflow: auto;
+  padding: var(--s-5);
+  background: var(--panel);
+  border-radius: var(--r-panel);
+  box-shadow: var(--shade-strong);
+  border: 1px solid var(--hairline);
+  animation: rise var(--t-fast) var(--ease);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-3);
+  align-items: flex-start;
+  margin-bottom: var(--s-4);
+}
+
+.title {
+  font-size: var(--step-1);
+  outline: none;
+}
+
+.shown {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  margin-top: var(--s-1);
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-chip);
+  border: 1px solid var(--hairline);
+  background: transparent;
+  color: var(--text-2);
+}
+
+.close:hover {
+  color: var(--text);
+  border-color: var(--text-2);
+}
+
+.description {
+  font-size: var(--step-0);
+  margin-bottom: var(--s-4);
+}
+
+.muted {
+  color: var(--text-2);
+  font-size: var(--step--1);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-3) var(--s-4);
+  margin: 0 0 var(--s-4);
+}
+
+.facts dt,
+.params dt {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.facts dd,
+.params dd {
+  margin: 0;
+  font-size: var(--step--1);
+  font-weight: 500;
+}
+
+.value {
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.params {
+  border-top: 1px solid var(--hairline);
+  padding-top: var(--s-3);
+  font-size: var(--step--1);
+}
+
+.params summary {
+  cursor: pointer;
+  color: var(--link);
+  font-weight: 500;
+}
+
+.params dl {
+  display: grid;
+  gap: var(--s-2);
+  margin: var(--s-3) 0 0;
+}
+
+.id {
+  margin-top: var(--s-4);
+  font-size: var(--step--2);
+  color: var(--text-2);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  .drawer {
+    right: var(--s-2);
+    left: var(--s-2);
+    bottom: var(--s-2);
+    width: auto;
+    border-radius: var(--r-panel) var(--r-panel) var(--r-chip) var(--r-chip);
+  }
+}

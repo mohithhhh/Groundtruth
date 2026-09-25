@@ -72,3 +72,8 @@ def test_nearby_facilities_counts_match_list(store):
     data = result["data"]
     assert data["counts"]["hospital"] == sum(1 for f in data["facilities"] if f["type"] == "hospital")
     assert data["counts"]["school"] == sum(1 for f in data["facilities"] if f["type"] == "school")
+
+
+def test_compare_to_city_median_difference_is_consistent(store):
+    data = wards.compare_to_city_median(store, "bengaluru", KNOWN_WARD, 2025)["data"]
+    assert data["difference_c"] == pytest.approx(data["lst_mean_c"] - data["city_median_lst_c"])

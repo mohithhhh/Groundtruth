@@ -103,6 +103,16 @@ def test_gemini_function_response_prefix_is_normalized():
     assert result.verified == 1
 
 
+def test_template_keeps_verified_tokens_and_drops_failed_ones():
+    claims = [
+        {"id": "c1", "text": "Bellandur", "kind": "entity", "tool_result_id": TOOL_RESULT_ID, "path": "data[0].ward_name"},
+        {"id": "c2", "text": "9.9 °C", "kind": "number", "value": 9.9, "unit": "°C", "tool_result_id": TOOL_RESULT_ID, "path": "data[0].value"},
+    ]
+    result = verify_answer("Ward {c1} warmed by {c2}.", claims, lookup)
+    assert result.template == "Ward {c1} warmed by ."
+    assert result.narrative == "Ward Bellandur warmed by ."
+
+
 def test_fully_verified_footer_matches_no_removals():
     claims = [{"id": "c1", "text": "Bellandur", "kind": "entity", "tool_result_id": TOOL_RESULT_ID, "path": "data[0].ward_name"}]
     result = verify_answer("Ward {c1}.", claims, lookup)

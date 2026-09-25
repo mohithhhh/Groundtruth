@@ -92,6 +92,9 @@ def verify_entity_claim(claim: dict, resolved) -> tuple[bool, str | None]:
 @dataclass
 class VerificationResult:
     narrative: str
+    # Same text, but verified claims keep their {cN} token so a UI can render
+    # each one as a traceable figure chip; failed ones are blanked like above.
+    template: str = ""
     verified_claims: list[dict] = field(default_factory=list)
     removed: list[dict] = field(default_factory=list)
 
@@ -119,6 +122,7 @@ def verify_answer(narrative: str, claims: list[dict], lookup_tool_result) -> Ver
     claims_by_id = {c["id"]: c for c in claims}
     result = VerificationResult(narrative=narrative)
     rendered = narrative
+    template = narrative
 
     for placeholder_id in _PLACEHOLDER_RE.findall(narrative):
         claim = claims_by_id.get(placeholder_id)
@@ -126,12 +130,14 @@ def verify_answer(narrative: str, claims: list[dict], lookup_tool_result) -> Ver
         if claim is None:
             result.removed.append({"id": placeholder_id, "reason": "no matching claim"})
             rendered = rendered.replace(placeholder, "")
+            template = template.replace(placeholder, "")
             continue
 
         entry = lookup_tool_result(claim["tool_result_id"])
         if entry is None:
             result.removed.append({"id": placeholder_id, "reason": "unknown tool_result_id"})
             rendered = rendered.replace(placeholder, "")
+            template = template.replace(placeholder, "")
             continue
 
         try:
@@ -139,6 +145,7 @@ def verify_answer(narrative: str, claims: list[dict], lookup_tool_result) -> Ver
         except PathResolutionError as e:
             result.removed.append({"id": placeholder_id, "reason": str(e)})
             rendered = rendered.replace(placeholder, "")
+            template = template.replace(placeholder, "")
             continue
 
         if claim["kind"] == "number":
@@ -154,6 +161,7 @@ def verify_answer(narrative: str, claims: list[dict], lookup_tool_result) -> Ver
         else:
             result.removed.append({"id": placeholder_id, "reason": reason})
             rendered = rendered.replace(placeholder, "")
+            template = template.replace(placeholder, "")
 
     # Stray numbers: any digit sequence in the ORIGINAL narrative that wasn't
     # inside a {cN} placeholder has no citation at all.
@@ -162,4 +170,5 @@ def verify_answer(narrative: str, claims: list[dict], lookup_tool_result) -> Ver
         result.removed.append({"id": None, "reason": f"stray number '{match.group()}' outside any claim placeholder"})
 
     result.narrative = re.sub(r"\s{2,}", " ", rendered).strip()
+    result.template = re.sub(r"\s{2,}", " ", template).strip()
     return result

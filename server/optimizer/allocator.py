@@ -36,6 +36,12 @@ def _expand_candidates(ward: dict) -> list[dict]:
                 "cost_inr": cost,
                 "person_c": person_c,
                 "benefit_per_rupee": person_c / cost,
+                # Ward-level surface-temperature change per unit, for the
+                # "modeled cooling range" column. Low/high fall back to mid
+                # when a caller only supplies a point estimate.
+                "cooling_mid_c": iv["effect_mid_c"],
+                "cooling_low_c": iv.get("effect_low_c", iv["effect_mid_c"]),
+                "cooling_high_c": iv.get("effect_high_c", iv["effect_mid_c"]),
             })
     return items
 
@@ -55,10 +61,21 @@ def _greedy_allocate(ordered_items: list[dict], budget_inr: float, per_ward_cap:
         ward_spend[ward] = spent_so_far + cost
         key = (ward, item["intervention_id"])
         if key not in picks:
-            picks[key] = {"ward_key": ward, "intervention_id": item["intervention_id"], "units": 0, "cost_inr": 0.0, "person_c": 0.0}
-        picks[key]["units"] += 1
-        picks[key]["cost_inr"] += cost
-        picks[key]["person_c"] += item["person_c"]
+            picks[key] = {
+                "ward_key": ward,
+                "ward_name": wards_by_key[ward].get("ward_name"),
+                "population": wards_by_key[ward]["population"],
+                "intervention_id": item["intervention_id"],
+                "units": 0, "cost_inr": 0.0, "person_c": 0.0,
+                "cooling_low_c": 0.0, "cooling_mid_c": 0.0, "cooling_high_c": 0.0,
+            }
+        pick = picks[key]
+        pick["units"] += 1
+        pick["cost_inr"] += cost
+        pick["person_c"] += item["person_c"]
+        pick["cooling_low_c"] += item["cooling_low_c"]
+        pick["cooling_mid_c"] += item["cooling_mid_c"]
+        pick["cooling_high_c"] += item["cooling_high_c"]
 
     allocation = sorted(picks.values(), key=lambda p: -p["person_c"])
     covered_wards = {p["ward_key"] for p in allocation}

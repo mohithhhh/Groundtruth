@@ -27,7 +27,7 @@ _METRIC_COLUMNS = {
 def get_ward_metrics(store: ToolResultStore, city_id: str, ward_key: str, year: int) -> dict:
     sql = f"""
     SELECT
-      w.ward_key, w.ward_name, w.ward_name_kn, w.corporation, w.area_km2,
+      w.ward_key, w.ward_no, w.ward_name, w.ward_name_kn, w.corporation, w.ac, w.area_km2,
       m.lst_mean_c, m.lst_max_c, m.ndvi_mean, m.built_frac, m.valid_pixel_frac,
       p.population, p.population_source_year,
       r.composite_risk, r.rank, r.delta_lst_c
@@ -211,3 +211,28 @@ def live_regionstats(store: ToolResultStore, ward_key: str, layer: str, year: in
     rows = run_query(sql, params)
     data = rows[0]["stats"] if rows else None
     return store.record("live_regionstats", {"ward_key": ward_key, "layer": layer, "year": year}, data)
+
+
+def compare_to_city_median(store: ToolResultStore, city_id: str, ward_key: str, year: int) -> dict:
+    """The ward's surface temperature against the citywide median of ward
+    means for the same year -- the difference is computed in SQL so the
+    ward sheet's hero figure is a traceable tool result, not browser math."""
+    sql = f"""
+    WITH city AS (
+      SELECT APPROX_QUANTILES(m.lst_mean_c, 100)[OFFSET(50)] AS city_median_lst_c
+      FROM `{_T}.ward_metrics` AS m
+      JOIN `{_T}.wards_clean` AS w USING (ward_key)
+      WHERE w.city_id = @city_id AND m.year = @year
+    )
+    SELECT m.ward_key, m.lst_mean_c, city.city_median_lst_c,
+      m.lst_mean_c - city.city_median_lst_c AS difference_c
+    FROM `{_T}.ward_metrics` AS m, city
+    WHERE m.ward_key = @ward_key AND m.year = @year
+    """
+    rows = run_query(sql, [
+        bigquery.ScalarQueryParameter("city_id", "STRING", city_id),
+        bigquery.ScalarQueryParameter("ward_key", "STRING", ward_key),
+        bigquery.ScalarQueryParameter("year", "INT64", year),
+    ])
+    data = rows[0] if rows else None
+    return store.record("compare_to_city_median", {"city_id": city_id, "ward_key": ward_key, "year": year}, data)

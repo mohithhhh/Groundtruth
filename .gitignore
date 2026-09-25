@@ -219,3 +219,7 @@ __marimo__/
 
 # Markdown notes
 *.md
+
+# Web app
+node_modules/
+web/dist/

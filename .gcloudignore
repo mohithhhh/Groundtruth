@@ -1,0 +1,14 @@
+# Upload only what the Dockerfile needs: server/ and web/ sources.
+.git
+.gitignore
+.venv
+**/__pycache__
+.pytest_cache
+web/node_modules
+web/dist
+model/
+pipeline/
+docs/
+cities/
+eval/
+*.md
