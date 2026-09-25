@@ -5,7 +5,7 @@ figure checked against the data before it is shown.
 
 | | |
 |---|---|
-| Live app | https://penumbra-app-891315005311.us-central1.run.app |
+| Live app | https://groundtruth-app-891315005311.us-central1.run.app |
 | Demo video (3 min) | *add link before submission* |
 | Slide deck (PDF) | *add link before submission* |
 | Team | *add names before submission* |
@@ -86,7 +86,7 @@ flowchart LR
     OC[OpenCity wards + population] --> BQ
     OV[Overture places] --> BQ
   end
-  subgraph Run["Cloud Run: penumbra-app"]
+  subgraph Run["Cloud Run: groundtruth-app"]
     WEB[React app] --> API[FastAPI]
     API --> AG[ADK agent<br/>Gemini 2.5 Flash, Vertex AI]
     AG --> T[Read-only SQL tools] --> BQ
@@ -179,7 +179,7 @@ python scripts/smoke.py <deployed URL>    # checks a live deployment
 **Deploy**
 
 ```bash
-gcloud run deploy penumbra-app --source . --region us-central1 \
+gcloud run deploy groundtruth-app --source . --region us-central1 \
   --service-account <service account> --allow-unauthenticated \
   --set-env-vars GOOGLE_CLOUD_PROJECT=<project>,GOOGLE_CLOUD_LOCATION=us-central1,BQ_DATASET=penumbra,MODEL_ID=gemini-2.5-flash,GOOGLE_GENAI_USE_ENTERPRISE=1
 ```

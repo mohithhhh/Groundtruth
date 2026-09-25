@@ -15,9 +15,12 @@ Save this file as `CLAUDE.md` in the repository root. Claude Code reads it as pr
 Phases 1 to 6 are built and deployed. Check `docs/NOTES.md` for the running
 log and `docs/DECISIONS.md` for every deviation from this brief.
 
-- Live: `https://penumbra-app-891315005311.us-central1.run.app` (Cloud Run
-  service `penumbra-app`, one container: FastAPI serves `/api` and the built
-  web app).
+- Live: `https://groundtruth-app-891315005311.us-central1.run.app` (Cloud Run
+  service `groundtruth-app`, one container: FastAPI serves `/api` and the
+  built web app; runs as the pre-existing `penumbra-app` service account,
+  which was not renamed). The original service `penumbra-app` still exists
+  at `https://penumbra-app-891315005311.us-central1.run.app`, scaled to
+  min-instances=0.
 - `pipeline/` data layer (01-10), `model/` cooling model, `cities/bengaluru.yaml`
   intervention catalog, `server/` API + ADK agent + verifier + optimizer,
   `web/` React app.
