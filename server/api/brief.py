@@ -6,11 +6,10 @@ from google.cloud import bigquery
 from server.store import ToolResultStore
 from server.tools.bq import DATASET, PROJECT, run_query
 from server.tools.interventions import recommend_interventions
-from server.tools.wards import compare_to_city_median, compare_years, get_ward_metrics, nearby_facilities
+from server.tools.wards import BASELINE_YEAR, compare_to_city_median, compare_years, get_ward_metrics, nearby_facilities
 
 router = APIRouter()
 
-BASELINE_YEAR = 2016
 
 # Section labels only -- prose (ward names, figures, citation quotes) stays
 # in English. Written from general Kannada knowledge, not run through a

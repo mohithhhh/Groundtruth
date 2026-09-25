@@ -280,7 +280,7 @@ function EvaluationResults({ e }: { e: Evaluation }) {
         Across these answers the agents cited {e.verifier.claims} figures and ward names. The verifier traced {e.verifier.verified} of them to the data and removed{" "}
         {e.verifier.claims - e.verifier.verified}, each for a citation it could not trace or a value that did not match.
         {e.summary.penumbra.errors > 0 &&
-          ` ${e.summary.penumbra.errors === 1 ? "One agent run" : `${e.summary.penumbra.errors} agent runs`} hit the 45-second limit, which counts as incorrect for both agent configurations.`}
+          ` ${e.summary.penumbra.errors === 1 ? "One agent run" : `${e.summary.penumbra.errors} agent runs`} failed to answer, by timing out at 45 seconds or ending without a structured answer. Each counts as incorrect for both agent configurations.`}
       </p>
       <p className={styles.caveat}>
         Agents without verification and full Penumbra share each agent run, so the gap between them is exactly what the verifier changed. The verifier can also remove a

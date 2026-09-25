@@ -1,0 +1,7 @@
+# Offline pipeline, cooling model and eval (not needed by the Cloud Run service).
+-r ../server/requirements.txt
+earthengine-api
+numpy
+pandas
+scikit-learn
+pyyaml
