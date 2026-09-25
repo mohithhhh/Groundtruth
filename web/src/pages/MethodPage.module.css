@@ -1,0 +1,163 @@
+.page {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.article {
+  max-width: 70ch;
+  margin: 0 auto;
+  padding: var(--s-8) var(--s-5) var(--s-8);
+  font-size: var(--step-1);
+  line-height: 1.6;
+}
+
+.h1 {
+  font-size: var(--step-5);
+  letter-spacing: -0.035em;
+  margin-bottom: var(--s-5);
+}
+
+.lead {
+  font-size: var(--step-2);
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.section {
+  margin-top: var(--s-7);
+  display: grid;
+  gap: var(--s-4);
+}
+
+.h2 {
+  font-size: var(--step-3);
+}
+
+.h3 {
+  font-size: var(--step-1);
+  margin-bottom: var(--s-2);
+}
+
+.caveat {
+  padding: var(--s-3) var(--s-4);
+  border-left: 3px solid var(--link);
+  background: var(--monsoon-wash);
+  border-radius: 0 var(--r-chip) var(--r-chip) 0;
+  font-size: var(--step-0);
+}
+
+.source,
+.generated {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.generated {
+  margin-top: var(--s-7);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--hairline);
+}
+
+.sources {
+  display: grid;
+  gap: var(--s-4);
+  margin: 0;
+}
+
+.sources dt {
+  font-weight: 600;
+  font-size: var(--step-0);
+}
+
+.sources dd {
+  margin: 0;
+  font-size: var(--step-0);
+}
+
+.license {
+  color: var(--text-2);
+}
+
+.table {
+  border-collapse: collapse;
+  font-size: var(--step--1);
+  width: 100%;
+  max-width: 28rem;
+}
+
+.table caption {
+  text-align: left;
+  color: var(--text-2);
+  font-size: var(--step--2);
+  margin-bottom: var(--s-2);
+}
+
+.table th,
+.table td {
+  padding: var(--s-1) var(--s-2);
+  border-bottom: 1px solid var(--hairline);
+  text-align: left;
+  font-weight: 400;
+}
+
+.table thead th {
+  color: var(--text-2);
+  font-size: var(--step--2);
+}
+
+.r {
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.twoLists {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-5);
+}
+
+.extremes {
+  margin: 0;
+  padding-left: var(--s-5);
+  font-size: var(--step--1);
+  display: grid;
+  gap: var(--s-1);
+}
+
+.meta {
+  display: block;
+  color: var(--text-2);
+  font-size: var(--step--2);
+}
+
+.list {
+  margin: 0;
+  padding-left: var(--s-5);
+  display: grid;
+  gap: var(--s-2);
+  font-size: var(--step-0);
+}
+
+.pre {
+  font-size: var(--step--2);
+  overflow-x: auto;
+}
+
+@media (max-width: 640px) {
+  .article {
+    padding: var(--s-6) var(--s-4);
+    font-size: var(--step-0);
+  }
+
+  .h1 {
+    font-size: var(--step-4);
+  }
+
+  .lead {
+    font-size: var(--step-1);
+  }
+
+  .twoLists {
+    grid-template-columns: 1fr;
+  }
+}

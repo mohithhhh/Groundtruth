@@ -74,7 +74,7 @@ async def ask(request: Request, body: AskRequest):
             detail="Penumbra took longer than 45 seconds. Try a narrower question, such as one corporation.",
         )
 
-    trace = store.trace(start_time)
+    trace = store.trace(start_time, answered_at=time.time())
     verify_start = time.time()
     result = verify_answer(answer["narrative"], answer["claims"], store.get)
     trace.append({
@@ -85,6 +85,7 @@ async def ask(request: Request, body: AskRequest):
 
     return {
         "narrative": result.narrative,
+        "narrative_template": result.template,
         "claims": result.verified_claims,
         "verification": result.as_dict(),
         "highlight_ward_keys": answer.get("highlight_ward_keys", []),

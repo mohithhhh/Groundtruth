@@ -1,0 +1,302 @@
+{
+ "generated_at": "2026-09-24T20:39:00.150316+00:00",
+ "generated_by": "pipeline/10_export_results.py",
+ "coverage": {
+  "source": "pipeline/03_zonal_stats.sql -> ward_metrics",
+  "years": [
+   {
+    "year": 2016,
+    "wards": 369,
+    "lst_min_c": 35.523602073700026,
+    "lst_avg_c": 40.559365626449654,
+    "lst_max_c": 44.522055652056444,
+    "min_valid_pixel_frac": 0.9951307632642916
+   },
+   {
+    "year": 2025,
+    "wards": 369,
+    "lst_min_c": 34.65848169472719,
+    "lst_avg_c": 38.50680022569547,
+    "lst_max_c": 41.37690771354924,
+    "min_valid_pixel_frac": 0.9951307632642916
+   }
+  ]
+ },
+ "risk_weights": {
+  "source": "pipeline/06_risk.sql -> ward_risk",
+  "heat": 0.4,
+  "green": 0.2,
+  "built": 0.15,
+  "exposure": 0.25
+ },
+ "cooling_model": {
+  "source": "model/cooling_model.py -> effect_model",
+  "held_out_r2": 0.2605953625400243,
+  "held_out_rmse_c": 2.0306842223268116,
+  "n_samples": 59828,
+  "model_type": "ridge_alpha1.0",
+  "fitted_date": "2026-09-25",
+  "effects": [
+   {
+    "intervention": "built_frac_decrease_0.1",
+    "unit_change": -0.1,
+    "low_c": 0.1819066489637936,
+    "mid_c": 0.1928099541311312,
+    "high_c": 0.2029931444175748,
+    "usable": false,
+    "note": "Sign-unstable due to collinearity with NDVI (r=-0.48); see model/README.md. Do not use for planning."
+   },
+   {
+    "intervention": "ndvi_increase_0.1",
+    "unit_change": 0.1,
+    "low_c": -1.1793050713092255,
+    "mid_c": -1.1534208933784535,
+    "high_c": -1.1288964025435633,
+    "usable": true,
+    "note": "Stable, intuitive-direction coefficient across univariate and multivariate fits."
+   }
+  ]
+ },
+ "weight_sensitivity": {
+  "source": "pipeline/07_validate_risk.sql",
+  "rows": [
+   {
+    "perturbation": "built +0.1",
+    "spearman_rho": 0.9923
+   },
+   {
+    "perturbation": "built -0.1",
+    "spearman_rho": 0.9933
+   },
+   {
+    "perturbation": "exposure +0.1",
+    "spearman_rho": 0.9924
+   },
+   {
+    "perturbation": "exposure -0.1",
+    "spearman_rho": 0.9923
+   },
+   {
+    "perturbation": "green +0.1",
+    "spearman_rho": 0.9979
+   },
+   {
+    "perturbation": "green -0.1",
+    "spearman_rho": 0.9976
+   },
+   {
+    "perturbation": "heat +0.1",
+    "spearman_rho": 0.9891
+   },
+   {
+    "perturbation": "heat -0.1",
+    "spearman_rho": 0.9899
+   }
+  ]
+ },
+ "ranking_extremes": {
+  "source": "pipeline/06_risk.sql -> ward_risk, year 2025",
+  "hottest": [
+   {
+    "composite_risk": 0.931929347826087,
+    "corporation": "Central",
+    "lst_mean_c": 40.259100505717576,
+    "ndvi_mean": 0.18941388284934907,
+    "rank": "1",
+    "ward_key": "ward_369_final.47",
+    "ward_name": "Bhuvaneshwari Nagar"
+   },
+   {
+    "composite_risk": 0.9269021739130434,
+    "corporation": "North",
+    "lst_mean_c": 40.286534945876376,
+    "ndvi_mean": 0.18025156169257875,
+    "rank": "2",
+    "ward_key": "ward_369_final.79",
+    "ward_name": "Kushal Nagar"
+   },
+   {
+    "composite_risk": 0.9254076086956523,
+    "corporation": "Central",
+    "lst_mean_c": 40.521403989495475,
+    "ndvi_mean": 0.18253727830805103,
+    "rank": "3",
+    "ward_key": "ward_369_final.317",
+    "ward_name": "Padarayanapura"
+   },
+   {
+    "composite_risk": 0.9086956521739131,
+    "corporation": "West",
+    "lst_mean_c": 40.33008195454147,
+    "ndvi_mean": 0.18609653232899478,
+    "rank": "4",
+    "ward_key": "ward_369_final.352",
+    "ward_name": "Vrishabhavathi Nagar"
+   },
+   {
+    "composite_risk": 0.9069293478260869,
+    "corporation": "North",
+    "lst_mean_c": 40.74207946962966,
+    "ndvi_mean": 0.2022962095901747,
+    "rank": "5",
+    "ward_key": "ward_369_final.67",
+    "ward_name": "Periyar Nagar"
+   },
+   {
+    "composite_risk": 0.9010869565217392,
+    "corporation": "Central",
+    "lst_mean_c": 39.9043994705996,
+    "ndvi_mean": 0.22127212892951856,
+    "rank": "6",
+    "ward_key": "ward_369_final.201",
+    "ward_name": "Bharathi Nagar"
+   },
+   {
+    "composite_risk": 0.8802989130434784,
+    "corporation": "Central",
+    "lst_mean_c": 39.64142119431437,
+    "ndvi_mean": 0.213546722980902,
+    "rank": "7",
+    "ward_key": "ward_369_final.307",
+    "ward_name": "Neelasandra"
+   },
+   {
+    "composite_risk": 0.8752717391304348,
+    "corporation": "Central",
+    "lst_mean_c": 39.67791353125954,
+    "ndvi_mean": 0.17963253250851985,
+    "rank": "8",
+    "ward_key": "ward_369_final.311",
+    "ward_name": "Old Guddadahalli"
+   },
+   {
+    "composite_risk": 0.8665760869565218,
+    "corporation": "West",
+    "lst_mean_c": 39.46677291513397,
+    "ndvi_mean": 0.21841214828599345,
+    "rank": "9",
+    "ward_key": "ward_369_final.133",
+    "ward_name": "Bapuji Nagara"
+   },
+   {
+    "composite_risk": 0.865625,
+    "corporation": "West",
+    "lst_mean_c": 39.11291042198266,
+    "ndvi_mean": 0.21796696466115398,
+    "rank": "10",
+    "ward_key": "ward_369_final.131",
+    "ward_name": "Bandi Reddy Circle Ward"
+   }
+  ],
+  "coolest": [
+   {
+    "composite_risk": 0.01290760869565218,
+    "corporation": "East",
+    "lst_mean_c": 35.45112864119462,
+    "ndvi_mean": 0.49647302453381026,
+    "rank": "369",
+    "ward_key": "ward_369_final.2",
+    "ward_name": "Yamalur"
+   },
+   {
+    "composite_risk": 0.01997282608695651,
+    "corporation": "Central",
+    "lst_mean_c": 36.680005569689676,
+    "ndvi_mean": 0.5084832532843161,
+    "rank": "368",
+    "ward_key": "ward_369_final.1",
+    "ward_name": "Agaram"
+   },
+   {
+    "composite_risk": 0.023505434782608695,
+    "corporation": "North",
+    "lst_mean_c": 35.4160742717897,
+    "ndvi_mean": 0.5138959099810995,
+    "rank": "367",
+    "ward_key": "ward_369_final.367",
+    "ward_name": "Kuvempunagara"
+   },
+   {
+    "composite_risk": 0.030706521739130445,
+    "corporation": "East",
+    "lst_mean_c": 36.47377115477499,
+    "ndvi_mean": 0.4712393834226905,
+    "rank": "366",
+    "ward_key": "ward_369_final.53",
+    "ward_name": "Hagaduru"
+   },
+   {
+    "composite_risk": 0.0436141304347826,
+    "corporation": "West",
+    "lst_mean_c": 34.65848169472719,
+    "ndvi_mean": 0.49578531566896783,
+    "rank": "365",
+    "ward_key": "ward_369_final.359",
+    "ward_name": "Sadashiva Nagara"
+   },
+   {
+    "composite_risk": 0.05230978260869565,
+    "corporation": "North",
+    "lst_mean_c": 35.97095453571928,
+    "ndvi_mean": 0.42063276220445456,
+    "rank": "364",
+    "ward_key": "ward_369_final.368",
+    "ward_name": "Doddabommasandra"
+   },
+   {
+    "composite_risk": 0.05244565217391304,
+    "corporation": "North",
+    "lst_mean_c": 36.943643731004755,
+    "ndvi_mean": 0.43107979593622026,
+    "rank": "363",
+    "ward_key": "ward_369_final.291",
+    "ward_name": "Thindlu"
+   },
+   {
+    "composite_risk": 0.052717391304347834,
+    "corporation": "North",
+    "lst_mean_c": 35.425855790590084,
+    "ndvi_mean": 0.3949864423043136,
+    "rank": "362",
+    "ward_key": "ward_369_final.246",
+    "ward_name": "Rajiv Gandhi Nagar"
+   },
+   {
+    "composite_risk": 0.06480978260869566,
+    "corporation": "Central",
+    "lst_mean_c": 36.1742843687163,
+    "ndvi_mean": 0.4704230132479676,
+    "rank": "361",
+    "ward_key": "ward_369_final.107",
+    "ward_name": "Sampangirama Nagar"
+   },
+   {
+    "composite_risk": 0.06603260869565218,
+    "corporation": "North",
+    "lst_mean_c": 36.37737838969872,
+    "ndvi_mean": 0.44578644529747413,
+    "rank": "360",
+    "ward_key": "ward_369_final.348",
+    "ward_name": "HMT Ward"
+   }
+  ]
+ },
+ "plan_comparison": {
+  "source": "server/optimizer/allocator.py via server/tools/interventions.py",
+  "corporation": "East",
+  "budget_inr": 500000000,
+  "optimized": {
+   "total_person_c": 368966.4087693937,
+   "people_covered": 555430,
+   "wards_covered": 23,
+   "total_cost_inr": 499500000
+  },
+  "naive": {
+   "total_person_c": 283697.3654904462,
+   "people_covered": 251425,
+   "wards_covered": 10,
+   "total_cost_inr": 500000000
+  }
+ },
+ "evaluation": null
+}

@@ -1,0 +1,36 @@
+.set {
+  display: grid;
+  gap: var(--s-4);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.row {
+  display: grid;
+  gap: 2px;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--step--1);
+  font-weight: 500;
+}
+
+.pct {
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.hint {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.range {
+  width: 100%;
+  accent-color: var(--accent);
+  margin: 2px 0;
+}

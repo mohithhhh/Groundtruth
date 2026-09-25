@@ -1,0 +1,143 @@
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 46%);
+  height: 100%;
+}
+
+.mapArea {
+  position: relative;
+  min-height: 0;
+}
+
+.center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--s-5);
+}
+
+.panel {
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--panel);
+  border-left: 1px solid var(--hairline);
+}
+
+.controls {
+  display: grid;
+  gap: var(--s-3);
+  padding: var(--s-5);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.title {
+  font-size: var(--step-3);
+}
+
+.lede {
+  font-size: var(--step--1);
+  color: var(--text-2);
+  max-width: 56ch;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-3);
+  margin-top: var(--s-2);
+}
+
+.help {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.costs summary {
+  cursor: pointer;
+  color: var(--link);
+  font-weight: 600;
+  font-size: var(--step--1);
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.costList {
+  list-style: none;
+  margin: 0 0 var(--s-2);
+  padding: 0;
+}
+
+.controls > button[type="submit"] {
+  justify-self: start;
+  min-width: 160px;
+}
+
+.results {
+  display: grid;
+  gap: var(--s-6);
+  padding: var(--s-5);
+  outline: none;
+}
+
+.h2 {
+  font-size: var(--step-2);
+  margin-bottom: var(--s-2);
+}
+
+.assumptions {
+  margin: 0;
+  padding-left: var(--s-5);
+  display: grid;
+  gap: var(--s-2);
+  font-size: var(--step--1);
+  color: var(--text-2);
+  max-width: 64ch;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: var(--s-5);
+  translate: -50% 0;
+  z-index: 70;
+  pointer-events: none;
+}
+
+.toast span {
+  display: inline-flex;
+  padding: var(--s-2) var(--s-4);
+  border-radius: var(--r-panel);
+  background: var(--text);
+  color: var(--bg);
+  font-weight: 600;
+  font-size: var(--step--1);
+  box-shadow: var(--shade-strong);
+  animation: pop var(--t-fast) var(--ease);
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@media (max-width: 900px) {
+  .page {
+    grid-template-columns: 1fr;
+    grid-template-rows: 56dvh auto;
+    height: auto;
+  }
+
+  .panel {
+    border-left: 0;
+    border-top: 1px solid var(--hairline);
+    overflow: visible;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

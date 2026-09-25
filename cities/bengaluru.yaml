@@ -36,12 +36,13 @@ interventions:
     applicability_rule: "ndvi_mean < 0.35"
     model_pathway:
       type: modeled
-      description: "Assumed to raise ward-mean NDVI by 0.05 per 1,000 trees planted (a stated assumption -- real conversion depends on species, spacing and survival rate, which we don't have ward-level data for). That NDVI change is then run through the cooling model's NDVI coefficient, which IS a stable, usable, held-out-validated effect (see model/README.md)."
-      ndvi_delta_per_unit: 0.05
+      description: "Assumed 30 sq m of mature canopy per tree, so 1,000 trees cover 30,000 sq m, with NDVI rising by 0.4 within that canopy (from bare or built ground to tree cover). Ward-level NDVI shift is area-weighted: (30,000 * 0.4) / ward_area_m2, then run through the cooling model's NDVI coefficient. Canopy size, species and survival rate are stated assumptions -- we have no ward-level data for them."
+      ndvi_gain_in_treated_area: 0.4
+      treated_area_m2: 30000
     cost:
-      amount_inr_per_unit: 4000
+      amount_inr_per_unit: 4000000
       assumption: true
-      note: "Per 1,000 trees, covering sapling + 3-year establishment maintenance. Not sourced from a vendor or BBMP quote -- a placeholder order-of-magnitude estimate."
+      note: "Rs 4,000 per tree (Rs 40 lakh per 1,000), covering sapling, planting and 3-year establishment maintenance. Not sourced from a vendor or BBMP quote -- a placeholder order-of-magnitude estimate."
     citations:
       - id: wri_bcap_proceedings_2022
         page: 19

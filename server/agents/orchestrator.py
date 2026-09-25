@@ -10,6 +10,7 @@ verifier working end-to-end; splitting it out is a follow-on now that the
 base path is proven, not a permanent design choice.
 """
 
+import functools
 import os
 
 from google.adk.agents.llm_agent import Agent
@@ -95,11 +96,20 @@ def _bind_tools(store: ToolResultStore):
         plainly rather than implying a number that doesn't exist."""
         return interventions_tools.recommend_interventions(store, city_id, ward_key, year)
 
-    return [
+    def timed(fn):
+        # functools.wraps keeps the signature and docstring ADK reads to
+        # build each tool's schema.
+        @functools.wraps(fn)
+        def wrapper(*args, **kwargs):
+            store.mark_start()
+            return fn(*args, **kwargs)
+        return wrapper
+
+    return [timed(f) for f in (
         get_ward_metrics, find_ward, rank_wards, compare_years,
         corporation_summary, nearby_facilities, live_regionstats,
         recommend_interventions,
-    ]
+    )]
 
 
 def build_orchestrator(store: ToolResultStore) -> Agent:

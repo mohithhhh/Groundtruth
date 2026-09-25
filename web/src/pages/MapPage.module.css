@@ -1,0 +1,132 @@
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  height: 100%;
+}
+
+.mapArea {
+  position: relative;
+  min-height: 0;
+}
+
+.center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--s-5);
+}
+
+.viewSwitch {
+  position: absolute;
+  top: var(--s-4);
+  left: var(--s-4);
+  z-index: 4;
+  max-width: calc(100% - 2 * var(--s-4) - 48px);
+}
+
+.panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-height: 0;
+  background: var(--panel);
+  border-left: 1px solid var(--hairline);
+}
+
+.panelHead {
+  padding: var(--s-5) var(--s-5) var(--s-3);
+  display: grid;
+  gap: var(--s-3);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.title {
+  font-size: var(--step-2);
+}
+
+.filters {
+  display: flex;
+  gap: var(--s-3);
+}
+
+.filter {
+  display: grid;
+  gap: var(--s-1);
+  flex: 1;
+}
+
+.count {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.listWrap {
+  overflow-y: auto;
+  padding: var(--s-2);
+  overscroll-behavior: contain;
+}
+
+.weights {
+  border-top: 1px solid var(--hairline);
+  padding: var(--s-3) var(--s-5) var(--s-4);
+}
+
+.disclosure {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 36px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--link);
+  font-weight: 600;
+  font-size: var(--step--1);
+}
+
+.chev,
+.chevOpen {
+  transition: transform var(--t-fast) var(--ease);
+}
+
+.chevOpen {
+  transform: rotate(90deg);
+}
+
+.weightsBody {
+  padding-top: var(--s-3);
+  display: grid;
+  gap: var(--s-3);
+  max-height: 46vh;
+  overflow-y: auto;
+}
+
+@media (max-width: 760px) {
+  .page {
+    grid-template-columns: 1fr;
+    grid-template-rows: 62dvh auto;
+    height: auto;
+  }
+
+  .panel {
+    border-left: 0;
+    border-top: 1px solid var(--hairline);
+    border-radius: var(--r-panel) var(--r-panel) 0 0;
+    margin-top: calc(-1 * var(--s-4));
+    position: relative;
+    z-index: 6;
+    grid-template-rows: auto auto auto;
+  }
+
+  .listWrap {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .viewSwitch {
+    top: var(--s-2);
+    left: var(--s-2);
+    right: var(--s-2);
+    max-width: none;
+  }
+}

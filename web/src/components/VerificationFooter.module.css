@@ -1,0 +1,36 @@
+.footer {
+  margin-top: var(--s-4);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--hairline);
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-weight: 600;
+}
+
+.ok .line {
+  color: var(--accent);
+}
+
+.partial .line {
+  color: var(--heat-6);
+}
+
+.removed {
+  margin-top: var(--s-2);
+}
+
+.removed summary {
+  cursor: pointer;
+  color: var(--link);
+}
+
+.removed ul {
+  margin: var(--s-2) 0 0;
+  padding-left: var(--s-5);
+}

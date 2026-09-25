@@ -1,0 +1,39 @@
+.trace {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr auto;
+  gap: var(--s-3);
+  align-items: baseline;
+  padding: var(--s-2) 0;
+  font-size: var(--step--1);
+  position: relative;
+}
+
+.step + .step::before {
+  content: "";
+  position: absolute;
+  left: 0.72rem;
+  top: -6px;
+  height: 12px;
+  width: 1px;
+  background: var(--hairline);
+}
+
+.n {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--accent);
+  text-align: center;
+}
+
+.dur {
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}

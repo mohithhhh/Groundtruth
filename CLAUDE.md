@@ -10,19 +10,25 @@ Save this file as `CLAUDE.md` in the repository root. Claude Code reads it as pr
 
 ---
 
-## Current state of the repo (as of this writing)
+## Current state of the repo (as of 25 Sep 2026)
 
-Everything above and below this note describes the **target** system. What actually exists in the repo right now is much smaller — check here before assuming any phase is complete:
+Phases 1 to 4 are built and deployed. Check `docs/NOTES.md` for the running
+log and `docs/DECISIONS.md` for every deviation from this brief.
 
-- `agents/` — a hello-world Flask app (`main.py`), deployed as the Cloud Run service `penumbra-app`. This is the only real code in the repo. It has not yet been moved into `server/` per Section 4.
-  - Run locally: `pip install -r agents/requirements.txt && python agents/main.py` (serves on `$PORT`, default 8080)
-  - Deploy: `gcloud run deploy penumbra-app --source agents --region us-central1 --project penumbra-509416 --service-account penumbra-app@penumbra-509416.iam.gserviceaccount.com --allow-unauthenticated`
-- No `pipeline/`, `server/`, `web/`, `model/`, `eval/`, `cities/`, or `docs/` directories exist yet — Phase 1 has not started.
-- `plan.md`, referenced in the kickoff message above, does not exist yet.
-- There is no test suite, linter, or build step configured anywhere in the repo yet (no `pytest`/`pyproject.toml`/`package.json`). Set these up as each phase introduces real code, per Section 6.
-- `.github/workflows/blank.yml` is the unmodified GitHub Actions template — not a real CI pipeline.
-
-When starting a session, verify this section against `git status`/`ls` rather than trusting it blindly — update it as phases land.
+- Live: `https://penumbra-app-891315005311.us-central1.run.app` (Cloud Run
+  service `penumbra-app`, one container: FastAPI serves `/api` and the built
+  web app).
+- `pipeline/` data layer (01-10), `model/` cooling model, `cities/bengaluru.yaml`
+  intervention catalog, `server/` API + ADK agent + verifier + optimizer,
+  `web/` React app.
+- Commands:
+  - Backend: `source .venv/bin/activate && GOOGLE_GENAI_USE_ENTERPRISE=1 GOOGLE_CLOUD_PROJECT=penumbra-509416 GOOGLE_CLOUD_LOCATION=us-central1 MODEL_ID=gemini-2.5-flash BQ_DATASET=penumbra uvicorn server.main:app --port 8080`
+  - Web dev: `cd web && npm run dev` (proxies `/api` to :8080; set `API_TARGET` to use the deployed API)
+  - Tests: `python -m pytest server/tests` and `cd web && npm test`; one test: `python -m pytest server/tests/test_verify.py::test_pass_entity_and_number`
+  - Build: `cd web && npm run build` (typechecks, then bundles to `web/dist`)
+  - Deploy: the `gcloud run deploy` command in Section 11, with `GOOGLE_GENAI_USE_ENTERPRISE=1` added (the ADK variable; `GOOGLE_GENAI_USE_VERTEXAI` is deprecated)
+- Not started: Phase 5 (eval and ablation), Phase 6 (ship). `plan.md` does not exist.
+- The user commits; do not run `git commit`.
 
 ---
 

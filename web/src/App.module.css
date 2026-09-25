@@ -1,0 +1,43 @@
+.shell {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100dvh;
+}
+
+.main {
+  min-height: 0;
+  position: relative;
+}
+
+.skip {
+  position: absolute;
+  left: var(--s-3);
+  top: -60px;
+  z-index: 100;
+  padding: var(--s-2) var(--s-3);
+  background: var(--panel);
+  border-radius: var(--r-chip);
+  box-shadow: var(--shade);
+}
+
+.skip:focus {
+  top: var(--s-2);
+}
+
+.notFound {
+  padding: var(--s-8) var(--s-5);
+  max-width: 60ch;
+  display: grid;
+  gap: var(--s-3);
+}
+
+.notFound h1 {
+  font-size: var(--step-4);
+}
+
+@media (max-width: 760px) {
+  .shell {
+    height: auto;
+    min-height: 100dvh;
+  }
+}

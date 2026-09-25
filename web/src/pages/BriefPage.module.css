@@ -1,0 +1,228 @@
+.screen {
+  min-height: 100dvh;
+  padding: var(--s-4) var(--s-4) var(--s-8);
+  background: var(--bg);
+}
+
+.toolbar {
+  max-width: 210mm;
+  margin: 0 auto var(--s-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  justify-content: space-between;
+}
+
+.toolbarRight {
+  display: flex;
+  gap: var(--s-2);
+}
+
+/* Paper is always light: it is a printed document. */
+.paper {
+  --text: #17302c;
+  --text-2: #5c6f69;
+  --hairline: #cad3ce;
+  --accent: #2e6a4e;
+  max-width: 210mm;
+  margin: 0 auto;
+  padding: 18mm 18mm 16mm;
+  background: #ffffff;
+  color: var(--text);
+  box-shadow: var(--shade);
+  border-radius: 2px;
+  font-size: 10.5pt;
+  line-height: 1.45;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 4mm;
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: 8mm;
+}
+
+.brand {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 12pt;
+  letter-spacing: -0.02em;
+}
+
+.kind {
+  color: var(--text-2);
+  font-size: 9.5pt;
+}
+
+.name {
+  font-size: 30pt;
+  letter-spacing: -0.03em;
+}
+
+.nameKn {
+  font-size: 14pt;
+  color: var(--text-2);
+  margin-top: 2mm;
+}
+
+.meta {
+  margin-top: 3mm;
+  color: var(--text-2);
+  font-size: 9.5pt;
+}
+
+.section {
+  margin-top: 8mm;
+  break-inside: auto;
+}
+
+.h2 {
+  font-size: 13pt;
+  padding-bottom: 2mm;
+  margin-bottom: 3mm;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6mm;
+  margin-bottom: 5mm;
+}
+
+.big {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22pt;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.figLabel {
+  color: var(--text-2);
+  font-size: 9pt;
+  margin-top: 1mm;
+}
+
+.fn {
+  font-family: var(--font-body);
+  font-size: 0.55em;
+  font-weight: 600;
+  color: var(--accent);
+  margin-left: 1px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9.5pt;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 1.5mm 2mm;
+  border-bottom: 1px solid var(--hairline);
+  font-weight: 400;
+}
+
+.table thead th {
+  color: var(--text-2);
+  font-size: 8.5pt;
+}
+
+.table tbody th {
+  font-weight: 500;
+}
+
+.actions {
+  margin: 0;
+  padding-left: 5mm;
+  display: grid;
+  gap: 4mm;
+}
+
+.actions li {
+  break-inside: avoid;
+}
+
+.actionName {
+  font-weight: 600;
+}
+
+.cite {
+  color: var(--text-2);
+  font-size: 8.5pt;
+  margin-top: 1mm;
+}
+
+.list {
+  margin: 0;
+  padding-left: 5mm;
+  display: grid;
+  gap: 1mm;
+}
+
+.sources {
+  margin: 0;
+  padding-left: 5mm;
+  font-size: 8.5pt;
+  color: var(--text-2);
+  display: grid;
+  gap: 1mm;
+  overflow-wrap: anywhere;
+}
+
+.doc {
+  font-size: 8.5pt;
+  color: var(--text-2);
+  margin-top: 1.5mm;
+  overflow-wrap: anywhere;
+}
+
+.foot {
+  margin-top: 10mm;
+  padding-top: 3mm;
+  border-top: 1px solid var(--hairline);
+  font-size: 8.5pt;
+  color: var(--text-2);
+}
+
+@media (max-width: 640px) {
+  .paper {
+    padding: 8mm 6mm;
+  }
+  .figures {
+    grid-template-columns: 1fr 1fr;
+  }
+  .name {
+    font-size: 22pt;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  .screen {
+    padding: 0;
+    background: #fff;
+  }
+
+  .toolbar {
+    display: none;
+  }
+
+  .paper {
+    max-width: none;
+    padding: 0;
+    box-shadow: none;
+  }
+}
