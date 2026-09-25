@@ -3,8 +3,9 @@ tables and scripts that produced them, into web/public/data/results.json.
 
 The Method page renders only from this file -- no figure on it is typed by
 hand (CLAUDE.md Section 10). Each section records which script produced it.
-The evaluation/ablation section is null until Phase 5 runs it, and the page
-says so rather than showing placeholders.
+The evaluation section comes from eval/results/latest.json (written by a
+full run of eval/run_eval.py); it is null if that file does not exist, and
+the page says so rather than showing placeholders.
 
 Run (after pipeline 01-09 and model/cooling_model.py):
     source .venv/bin/activate
@@ -40,6 +41,31 @@ def bq(sql: str) -> list[dict]:
 
 def num(v):
     return None if v is None else float(v)
+
+
+def evaluation():
+    path = "eval/results/latest.json"
+    if not os.path.exists(path):
+        return None
+    with open(path, encoding="utf-8") as f:
+        run = json.load(f)
+    configs = ("gemini_alone", "agents_unverified", "penumbra")
+    return {
+        "source": f"eval/run_eval.py over eval/questions.yaml, model {run['model_id']}",
+        "generated_at": run["generated_at"],
+        "summary": {c: run["summary"][c] for c in configs},
+        # What the verifier did to full Penumbra's answers across the set.
+        "verifier": {
+            "claims": sum((q["configs"]["penumbra"]["verification"] or {}).get("total", 0) for q in run["questions"]),
+            "verified": sum((q["configs"]["penumbra"]["verification"] or {}).get("verified", 0) for q in run["questions"]),
+        },
+        "questions": [
+            {"id": q["id"], "category": q["category"], "question": q["question"],
+             **{c: {"correct": q["configs"][c]["facts_correct"] == q["configs"][c]["facts_expected"],
+                    "unsupported": len(q["configs"][c]["unsupported_figures"])} for c in configs}}
+            for q in run["questions"]
+        ],
+    }
 
 
 def main():
@@ -126,9 +152,7 @@ def main():
             "optimized": {k: opt[k] for k in ("total_person_c", "people_covered", "wards_covered", "total_cost_inr")},
             "naive": {k: naive[k] for k in ("total_person_c", "people_covered", "wards_covered", "total_cost_inr")},
         },
-        # Phase 5 fills this from eval/run_eval.py. Until then the Method page
-        # states that the ablation has not been run.
-        "evaluation": None,
+        "evaluation": evaluation(),
     }
 
     os.makedirs(os.path.dirname(OUT), exist_ok=True)

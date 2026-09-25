@@ -138,6 +138,8 @@ def _describe_tool_call(tool_name: str, params: dict) -> str:
     if tool_name == "budget_plan":
         scope = f"{params['corporation']} corporation" if params.get("corporation") else "the whole city"
         return f"Allocated a Rs {params['budget_inr']:,.0f} budget across {scope}, and the hottest-first comparison"
+    if tool_name == "intervention_catalog":
+        return "Listed the intervention catalog with assumed unit costs"
     if tool_name == "compare_to_city_median":
         return f"Compared {params['ward_key']} with the city median surface temperature, {params['year']}"
     return f"Called {tool_name}"

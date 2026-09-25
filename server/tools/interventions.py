@@ -56,6 +56,13 @@ def _fetch_catalog(city_id: str) -> list[dict]:
     return run_query(sql, [bigquery.ScalarQueryParameter("city_id", "STRING", city_id)])
 
 
+def intervention_catalog(store: ToolResultStore, city_id: str) -> dict:
+    """The catalog itself: every intervention's unit, assumed unit cost and
+    citations, independent of any ward."""
+    data = _fetch_catalog(city_id)
+    return store.record("intervention_catalog", {"city_id": city_id}, data)
+
+
 def _fetch_ndvi_effect_per_0_1() -> dict:
     sql = f"""
     SELECT effect_low_c, effect_mid_c, effect_high_c
