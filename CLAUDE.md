@@ -12,7 +12,7 @@ Save this file as `CLAUDE.md` in the repository root. Claude Code reads it as pr
 
 ## Current state of the repo (as of 25 Sep 2026)
 
-Phases 1 to 5 are built and deployed. Check `docs/NOTES.md` for the running
+Phases 1 to 6 are built and deployed. Check `docs/NOTES.md` for the running
 log and `docs/DECISIONS.md` for every deviation from this brief.
 
 - Live: `https://penumbra-app-891315005311.us-central1.run.app` (Cloud Run
@@ -28,7 +28,9 @@ log and `docs/DECISIONS.md` for every deviation from this brief.
   - Tests: `python -m pytest server/tests eval` and `cd web && npm test`; one test: `python -m pytest server/tests/test_verify.py::test_pass_entity_and_number`
   - Build: `cd web && npm run build` (typechecks, then bundles to `web/dist`)
   - Deploy: the `gcloud run deploy` command in Section 11, with `GOOGLE_GENAI_USE_ENTERPRISE=1` added (the ADK variable; `GOOGLE_GENAI_USE_VERTEXAI` is deprecated)
-- Not started: Phase 6 (ship). `plan.md` does not exist. Phase 5 results are in `docs/RESULTS.md`; the manual-timing comparison is not measured yet.
+- Smoke test a deployment: `python scripts/smoke.py <url>`. Video script and deck outline: `docs/pitch.md`. Architecture: `docs/architecture.md`.
+- Cloud Run runs with `--min-instances=1` for judging; set it back to 0 afterwards. Keep `--min-instances=1` in any redeploy until then.
+- Open for the team: manual-timing comparison (not measured), LICENSE choice, team names and video/deck links in README, making the repo public. `plan.md` does not exist.
 - The user commits; do not run `git commit`.
 
 ---

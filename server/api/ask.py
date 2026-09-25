@@ -73,6 +73,11 @@ async def ask(request: Request, body: AskRequest):
             status_code=504,
             detail="Penumbra took longer than 45 seconds. Try a narrower question, such as one corporation.",
         )
+    except ValueError:  # the model ended without a structured answer
+        raise HTTPException(
+            status_code=502,
+            detail="Penumbra could not finish an answer to that question. Ask it again, or make it narrower, such as one ward or corporation.",
+        )
 
     trace = store.trace(start_time, answered_at=time.time())
     verify_start = time.time()

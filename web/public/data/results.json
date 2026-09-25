@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-25T11:01:44.820424+00:00",
+ "generated_at": "2026-09-25T12:30:32.626831+00:00",
  "generated_by": "pipeline/10_export_results.py",
  "coverage": {
   "source": "pipeline/03_zonal_stats.sql -> ward_metrics",
@@ -300,19 +300,19 @@
  },
  "evaluation": {
   "source": "eval/run_eval.py over eval/questions.yaml, model gemini-2.5-flash",
-  "generated_at": "2026-09-25T11:00:26.044689+00:00",
+  "generated_at": "2026-09-25T12:29:27.130706+00:00",
   "summary": {
    "gemini_alone": {
     "questions": 18,
     "fully_correct": 0,
-    "facts_correct": 1,
+    "facts_correct": 3,
     "facts_expected": 44,
-    "answers_with_unsupported_figures": 13,
-    "unsupported_figures": 46,
+    "answers_with_unsupported_figures": 10,
+    "unsupported_figures": 28,
     "errors": 0,
-    "latency_median_s": 7.5,
-    "latency_max_s": 16.16,
-    "cost_usd_mean": 0.00233
+    "latency_median_s": 10.33,
+    "latency_max_s": 24.51,
+    "cost_usd_mean": 0.00281
    },
    "agents_unverified": {
     "questions": 18,
@@ -322,9 +322,9 @@
     "answers_with_unsupported_figures": 0,
     "unsupported_figures": 0,
     "errors": 2,
-    "latency_median_s": 11.51,
-    "latency_max_s": 45.03,
-    "cost_usd_mean": 0.00306
+    "latency_median_s": 14.44,
+    "latency_max_s": 45.01,
+    "cost_usd_mean": 0.0031
    },
    "penumbra": {
     "questions": 18,
@@ -334,14 +334,14 @@
     "answers_with_unsupported_figures": 0,
     "unsupported_figures": 0,
     "errors": 2,
-    "latency_median_s": 11.51,
-    "latency_max_s": 45.03,
-    "cost_usd_mean": 0.00306
+    "latency_median_s": 14.44,
+    "latency_max_s": 45.01,
+    "cost_usd_mean": 0.0031
    }
   },
   "verifier": {
-   "claims": 75,
-   "verified": 74
+   "claims": 80,
+   "verified": 79
   },
   "questions": [
    {
@@ -350,14 +350,14 @@
     "question": "What is the surface temperature and green cover of Padarayanapura in 2025?",
     "gemini_alone": {
      "correct": false,
-     "unsupported": 3
+     "unsupported": 0
     },
     "agents_unverified": {
-     "correct": true,
+     "correct": false,
      "unsupported": 0
     },
     "penumbra": {
-     "correct": true,
+     "correct": false,
      "unsupported": 0
     }
    },
@@ -367,14 +367,14 @@
     "question": "How many hospitals and schools are there in Whitefield ward?",
     "gemini_alone": {
      "correct": false,
-     "unsupported": 2
+     "unsupported": 3
     },
     "agents_unverified": {
-     "correct": true,
+     "correct": false,
      "unsupported": 0
     },
     "penumbra": {
-     "correct": true,
+     "correct": false,
      "unsupported": 0
     }
    },
@@ -384,14 +384,14 @@
     "question": "Where does Vijinapura rank among all wards by composite heat risk in 2025?",
     "gemini_alone": {
      "correct": false,
-     "unsupported": 2
+     "unsupported": 0
     },
     "agents_unverified": {
-     "correct": false,
+     "correct": true,
      "unsupported": 0
     },
     "penumbra": {
-     "correct": false,
+     "correct": true,
      "unsupported": 0
     }
    },
@@ -401,7 +401,7 @@
     "question": "What is the population of Malleshwaram ward?",
     "gemini_alone": {
      "correct": false,
-     "unsupported": 3
+     "unsupported": 1
     },
     "agents_unverified": {
      "correct": true,
@@ -418,7 +418,7 @@
     "question": "Which five wards have the highest average surface temperature in the city in 2025?",
     "gemini_alone": {
      "correct": false,
-     "unsupported": 4
+     "unsupported": 0
     },
     "agents_unverified": {
      "correct": true,
@@ -452,7 +452,7 @@
     "question": "Which ward has the highest composite heat risk in 2025, and what is its surface temperature?",
     "gemini_alone": {
      "correct": false,
-     "unsupported": 2
+     "unsupported": 0
     },
     "agents_unverified": {
      "correct": true,
@@ -520,7 +520,7 @@
     "question": "Which three wards cooled the most between 2016 and 2025?",
     "gemini_alone": {
      "correct": false,
-     "unsupported": 7
+     "unsupported": 0
     },
     "agents_unverified": {
      "correct": true,
@@ -537,7 +537,7 @@
     "question": "How many people live in the West corporation and what is its average surface temperature in 2025?",
     "gemini_alone": {
      "correct": false,
-     "unsupported": 0
+     "unsupported": 2
     },
     "agents_unverified": {
      "correct": true,
@@ -554,7 +554,7 @@
     "question": "Which ward in the South corporation has the highest composite heat risk in 2025?",
     "gemini_alone": {
      "correct": false,
-     "unsupported": 0
+     "unsupported": 1
     },
     "agents_unverified": {
      "correct": true,
@@ -571,7 +571,7 @@
     "question": "What is the average green cover, as NDVI, of the Central corporation in 2025?",
     "gemini_alone": {
      "correct": false,
-     "unsupported": 0
+     "unsupported": 2
     },
     "agents_unverified": {
      "correct": true,
@@ -588,14 +588,14 @@
     "question": "Which three wards in the North corporation have the least green cover in 2025?",
     "gemini_alone": {
      "correct": false,
-     "unsupported": 6
+     "unsupported": 0
     },
     "agents_unverified": {
-     "correct": false,
+     "correct": true,
      "unsupported": 0
     },
     "penumbra": {
-     "correct": false,
+     "correct": true,
      "unsupported": 0
     }
    },
@@ -639,7 +639,7 @@
     "question": "How many people live in the wards that a 10 crore rupee citywide cooling plan would fund?",
     "gemini_alone": {
      "correct": false,
-     "unsupported": 2
+     "unsupported": 4
     },
     "agents_unverified": {
      "correct": true,

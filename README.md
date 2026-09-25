@@ -1,216 +1,223 @@
 # Penumbra
 
-**Agentic Platform for Urban Climate Resilience (APUCR)**
-
-*Ward-level heat decisions for city planners, with every number checked against the data.*
-
-> **Status:** work in progress, built for the Google Cloud AI Builder Cup 2026 (theme: Sustainability & Social Impact).
-> Sections marked **TODO** are filled in as the build progresses. Do not treat any number in this README as a result until it is filled in from a real run.
+Ward-level heat decisions for Bengaluru's city engineers, with every
+figure checked against the data before it is shown.
 
 | | |
 |---|---|
-| Live demo | TODO: Cloud Run URL |
-| Demo video (3 min) | TODO: link |
-| Slide deck | TODO: link to PDF |
-| Team | TODO: names |
+| Live app | https://penumbra-app-891315005311.us-central1.run.app |
+| Demo video (3 min) | *add link before submission* |
+| Slide deck (PDF) | *add link before submission* |
+| Team | *add names before submission* |
 
----
+Built for the Google Cloud AI Builder Cup 2026, theme Sustainability &
+Social Impact.
 
 ## The problem
 
-Cities like Bengaluru have lost much of the vegetation and open water that once kept them cooler and let rain soak into the ground. Since September 2025 the city has been run as five corporations with **369 wards**, so the ward is now the natural unit for decisions.
-
-Satellite data on heat and land cover exists, but a planner deciding **which ward to act on first, with what intervention, and at what cost** usually needs GIS specialists and weeks of analysis. Decisions end up resting on partial information.
-
-*TODO: add one or two cited statistics from published studies (cite the papers directly).*
+Since September 2025 Bengaluru has been governed as five corporations with
+369 wards, so the ward is the unit where cooling work gets funded. Satellite
+data on surface heat and green cover exists, but turning it into "which
+ward first, with what, for how much" normally takes GIS specialists and
+weeks. And a planner cannot defend a decision on a number a chatbot made up.
 
 ## What Penumbra does
 
-Penumbra is a decision tool, not a dashboard and not a chatbot.
+- **Ranks all 369 wards by heat risk** from 2025 satellite data: surface
+  temperature, green cover, built-up share and population density, with
+  adjustable weights. Also shows change since 2016.
+- **Answers planning questions in plain language**, for example "Which five
+  wards in the East corporation warmed most since the baseline year?", and
+  shows how the answer was made, step by step.
+- **Verifies every figure.** Each number and ward name in an answer cites
+  the stored result of a data query. Code, not the language model, checks
+  it; anything that fails is removed. The answer footer says "N of N
+  figures verified", and every figure opens its source.
+- **Plans a cooling budget** across wards and interventions, and compares
+  it with funding the hottest wards first.
+- **Exports a ward brief** for a meeting, in English with Kannada ward names
+  and section labels, printable as PDF.
 
-- **Ranks all 369 wards** by heat risk, combining surface temperature, green cover, built-up pressure and population exposure. Weights are adjustable.
-- **Answers planning questions in plain language**, such as "Which five wards in the East corporation have warmed most since 2015 and have the least green cover?"
-- **Recommends interventions within a budget**, using a budget optimizer and modeled effect ranges fitted to local data.
-- **Verifies every figure.** Each number in an answer points to the query result it came from, and a Verifier agent re-checks it before it reaches the screen.
-- **Produces a ward brief** a corporation engineer can take into a meeting: risk summary, key figures, recommended actions, assumptions and limits.
+## Results (all from real runs; details in [docs/RESULTS.md](docs/RESULTS.md))
+
+**Ablation, 18 planning questions, same Gemini model**
+(`eval/run_eval.py`, run 2026-09-25; expected answers computed from
+BigQuery or the optimizer at run time):
+
+| | Gemini alone | Agents, no verification | Full Penumbra |
+|---|---|---|---|
+| Answers fully correct | 0 of 18 | 16 of 18 | 16 of 18 |
+| Answers with unsupported figures | 10 of 18 | 0 of 18 | 0 of 18 |
+| Median time | 10.3 s | 14.4 s | 14.4 s |
+| Mean cost per question | $0.0028 | $0.0031 | $0.0031 |
+
+Both agent misses were failures to answer (one 45-second timeout, one run
+where the model returned no structured answer), not wrong answers. The
+verifier traced 79 of 80 cited figures and ward names. On this question set it did
+not change the number of correct answers; what it adds is the guarantee
+that every figure shown traces to a data result. In a smoke run it caught
+the agent inventing a surface temperature (31.7 °C where the data says
+40.52 °C) and removed it.
+
+**Budget decision** (East corporation, Rs 50 crore, assumed costs): the
+optimized plan models 30% more cooling (368,966 vs 283,697 person-°C) and
+reaches wards home to 121% more people (555,430 vs 251,425) than funding
+the hottest wards first, with the same catalog and budget.
+
+**Ranking checks** (run 2026-09-24): all 369 wards scored with no missing
+values. Under a ±0.1 change to any weight, the ranking's Spearman
+correlation with the default stays at 0.989 or above. Several of the
+coolest wards sit on known lakes and parks (Agaram Lake, Sankey Tank,
+Cubbon Park); several of the hottest are dense, low-vegetation areas in
+the historic core. This check is qualitative, not a GIS overlay.
+
+**Cooling model** (`model/cooling_model.py`): ridge regression on 59,828
+grid points with spatial block cross-validation. Held-out R² 0.26, RMSE
+2.03 °C: a weak to moderate fit, and the product says so. +0.1 NDVI is
+associated with -1.15 °C surface temperature (90% range -1.18 to -1.13).
 
 ## How it works
 
 ```mermaid
 flowchart LR
-  subgraph Sources
-    EE[Earth Engine<br/>temperature, vegetation, land cover, elevation]
-    OC[OpenCity wards + population]
-    OV[Overture places]
-    DOCS[Policy and research PDFs]
+  subgraph Offline["Offline pipeline"]
+    L[Landsat 8/9 + Dynamic World<br/>via Earth Engine] --> COG[(Cloud Storage<br/>COG rasters)]
+    COG -->|ST_REGIONSTATS| BQ[(BigQuery)]
+    OC[OpenCity wards + population] --> BQ
+    OV[Overture places] --> BQ
   end
-  subgraph GCP[Google Cloud]
-    GCS[(Cloud Storage US<br/>annual rasters as COG)]
-    BQ[(BigQuery US<br/>ward metrics, risk scores, tool results)]
-    RAG[Document index]
-    subgraph CR[Cloud Run: agent service]
-      ORCH[Orchestrator]
-      GEO[Geospatial Analyst]
-      PLAN[Intervention Planner]
-      OPT[Budget Optimizer]
-      VER[Verifier]
-    end
-    WEB[Cloud Run: web app]
+  subgraph Run["Cloud Run: penumbra-app"]
+    WEB[React app] --> API[FastAPI]
+    API --> AG[ADK agent<br/>Gemini 2.5 Flash, Vertex AI]
+    AG --> T[Read-only SQL tools] --> BQ
+    AG --> OPT[Budget optimizer<br/>plain Python]
+    AG -->|claims with citations| V[Verifier<br/>plain Python]
+    V --> API
   end
-  EE --> GCS --> BQ
-  OC --> BQ
-  OV --> BQ
-  DOCS --> RAG
-  WEB <--> ORCH
-  ORCH --> GEO --> BQ
-  ORCH --> PLAN --> RAG
-  ORCH --> OPT
-  ORCH --> VER --> BQ
 ```
 
-### The agents
+1. The pipeline builds pre-monsoon (March to May) median composites for
+   2016 and 2025 from Landsat 8/9 Collection 2 Level 2 and Dynamic World,
+   exports them as Cloud Optimized GeoTIFFs, and summarizes them per ward
+   with BigQuery's `ST_REGIONSTATS`.
+2. A question goes to one ADK agent on Gemini 2.5 Flash. It can only call
+   read-only, parameterized SQL tools over allow-listed metrics, plus the
+   budget optimizer. Every call gets a `tool_result_id` and is logged.
+3. The agent writes its answer with a placeholder for every figure and a
+   claim citing the result and path it came from. The verifier resolves
+   each one, compares values and units, and removes what fails, along with
+   any number written outside a placeholder.
 
-| Component | Job |
-|---|---|
-| **Orchestrator** | Plans the steps for a question, delegates, and assembles the answer as structured claims. |
-| **Geospatial Analyst** | Calls vetted, read-only data tools (rank wards, compare years, list wards by corporation). |
-| **Intervention Planner** | Retrieves cited guidance and modeled effect ranges for a ward. |
-| **Budget Optimizer** | Allocates a budget across wards and interventions. Plain Python, no language model. |
-| **Verifier** | Re-reads each cited tool result and compares values and units. Failed figures are removed or marked as assumptions. |
+More in [docs/architecture.md](docs/architecture.md). Every deviation from
+the original plan is recorded in [docs/DECISIONS.md](docs/DECISIONS.md).
 
-### Why numbers can be trusted
+## Data sources and licenses
 
-1. The language model plans and explains. It does not compute numbers.
-2. Every tool result is stored with an ID.
-3. The final answer is structured claims, each citing a result ID.
-4. The Verifier checks each claim against the stored result, and the UI shows how many figures were verified.
-
-## Data
-
-| Layer | Source | Status |
+| Data | Source | License |
 |---|---|---|
-| Ward polygons and population | OpenCity, GBA 369-ward map | TODO: confirm license and file format |
-| Surface temperature | Landsat Collection 2 Level 2 via Earth Engine | TODO: confirm asset IDs and scale factors |
-| Vegetation, built-up, elevation | Earth Engine catalog (Sentinel-2 / Dynamic World / DEM) | TODO: choose and document datasets |
-| Hospitals and schools | Overture Maps (BigQuery public data) | TODO: confirm categories and license |
-| Guidance documents | Climate action and resilience plans, published studies | TODO: list documents |
-
-Ward metrics come from annual summer composites exported as Cloud Optimized GeoTIFFs and summarized per ward with BigQuery's `ST_REGIONSTATS`. Earth Engine data only works with queries run in the US region, so the BigQuery dataset and Cloud Storage bucket are in the US.
+| Ward boundaries and population | OpenCity, GBA final ward map with population, Dec 2025 (population is 2011 Census apportioned to 2025 wards) | Listed as "Other (Public Domain)" on OpenCity |
+| Surface temperature, NDVI | USGS Landsat 8 and 9, Collection 2 Level 2, via Google Earth Engine | Public domain, courtesy of the U.S. Geological Survey |
+| Built-up share, water | Google Dynamic World V1 | CC BY 4.0 (Google, with National Geographic Society and World Resources Institute) |
+| Elevation (cooling model only) | NASA SRTM 30 m | NASA/JPL public use terms |
+| Hospitals and schools | Overture Maps places, BigQuery public data | CDLA Permissive 2.0 and Apache 2.0, by source |
+| Intervention guidance | WRI India (2022) Bengaluru climate action proceedings; US EPA (2014) heat island compendium | Cited by page in the app |
 
 ## Tech stack
 
-- **AI:** Gemini models through the Google Cloud agent platform, with the Agent Development Kit (ADK) for the agents
-- **Data:** BigQuery (including `ST_REGIONSTATS`), Earth Engine, Cloud Storage
-- **Hosting:** Cloud Run (agent service and web app)
-- **Retrieval:** a document index with page-level citations
-- **App:** Python backend, web frontend with an interactive map
-- TODO: pin exact versions once chosen
+Gemini 2.5 Flash on Vertex AI; Google Agent Development Kit (`google-adk`);
+BigQuery with `ST_REGIONSTATS`; Earth Engine; Cloud Storage; Cloud Run.
+FastAPI (Python 3.11). React 19, TypeScript, Vite, MapLibre GL JS, React
+Router, TanStack Query, CSS Modules. pytest and Vitest.
 
-## Getting started
+## Run it
 
-> Commands are a starting point. Check them against the current Google Cloud documentation before running.
-
-**Prerequisites**
-
-- A Google Cloud project with billing enabled
-- Earth Engine access registered for the project
-- `gcloud` CLI and Python 3.11 or newer
-
-**1. Set up the project**
+You need a Google Cloud project with billing, BigQuery, Cloud Run, Vertex
+AI, Cloud Storage and Earth Engine enabled; `gcloud`, `bq`, Python 3.11+
+and Node 22. There is no API key: the app uses Application Default
+Credentials locally and a service account on Cloud Run.
 
 ```bash
-git clone https://github.com/TODO/penumbra.git
-cd penumbra
-gcloud config set project YOUR_PROJECT_ID
-gcloud services enable bigquery.googleapis.com run.googleapis.com \
-  storage.googleapis.com earthengine.googleapis.com
-# TODO: add the Gemini / agent platform API once confirmed
+gcloud auth application-default login
+python3.11 -m venv .venv && source .venv/bin/activate
+pip install -r pipeline/requirements.txt -r server/requirements-dev.txt
 ```
 
-**2. Create US-region storage**
+**Build the data layer** (once; the dataset and bucket must be in the US
+region for Earth Engine rasters). Each script's header states its inputs.
 
 ```bash
-bq --location=US mk -d YOUR_PROJECT_ID:penumbra
-gcloud storage buckets create gs://YOUR_BUCKET --location=US
+bq query --use_legacy_sql=false < pipeline/01_prepare_wards.sql
+python pipeline/02_export_composites.py      # starts Earth Engine exports to Cloud Storage
+bq query --use_legacy_sql=false < pipeline/03_zonal_stats.sql
+python pipeline/04_population.py
+bq query --use_legacy_sql=false < pipeline/05_infrastructure.sql
+bq query --use_legacy_sql=false < pipeline/06_risk.sql
+python pipeline/07_grid_sample.py && python model/cooling_model.py
+python pipeline/08_export_geojson.py
+python pipeline/09_intervention_catalog.py
+python pipeline/10_export_results.py
 ```
 
-**3. Build the data layer**
+**Run locally**
 
 ```bash
-# TODO: scripts to build and export composites, load wards, and run region stats
-python pipeline/export_composites.py --city bengaluru --years 2015 2020 2025
-python pipeline/load_wards.py --city bengaluru
-python pipeline/compute_ward_metrics.py --city bengaluru
+export GOOGLE_GENAI_USE_ENTERPRISE=1 GOOGLE_CLOUD_PROJECT=<project> \
+  GOOGLE_CLOUD_LOCATION=us-central1 MODEL_ID=gemini-2.5-flash BQ_DATASET=penumbra
+uvicorn server.main:app --port 8080       # API
+cd web && npm ci && npm run dev           # app on :5173, proxies /api
 ```
 
-**4. Run locally**
+**Test and evaluate**
 
 ```bash
-# TODO: local run instructions for the agent service and web app
+python -m pytest server/tests eval
+cd web && npm test
+python eval/run_eval.py                   # about 10 minutes, a few US cents
+python scripts/smoke.py <deployed URL>    # checks a live deployment
 ```
 
-**5. Deploy**
+**Deploy**
 
 ```bash
-# TODO: gcloud run deploy commands
+gcloud run deploy penumbra-app --source . --region us-central1 \
+  --service-account <service account> --allow-unauthenticated \
+  --set-env-vars GOOGLE_CLOUD_PROJECT=<project>,GOOGLE_CLOUD_LOCATION=us-central1,BQ_DATASET=penumbra,MODEL_ID=gemini-2.5-flash,GOOGLE_GENAI_USE_ENTERPRISE=1
 ```
 
-## Repository layout (planned)
+## Repository layout
 
 ```
-penumbra/
-├── pipeline/        # Earth Engine exports, ward loading, region stats
-├── agents/          # ADK agents and tool definitions
-├── optimizer/       # budget allocation logic
-├── model/           # cooling-effect model and validation
-├── eval/            # evaluation questions and scoring scripts
-├── web/             # map and chat frontend
-├── cities/          # city packs (config per city)
-└── docs/            # architecture notes and decisions
+pipeline/   data layer: Earth Engine exports, zonal stats, risk scores, exports
+model/      cooling-effect model (fit, spatial CV, bootstrap)
+cities/     city pack: intervention catalog and guidance citations
+server/     FastAPI, ADK agent, tools, verifier, optimizer, tests
+web/        React app
+eval/       question set, ablation runner, raw results
+scripts/    deployment smoke test
+docs/       architecture, decisions, running notes, results
 ```
-
-## Evaluation
-
-We test the system on a set of planner questions whose correct answers come from hand-written SQL, run separately from the agents. Results are reported honestly, including failures.
-
-| Setup | Answer accuracy | Unsupported figures |
-|---|---|---|
-| Model only, no tools | TODO | TODO |
-| Agents without the Verifier | TODO | TODO |
-| Full Penumbra | TODO | TODO |
-
-Validation of the ward ranking against independent evidence (known hotspots and lakes, weight-sensitivity checks): **TODO**.
 
 ## Limitations
 
-- Land surface temperature is not air temperature or felt heat.
-- Landsat passes over in the morning, not at peak afternoon heat.
-- Clouds leave gaps, especially in the monsoon. The data layer reports the share of valid pixels per ward.
-- Ward boundaries changed in 2025. Historical trends use pixel data summarized over the current wards.
-- Cooling estimates come from a statistical model of local data. They are associations, not guaranteed outcomes.
-- Default intervention costs are editable assumptions unless a source is cited.
-- The tool supports decisions at ward level. It makes no claims about individual streets or properties.
+- Land surface temperature is not air temperature, and Landsat passes in
+  the morning, not at peak afternoon heat.
+- Each year is one pre-monsoon season. The city's mean surface temperature
+  was higher in the 2016 composite than in 2025, so "change since 2016"
+  mixes weather with lasting change.
+- Population is 2011 Census data apportioned to the 2025 wards.
+- Cooling effects are modeled associations from a weak to moderate model,
+  not guaranteed outcomes. Cool roofs and permeable paving have no modeled
+  effect here.
+- Every intervention cost is an assumption until replaced with real quotes.
+- The ranking check against known places is qualitative.
+- About 1 in 9 questions fails to answer (a 45-second timeout or no
+  structured answer; 2 of 18 in the reported run, on different questions
+  each run).
+- Penumbra makes no claims about individual streets, buildings or
+  addresses.
 
 ## Responsible use
 
-- Recommendations are decision support for planners. They are not automated actions.
-- Only public, open datasets are used, and no personal data.
-- Sources, assumptions and limits are shown in the app.
-
-## Roadmap
-
-- **City packs:** each city is a configuration bundle (boundaries, population source, clear-sky window, currency and unit costs, languages, guidance documents, optional validation set). Bengaluru is the calibrated, validated flagship; other cities run in a labeled screening mode.
-- Flood-stress layer using elevation, built-up cover, lake loss and proximity to drains.
-- Kannada ward briefs.
-- A second city, with onboarding time measured and reported.
-
-## Acknowledgements
-
-Built for the Google Cloud AI Builder Cup 2026, organized by Hack2skill with Google Cloud. Ward boundaries and population data from OpenCity. Satellite imagery from the Landsat program through Google Earth Engine.
-
-## License
-
-TODO: choose a license (for example MIT or Apache-2.0) and add a `LICENSE` file. Check the competition's Terms & Conditions for any IP requirements first.
-
-<!-- Keep the next line only if it is true when you submit. -->
-All code in this repository was written during the hackathon period.
+Penumbra is decision support for planners, not an automated decision.
+It uses only public, open datasets and no personal data. Sources,
+assumptions and limits are shown in the app.

@@ -10,6 +10,9 @@ from server.tools.bq import DATASET, PROJECT, run_query
 
 _T = f"{PROJECT}.{DATASET}"
 
+# The baseline year delta_lst_c is measured from (pipeline/06_risk.sql).
+BASELINE_YEAR = 2016
+
 # Allow-list: metric name -> (table, column, has_year). No free-form SQL from
 # the model -- rank_wards and compare_years can only touch these.
 _METRIC_COLUMNS = {
@@ -78,9 +81,12 @@ def rank_wards(
     table, column, has_year = _METRIC_COLUMNS[metric]
 
     year_join = f"AND t.year = @year" if has_year else ""
+    # A change ranking also returns its baseline year, so an answer can cite
+    # "since 2016" to a tool result like any other figure.
+    baseline = f", {BASELINE_YEAR} AS baseline_year" if metric == "delta_lst_c" else ""
     corp_filter = "AND w.corporation = @corporation" if corporation else ""
     sql = f"""
-    SELECT w.ward_key, w.ward_name, w.ward_name_kn, w.corporation, t.{column} AS value
+    SELECT w.ward_key, w.ward_name, w.ward_name_kn, w.corporation, t.{column} AS value{baseline}
     FROM `{_T}.wards_clean` AS w
     JOIN `{_T}.{table}` AS t ON t.ward_key = w.ward_key {year_join}
     WHERE w.city_id = @city_id {corp_filter}
