@@ -3,7 +3,7 @@ worker are served, and one question, one source, one plan and one brief
 work end to end on real data. Standard library only.
 
 Run:
-    python scripts/smoke.py https://penumbra-app-891315005311.us-central1.run.app
+    python scripts/smoke.py https://groundtruth-app-891315005311.us-central1.run.app
 """
 
 import json
@@ -12,7 +12,7 @@ import time
 import urllib.error
 import urllib.request
 
-BASE = (sys.argv[1] if len(sys.argv) > 1 else "https://penumbra-app-891315005311.us-central1.run.app").rstrip("/")
+BASE = (sys.argv[1] if len(sys.argv) > 1 else "https://groundtruth-app-891315005311.us-central1.run.app").rstrip("/")
 QUESTION = "Which five wards in the East corporation warmed most since the baseline year?"
 failures = []
 
