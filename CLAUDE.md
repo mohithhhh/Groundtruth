@@ -1,4 +1,4 @@
-# Penumbra: Build Brief for Claude Code
+# Groundtruth: Build Brief for Claude Code
 
 Save this file as `CLAUDE.md` in the repository root. Claude Code reads it as project instructions. Then start a session with the kickoff message in Section 0.
 
@@ -37,9 +37,9 @@ log and `docs/DECISIONS.md` for every deviation from this brief.
 
 ## 1. Your role and the mission
 
-You are the lead engineer and design lead on **Penumbra**, a two-person team's entry to the **Google Cloud AI Builder Cup 2026** (Hack2skill), theme **Sustainability & Social Impact**.
+You are the lead engineer and design lead on **Groundtruth**, a two-person team's entry to the **Google Cloud AI Builder Cup 2026** (Hack2skill), theme **Sustainability & Social Impact**.
 
-**Penumbra** helps city engineers in Bengaluru decide which of the city's **369 wards** to cool first, with what intervention, and at what cost. It ranks wards by heat risk from satellite data, answers planning questions in plain language through a team of agents, recommends interventions within a budget, and **verifies every figure against the data before showing it**.
+**Groundtruth** helps city engineers in Bengaluru decide which of the city's **369 wards** to cool first, with what intervention, and at what cost. It ranks wards by heat risk from satellite data, answers planning questions in plain language through a team of agents, recommends interventions within a budget, and **verifies every figure against the data before showing it**.
 
 **The one thing judges should remember:**
 > "A city engineer could use this tomorrow, every number it shows is verified, and it would work in any city."
@@ -55,7 +55,7 @@ You are the lead engineer and design lead on **Penumbra**, a two-person team's e
 
 **Four differentiators you must protect above all else.** If time runs short, cut other features first.
 1. The Verifier, with a visible "N of N figures verified" indicator and clickable sources for every figure.
-2. The ablation: Gemini alone vs agents without verification vs full Penumbra, measured.
+2. The ablation: Gemini alone vs agents without verification vs full Groundtruth, measured.
 3. A budget decision compared with a naive "hottest wards first" allocation.
 4. Validation of the ranking against known hot and cool areas.
 
@@ -311,8 +311,8 @@ Build to the design system in Section 9. Pages and behavior in Section 10.
 ### Phase 5: Proof (30 Sep to 2 Oct)
 
 1. `eval/questions.yaml`: at least 15 questions across lookup, ranking, change over time, corporation filter and budget. Each has `expected_sql` run directly against BigQuery by `run_eval.py`. Never write expected answers by hand.
-2. Run three configurations: **Gemini alone (no tools)**, **agents without verification**, **full Penumbra**. Record numeric accuracy, answers containing unsupported figures, latency and cost per question. Save raw outputs in `eval/results/` and a summary in `docs/RESULTS.md`.
-3. Time three planning questions answered manually with standard tools (or state an explicit assumption) versus Penumbra.
+2. Run three configurations: **Gemini alone (no tools)**, **agents without verification**, **full Groundtruth**. Record numeric accuracy, answers containing unsupported figures, latency and cost per question. Save raw outputs in `eval/results/` and a summary in `docs/RESULTS.md`.
+3. Time three planning questions answered manually with standard tools (or state an explicit assumption) versus Groundtruth.
 4. Record the optimizer versus naive comparison for one realistic budget, with assumptions.
 5. Surface these results on the Method page directly from the results files.
 
@@ -352,7 +352,7 @@ Build to the design system in Section 9. Pages and behavior in Section 10.
 ## 9. Design system: "Shade"
 
 ### Concept
-Penumbra means the partial shadow between full light and full shade. The interface is built on that idea: **the city's heat is warm and bright; the interface is cool and shaded; the product's job is to move wards from light into shade.** Heat colors appear only where they encode data. Everything else lives in cool, quiet greens and slate blues taken from Bengaluru's rain trees and monsoon sky.
+Groundtruth means the partial shadow between full light and full shade. The interface is built on that idea: **the city's heat is warm and bright; the interface is cool and shaded; the product's job is to move wards from light into shade.** Heat colors appear only where they encode data. Everything else lives in cool, quiet greens and slate blues taken from Bengaluru's rain trees and monsoon sky.
 
 The subject is civic and serious. The audience is ward engineers and planners who need to trust what they see. The primary job of every screen is to help someone make and defend a decision.
 
@@ -428,24 +428,24 @@ Every verified figure in an answer, a ward brief or a plan appears as an inline 
 
 ### Copy voice
 
-Plain, specific, active. Buttons say exactly what happens: "Ask Penumbra", "Run plan", "Export ward brief", "Show source". The same action keeps the same name throughout ("Run plan" → toast "Plan ready"). Errors say what happened and what to do, without apologizing. Empty states invite action.
+Plain, specific, active. Buttons say exactly what happens: "Ask Groundtruth", "Run plan", "Export ward brief", "Show source". The same action keeps the same name throughout ("Run plan" → toast "Plan ready"). Errors say what happened and what to do, without apologizing. Empty states invite action.
 
 Examples:
 - Empty Ask panel: "Ask about any ward, corporation or change since 2016. Try one of these." followed by three real suggested questions.
-- Timeout: "Penumbra took longer than 45 seconds. Try a narrower question, such as one corporation."
+- Timeout: "Groundtruth took longer than 45 seconds. Try a narrower question, such as one corporation."
 - No coverage: "Clouds hid most of this ward in the 2016 images, so its baseline value is uncertain."
 
 ---
 
 ## 10. Pages and components
 
-Navigation (top bar, left aligned): **Penumbra** wordmark in Geologica, then "Map", "Ask", "Plan", "Method". Right side: city ("Bengaluru"), year, theme toggle, English/ಕನ್ನಡ toggle for ward names.
+Navigation (top bar, left aligned): **Groundtruth** wordmark in Geologica, then "Map", "Ask", "Plan", "Method". Right side: city ("Bengaluru"), year, theme toggle, English/ಕನ್ನಡ toggle for ward names.
 
 ### Map (home)
 
 ```
 +-----------------------------------------------------------------------------+
-| Penumbra   Map  Ask  Plan  Method                 Bengaluru  2025  ◐  EN/ಕ |
+| Groundtruth   Map  Ask  Plan  Method                 Bengaluru  2025  ◐  EN/ಕ |
 +--------------------------------------------------+--------------------------+
 |                                                  | Wards by heat risk       |
 |                                                  | Corporation: All ▾       |
@@ -498,7 +498,7 @@ Navigation (top bar, left aligned): **Penumbra** wordmark in Geologica, then "Ma
 ### Method
 
 - Readable long-form page, max 70 characters per line, Hanken Grotesk body with Geologica headings.
-- Sections: what Penumbra measures; data sources with dates and licenses; how the risk score works; the cooling model and its held-out performance; the evaluation and ablation results (rendered from `docs/RESULTS.md` data, not typed by hand); limitations.
+- Sections: what Groundtruth measures; data sources with dates and licenses; how the risk score works; the cooling model and its held-out performance; the evaluation and ablation results (rendered from `docs/RESULTS.md` data, not typed by hand); limitations.
 
 ### Ward brief (print)
 

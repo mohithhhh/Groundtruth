@@ -1,4 +1,4 @@
-"""Smoke test for a deployed Penumbra: the pages load, the map's data and
+"""Smoke test for a deployed Groundtruth: the pages load, the map's data and
 worker are served, and one question, one source, one plan and one brief
 work end to end on real data. Standard library only.
 

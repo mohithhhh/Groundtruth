@@ -1,4 +1,4 @@
-# Penumbra
+# Groundtruth
 
 Ward-level heat decisions for Bengaluru's city engineers, with every
 figure checked against the data before it is shown.
@@ -21,7 +21,7 @@ data on surface heat and green cover exists, but turning it into "which
 ward first, with what, for how much" normally takes GIS specialists and
 weeks. And a planner cannot defend a decision on a number a chatbot made up.
 
-## What Penumbra does
+## What Groundtruth does
 
 - **Ranks all 369 wards by heat risk** from 2025 satellite data: surface
   temperature, green cover, built-up share and population density, with
@@ -44,7 +44,7 @@ weeks. And a planner cannot defend a decision on a number a chatbot made up.
 (`eval/run_eval.py`, run 2026-09-25; expected answers computed from
 BigQuery or the optimizer at run time):
 
-| | Gemini alone | Agents, no verification | Full Penumbra |
+| | Gemini alone | Agents, no verification | Full Groundtruth |
 |---|---|---|---|
 | Answers fully correct | 0 of 18 | 16 of 18 | 16 of 18 |
 | Answers with unsupported figures | 10 of 18 | 0 of 18 | 0 of 18 |
@@ -213,11 +213,11 @@ docs/       architecture, decisions, running notes, results
 - About 1 in 9 questions fails to answer (a 45-second timeout or no
   structured answer; 2 of 18 in the reported run, on different questions
   each run).
-- Penumbra makes no claims about individual streets, buildings or
+- Groundtruth makes no claims about individual streets, buildings or
   addresses.
 
 ## Responsible use
 
-Penumbra is decision support for planners, not an automated decision.
+Groundtruth is decision support for planners, not an automated decision.
 It uses only public, open datasets and no personal data. Sources,
 assumptions and limits are shown in the app.

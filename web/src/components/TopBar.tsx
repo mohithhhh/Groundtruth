@@ -10,7 +10,7 @@ const NAV = [
 ];
 
 export function Mark({ size = 22 }: { size?: number }) {
-  // Umbra, penumbra and a sliver of light: the product's idea in one glyph.
+  // A shaded circle: satellite data resolving into a clear, checked answer.
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true" className={styles.mark}>
       <defs>
@@ -28,9 +28,9 @@ export function Mark({ size = 22 }: { size?: number }) {
 export function TopBar() {
   return (
     <header className={styles.bar}>
-      <NavLink to="/" className={styles.brand} aria-label="Penumbra, map home">
+      <NavLink to="/" className={styles.brand} aria-label="Groundtruth, map home">
         <Mark />
-        <span className={styles.wordmark}>Penumbra</span>
+        <span className={styles.wordmark}>Groundtruth</span>
       </NavLink>
       <nav className={styles.nav} aria-label="Main">
         {NAV.map((n) => (

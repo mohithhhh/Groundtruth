@@ -55,7 +55,7 @@ async def ask(request: Request, body: AskRequest):
     if _SUB_WARD_PATTERN.search(body.question):
         raise HTTPException(
             status_code=400,
-            detail="Penumbra answers at ward level and above -- it can't make claims about a specific street, building, or address.",
+            detail="Groundtruth answers at ward level and above -- it can't make claims about a specific street, building, or address.",
         )
 
     start_time = time.time()
@@ -71,12 +71,12 @@ async def ask(request: Request, body: AskRequest):
     except asyncio.TimeoutError:
         raise HTTPException(
             status_code=504,
-            detail="Penumbra took longer than 45 seconds. Try a narrower question, such as one corporation.",
+            detail="Groundtruth took longer than 45 seconds. Try a narrower question, such as one corporation.",
         )
     except ValueError:  # the model ended without a structured answer
         raise HTTPException(
             status_code=502,
-            detail="Penumbra could not finish an answer to that question. Ask it again, or make it narrower, such as one ward or corporation.",
+            detail="Groundtruth could not finish an answer to that question. Ask it again, or make it narrower, such as one ward or corporation.",
         )
 
     trace = store.trace(start_time, answered_at=time.time())

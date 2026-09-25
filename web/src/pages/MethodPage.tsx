@@ -43,9 +43,9 @@ export function MethodPage() {
   return (
     <div className={styles.page}>
       <article className={styles.article}>
-        <h1 className={styles.h1}>How Penumbra works</h1>
+        <h1 className={styles.h1}>How Groundtruth works</h1>
         <p className={styles.lead}>
-          Penumbra ranks every ward in Bengaluru by heat risk from satellite data, answers planning questions through a team of agents, and plans cooling work within a
+          Groundtruth ranks every ward in Bengaluru by heat risk from satellite data, answers planning questions through a team of agents, and plans cooling work within a
           budget. The language model plans and writes. Every number comes from a database query or plain code, and is checked before you see it.
         </p>
         {q.isPending && <Loading step="Loading the results file." />}
@@ -70,7 +70,7 @@ function Body({ r }: { r: Results }) {
       <section className={styles.section}>
         <h2 className={styles.h2}>What it measures</h2>
         <p>
-          For each of the {cur?.wards ?? "city's"} wards, Penumbra measures surface temperature, green cover (NDVI) and built-up share from pre-monsoon satellite
+          For each of the {cur?.wards ?? "city's"} wards, Groundtruth measures surface temperature, green cover (NDVI) and built-up share from pre-monsoon satellite
           images, and combines them with population. Surface temperature is how hot the ground and roofs are, not the air a person feels, and the satellite passes in
           the morning rather than at peak afternoon heat.
         </p>
@@ -153,7 +153,7 @@ function Body({ r }: { r: Results }) {
       <section className={styles.section}>
         <h2 className={styles.h2}>The cooling model</h2>
         <p>
-          To estimate what an intervention might do, Penumbra fits a ridge regression of surface temperature on green cover, built-up share, elevation and distance to
+          To estimate what an intervention might do, Groundtruth fits a ridge regression of surface temperature on green cover, built-up share, elevation and distance to
           water, over {people(r.cooling_model.n_samples)} points on a 150 m grid. It is tested with spatial block cross-validation, so neighbouring points never sit on both
           sides of a test.
         </p>
@@ -172,7 +172,7 @@ function Body({ r }: { r: Results }) {
           <p className={styles.caveat}>
             The built-up term is not used. Green cover and built-up share move together in this city, and the fitted model gave built-up share the opposite sign to its
             simple relationship with temperature. So cool roofs and permeable paving, which work through reflectance and permeability rather than vegetation, get no modeled
-            cooling in Penumbra. They are shown with their published evidence instead.
+            cooling in Groundtruth. They are shown with their published evidence instead.
           </p>
         )}
         <Source text={`${r.cooling_model.source}, ${r.cooling_model.model_type}, fitted ${r.cooling_model.fitted_date}`} />
@@ -198,7 +198,7 @@ function Body({ r }: { r: Results }) {
           <EvaluationResults e={r.evaluation} />
         ) : (
           <p>
-            The comparison of Gemini alone, the agents without verification, and full Penumbra has not been run yet. Its results will appear here from the evaluation run,
+            The comparison of Gemini alone, the agents without verification, and full Groundtruth has not been run yet. Its results will appear here from the evaluation run,
             not typed by hand.
           </p>
         )}
@@ -212,7 +212,7 @@ function Body({ r }: { r: Results }) {
           <li>Population is 2011 Census data apportioned to the 2025 ward boundaries.</li>
           <li>Cooling effects are modeled associations from a weak to moderate model, not guaranteed outcomes.</li>
           <li>Intervention costs are assumptions until replaced with real quotes.</li>
-          <li>Penumbra makes no claims about individual streets, buildings or addresses.</li>
+          <li>Groundtruth makes no claims about individual streets, buildings or addresses.</li>
         </ul>
       </section>
 
@@ -226,7 +226,7 @@ function Body({ r }: { r: Results }) {
 const CONFIG_NAMES: Record<EvalConfig, string> = {
   gemini_alone: "Gemini alone, no data",
   agents_unverified: "Agents without verification",
-  penumbra: "Full Penumbra",
+  groundtruth: "Full Groundtruth",
 };
 const CONFIGS = Object.keys(CONFIG_NAMES) as EvalConfig[];
 
@@ -235,11 +235,11 @@ function usd(v: number): string {
 }
 
 function EvaluationResults({ e }: { e: Evaluation }) {
-  const n = e.summary.penumbra.questions;
+  const n = e.summary.groundtruth.questions;
   return (
     <>
       <p>
-        {n} planning questions were answered three ways: by Gemini on its own, by Penumbra's agents with their data tools but no checking, and by full Penumbra, where the
+        {n} planning questions were answered three ways: by Gemini on its own, by Groundtruth's agents with their data tools but no checking, and by full Groundtruth, where the
         verifier removes any figure it cannot trace. The right answer to each question is computed fresh from the database, or from the budget planner, when the
         evaluation runs. An answer counts as correct only if it states every expected ward and figure. A figure is unsupported if it matches no value that any data tool
         returned for that question.
@@ -279,12 +279,12 @@ function EvaluationResults({ e }: { e: Evaluation }) {
       <p>
         Across these answers the agents cited {e.verifier.claims} figures and ward names. The verifier traced {e.verifier.verified} of them to the data and removed{" "}
         {e.verifier.claims - e.verifier.verified}, each for a citation it could not trace or a value that did not match.
-        {e.summary.penumbra.errors > 0 &&
-          ` ${e.summary.penumbra.errors === 1 ? "One agent run" : `${e.summary.penumbra.errors} agent runs`} failed to answer, by timing out at 45 seconds or ending without a structured answer. Each counts as incorrect for both agent configurations.`}
+        {e.summary.groundtruth.errors > 0 &&
+          ` ${e.summary.groundtruth.errors === 1 ? "One agent run" : `${e.summary.groundtruth.errors} agent runs`} failed to answer, by timing out at 45 seconds or ending without a structured answer. Each counts as incorrect for both agent configurations.`}
       </p>
       <p className={styles.caveat}>
-        Agents without verification and full Penumbra share each agent run, so the gap between them is exactly what the verifier changed. The verifier can also remove a
-        correct figure that the agent cited from the wrong place, which counts against full Penumbra here. Cost is Gemini tokens at list price plus BigQuery bytes
+        Agents without verification and full Groundtruth share each agent run, so the gap between them is exactly what the verifier changed. The verifier can also remove a
+        correct figure that the agent cited from the wrong place, which counts against full Groundtruth here. Cost is Gemini tokens at list price plus BigQuery bytes
         billed.
       </p>
       <details className={styles.details}>

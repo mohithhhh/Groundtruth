@@ -12,9 +12,9 @@ async def run_agent_for_final_answer(agent: Agent, question: str, session_id: st
     final structured response. If `usage` is given, Gemini token counts for
     every model call are added into it (the eval uses this for cost)."""
     session_id = session_id or str(uuid.uuid4())
-    user_id = "penumbra-user"
-    runner = InMemoryRunner(agent=agent, app_name="penumbra")
-    await runner.session_service.create_session(app_name="penumbra", user_id=user_id, session_id=session_id)
+    user_id = "groundtruth-user"
+    runner = InMemoryRunner(agent=agent, app_name="groundtruth")
+    await runner.session_service.create_session(app_name="groundtruth", user_id=user_id, session_id=session_id)
 
     message = types.Content(role="user", parts=[types.Part(text=question)])
     final_text = None

@@ -8,7 +8,7 @@ import { SourceDrawerProvider } from "./components/SourceDrawer";
 import { PrefsProvider } from "./lib/prefs";
 import "./styles/global.css";
 
-// Shipped by the penumbra-maplibre-worker plugin in vite.config.ts.
+// Shipped by the groundtruth-maplibre-worker plugin in vite.config.ts.
 setWorkerUrl(new URL("/maplibre/maplibre-gl-worker.mjs", window.location.origin).href);
 
 const queryClient = new QueryClient({

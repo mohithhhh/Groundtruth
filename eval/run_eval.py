@@ -3,9 +3,9 @@ and scores each answer against expected values computed fresh from
 BigQuery (or the budget optimizer), never typed by hand.
 
   gemini_alone        Gemini with the same model ID, no tools, no data.
-  agents_unverified   The Penumbra agent with its tools, narrative shown as
+  agents_unverified   The Groundtruth agent with its tools, narrative shown as
                       the model wrote it (every claim's text dropped in, no checks).
-  penumbra            The same agent run, after the deterministic verifier.
+  groundtruth         The same agent run, after the deterministic verifier.
 
 The last two share one agent run per question, so the difference between
 them is exactly what the verifier changes (see docs/DECISIONS.md).
@@ -227,7 +227,7 @@ async def run_agent(question: str) -> dict:
     if answer is None:
         return {
             "agents_unverified": {**base, "text": "", "latency_s": agent_s},
-            "penumbra": {**base, "text": "", "latency_s": agent_s, "verification": None},
+            "groundtruth": {**base, "text": "", "latency_s": agent_s, "verification": None},
         }
 
     t1 = time.time()
@@ -236,12 +236,12 @@ async def run_agent(question: str) -> dict:
     return {
         "agents_unverified": {**base, "text": render_unverified(answer["narrative"], answer["claims"]), "latency_s": agent_s,
                               "raw_answer": answer},
-        "penumbra": {**base, "text": verified.narrative, "latency_s": agent_s + verify_s,
+        "groundtruth": {**base, "text": verified.narrative, "latency_s": agent_s + verify_s,
                      "verification": verified.as_dict()},
     }
 
 
-CONFIGS = ("gemini_alone", "agents_unverified", "penumbra")
+CONFIGS = ("gemini_alone", "agents_unverified", "groundtruth")
 
 
 def summarize(records: list[dict]) -> dict:

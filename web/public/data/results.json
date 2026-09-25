@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-25T12:30:32.626831+00:00",
+ "generated_at": "2026-09-25T18:21:12.790634+00:00",
  "generated_by": "pipeline/10_export_results.py",
  "coverage": {
   "source": "pipeline/03_zonal_stats.sql -> ward_metrics",
@@ -326,7 +326,7 @@
     "latency_max_s": 45.01,
     "cost_usd_mean": 0.0031
    },
-   "penumbra": {
+   "groundtruth": {
     "questions": 18,
     "fully_correct": 16,
     "facts_correct": 40,
@@ -356,7 +356,7 @@
      "correct": false,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": false,
      "unsupported": 0
     }
@@ -373,7 +373,7 @@
      "correct": false,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": false,
      "unsupported": 0
     }
@@ -390,7 +390,7 @@
      "correct": true,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": true,
      "unsupported": 0
     }
@@ -407,7 +407,7 @@
      "correct": true,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": true,
      "unsupported": 0
     }
@@ -424,7 +424,7 @@
      "correct": true,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": true,
      "unsupported": 0
     }
@@ -441,7 +441,7 @@
      "correct": true,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": true,
      "unsupported": 0
     }
@@ -458,7 +458,7 @@
      "correct": true,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": true,
      "unsupported": 0
     }
@@ -475,7 +475,7 @@
      "correct": true,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": true,
      "unsupported": 0
     }
@@ -492,7 +492,7 @@
      "correct": true,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": true,
      "unsupported": 0
     }
@@ -509,7 +509,7 @@
      "correct": true,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": true,
      "unsupported": 0
     }
@@ -526,7 +526,7 @@
      "correct": true,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": true,
      "unsupported": 0
     }
@@ -543,7 +543,7 @@
      "correct": true,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": true,
      "unsupported": 0
     }
@@ -560,7 +560,7 @@
      "correct": true,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": true,
      "unsupported": 0
     }
@@ -577,7 +577,7 @@
      "correct": true,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": true,
      "unsupported": 0
     }
@@ -594,7 +594,7 @@
      "correct": true,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": true,
      "unsupported": 0
     }
@@ -611,7 +611,7 @@
      "correct": true,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": true,
      "unsupported": 0
     }
@@ -628,7 +628,7 @@
      "correct": true,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": true,
      "unsupported": 0
     }
@@ -645,7 +645,7 @@
      "correct": true,
      "unsupported": 0
     },
-    "penumbra": {
+    "groundtruth": {
      "correct": true,
      "unsupported": 0
     }

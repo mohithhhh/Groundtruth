@@ -32,7 +32,7 @@
    "latency_max_s": 21.66,
    "cost_usd_mean": 0.0037
   },
-  "penumbra": {
+  "groundtruth": {
    "questions": 18,
    "fully_correct": 17,
    "facts_correct": 43,
@@ -54,7 +54,7 @@
      "questions": 4,
      "fully_correct": 4
     },
-    "penumbra": {
+    "groundtruth": {
      "questions": 4,
      "fully_correct": 4
     }
@@ -68,7 +68,7 @@
      "questions": 4,
      "fully_correct": 4
     },
-    "penumbra": {
+    "groundtruth": {
      "questions": 4,
      "fully_correct": 3
     }
@@ -82,7 +82,7 @@
      "questions": 3,
      "fully_correct": 3
     },
-    "penumbra": {
+    "groundtruth": {
      "questions": 3,
      "fully_correct": 3
     }
@@ -96,7 +96,7 @@
      "questions": 4,
      "fully_correct": 4
     },
-    "penumbra": {
+    "groundtruth": {
      "questions": 4,
      "fully_correct": 4
     }
@@ -110,7 +110,7 @@
      "questions": 3,
      "fully_correct": 3
     },
-    "penumbra": {
+    "groundtruth": {
      "questions": 3,
      "fully_correct": 3
     }
@@ -217,7 +217,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0047745
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 3,
@@ -338,7 +338,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0030526999999999998
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 3,
@@ -447,7 +447,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.004375899999999999
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 3,
@@ -552,7 +552,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0026067
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 3,
@@ -765,7 +765,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.005241
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -931,7 +931,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0030056999999999996
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -1066,7 +1066,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0040672
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 3,
@@ -1244,7 +1244,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0031583
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -1476,7 +1476,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0043628
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -1602,7 +1602,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0041879
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 3,
@@ -1802,7 +1802,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0055056
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -1926,7 +1926,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.001808
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -2039,7 +2039,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0026226
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -2141,7 +2141,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0020155
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -2310,7 +2310,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.00356
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -2414,7 +2414,7 @@
      ],
      "cost_usd": 0.0030803999999999996
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -2589,7 +2589,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0059197
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -2736,7 +2736,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0031756999999999996
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,

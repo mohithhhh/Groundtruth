@@ -19,7 +19,7 @@ function maplibreWorker(): Plugin {
   const dir = join(dirname(createRequire(import.meta.url).resolve("maplibre-gl/package.json")), "dist");
   const files = ["maplibre-gl-worker.mjs", "maplibre-gl-shared.mjs"];
   return {
-    name: "penumbra-maplibre-worker",
+    name: "groundtruth-maplibre-worker",
     configureServer(server) {
       server.middlewares.use("/maplibre/", (req, res, next) => {
         const name = (req.url ?? "").replace(/^\//, "").split("?")[0];

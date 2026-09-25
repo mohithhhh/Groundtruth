@@ -16,7 +16,7 @@ import { mapViews } from "../lib/views";
 import styles from "./AskPage.module.css";
 
 // Suggestions come from the evaluation set (eval/questions.yaml): these
-// three, shown only if full Penumbra answered each correctly in the latest
+// three, shown only if full Groundtruth answered each correctly in the latest
 // run (results.json). Otherwise fall back to questions verified in live
 // tests (docs/NOTES.md).
 const FALLBACK_SUGGESTED = [
@@ -28,7 +28,7 @@ const SUGGESTED_IDS = ["change_east_warmed_five", "corp_west_summary", "budget_e
 
 function suggestedFrom(r: Results | undefined): string[] {
   const qs = r?.evaluation?.questions ?? [];
-  const picked = SUGGESTED_IDS.map((id) => qs.find((q) => q.id === id && q.penumbra.correct)?.question).filter((q): q is string => !!q);
+  const picked = SUGGESTED_IDS.map((id) => qs.find((q) => q.id === id && q.groundtruth.correct)?.question).filter((q): q is string => !!q);
   return picked.length === SUGGESTED_IDS.length ? picked : FALLBACK_SUGGESTED;
 }
 
@@ -132,7 +132,7 @@ export function AskPage() {
     <div className={styles.page}>
       <section className={styles.conversation} aria-labelledby="ask-title">
         <h1 id="ask-title" className="visually-hidden">
-          Ask Penumbra
+          Ask Groundtruth
         </h1>
         <div className={styles.thread} aria-live="polite">
           {turns.length === 0 && (
@@ -147,7 +147,7 @@ export function AskPage() {
                 ))}
               </ul>
               <p className={styles.fine}>
-                Every figure in an answer is checked against the data before you see it. Select a figure to see where it came from. Penumbra answers at ward level
+                Every figure in an answer is checked against the data before you see it. Select a figure to see where it came from. Groundtruth answers at ward level
                 and above.
               </p>
             </EmptyState>
@@ -189,7 +189,7 @@ export function AskPage() {
             }}
           />
           <button type="submit" className="btn btn-primary" disabled={pending || !input.trim()}>
-            Ask Penumbra
+            Ask Groundtruth
           </button>
         </form>
       </section>
