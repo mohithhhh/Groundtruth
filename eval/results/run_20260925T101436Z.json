@@ -32,7 +32,7 @@
    "latency_max_s": 16.34,
    "cost_usd_mean": 0.00359
   },
-  "penumbra": {
+  "groundtruth": {
    "questions": 18,
    "fully_correct": 16,
    "facts_correct": 42,
@@ -54,7 +54,7 @@
      "questions": 4,
      "fully_correct": 4
     },
-    "penumbra": {
+    "groundtruth": {
      "questions": 4,
      "fully_correct": 4
     }
@@ -68,7 +68,7 @@
      "questions": 4,
      "fully_correct": 4
     },
-    "penumbra": {
+    "groundtruth": {
      "questions": 4,
      "fully_correct": 4
     }
@@ -82,7 +82,7 @@
      "questions": 3,
      "fully_correct": 3
     },
-    "penumbra": {
+    "groundtruth": {
      "questions": 3,
      "fully_correct": 3
     }
@@ -96,7 +96,7 @@
      "questions": 4,
      "fully_correct": 4
     },
-    "penumbra": {
+    "groundtruth": {
      "questions": 4,
      "fully_correct": 4
     }
@@ -110,7 +110,7 @@
      "questions": 3,
      "fully_correct": 2
     },
-    "penumbra": {
+    "groundtruth": {
      "questions": 3,
      "fully_correct": 1
     }
@@ -208,7 +208,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0040278
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 3,
@@ -321,7 +321,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.003072513934326172
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 3,
@@ -442,7 +442,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0034041232238769532
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 3,
@@ -556,7 +556,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.004276523223876953
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 3,
@@ -769,7 +769,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.004155809289550781
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -940,7 +940,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.003873309289550781
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -1071,7 +1071,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.004503227868652344
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 3,
@@ -1238,7 +1238,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0027461092895507814
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -1468,7 +1468,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0050831999999999995
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -1598,7 +1598,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.004256613934326172
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 3,
@@ -1787,7 +1787,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.003904409289550781
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -1912,7 +1912,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0020551
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -2039,7 +2039,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.002700409289550781
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -2150,7 +2150,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0020170185791015625
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -2324,7 +2324,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.003812309289550781
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -2419,7 +2419,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.004023209289550781
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 3,
@@ -2666,7 +2666,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0039304
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,
@@ -2782,7 +2782,7 @@
      "unsupported_figures": [],
      "cost_usd": 0.0027974
     },
-    "penumbra": {
+    "groundtruth": {
      "error": null,
      "usage": {
       "model_calls": 2,

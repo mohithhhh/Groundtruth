@@ -134,7 +134,7 @@ export function PlanPage() {
           <h1 id="plan-title" className={styles.title}>
             Plan a cooling budget
           </h1>
-          <p className={styles.lede}>Choose where and how much. Penumbra funds the most modeled cooling per rupee, then compares it with funding the hottest wards first.</p>
+          <p className={styles.lede}>Choose where and how much. Groundtruth funds the most modeled cooling per rupee, then compares it with funding the hottest wards first.</p>
           <div className={styles.row}>
             <label className="field">
               <span className="label">Where</span>

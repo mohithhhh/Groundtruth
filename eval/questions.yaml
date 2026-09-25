@@ -178,7 +178,7 @@ questions:
   # ---- Budget ----
   - id: budget_cool_roof_cost
     category: budget
-    question: What is the assumed cost per unit of cool roofs in Penumbra's intervention catalog, and what is the unit?
+    question: What is the assumed cost per unit of cool roofs in Groundtruth's intervention catalog, and what is the unit?
     expected_sql: |
       SELECT cost_amount_inr_per_unit
       FROM `{T}.intervention_catalog`

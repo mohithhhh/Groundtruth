@@ -10,7 +10,7 @@ from server.api.brief import router as brief_router
 from server.api.plan import router as plan_router
 from server.api.wards import router as wards_router
 
-app = FastAPI(title="Penumbra")
+app = FastAPI(title="Groundtruth")
 app.include_router(wards_router, prefix="/api")
 app.include_router(ask_router, prefix="/api")
 app.include_router(plan_router, prefix="/api")

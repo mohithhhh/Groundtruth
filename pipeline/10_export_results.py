@@ -49,15 +49,15 @@ def evaluation():
         return None
     with open(path, encoding="utf-8") as f:
         run = json.load(f)
-    configs = ("gemini_alone", "agents_unverified", "penumbra")
+    configs = ("gemini_alone", "agents_unverified", "groundtruth")
     return {
         "source": f"eval/run_eval.py over eval/questions.yaml, model {run['model_id']}",
         "generated_at": run["generated_at"],
         "summary": {c: run["summary"][c] for c in configs},
-        # What the verifier did to full Penumbra's answers across the set.
+        # What the verifier did to full Groundtruth's answers across the set.
         "verifier": {
-            "claims": sum((q["configs"]["penumbra"]["verification"] or {}).get("total", 0) for q in run["questions"]),
-            "verified": sum((q["configs"]["penumbra"]["verification"] or {}).get("verified", 0) for q in run["questions"]),
+            "claims": sum((q["configs"]["groundtruth"]["verification"] or {}).get("total", 0) for q in run["questions"]),
+            "verified": sum((q["configs"]["groundtruth"]["verification"] or {}).get("verified", 0) for q in run["questions"]),
         },
         "questions": [
             {"id": q["id"], "category": q["category"], "question": q["question"],

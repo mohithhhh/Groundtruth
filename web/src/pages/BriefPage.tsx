@@ -14,9 +14,9 @@ export function BriefPage() {
   const q = useQuery({ queryKey: ["brief", wardKey, lang], queryFn: () => api.brief(wardKey, lang) });
 
   useEffect(() => {
-    if (q.data) document.title = `${q.data.ward.ward_name} ward brief, Penumbra`;
+    if (q.data) document.title = `${q.data.ward.ward_name} ward brief, Groundtruth`;
     return () => {
-      document.title = "Penumbra — ward heat planning for Bengaluru";
+      document.title = "Groundtruth — ward heat planning for Bengaluru";
     };
   }, [q.data]);
 
@@ -69,7 +69,7 @@ function Paper({ b }: { b: Brief }) {
       <header className={styles.head}>
         <div className={styles.brand}>
           <Mark size={20} />
-          <span>Penumbra</span>
+          <span>Groundtruth</span>
         </div>
         <p className={`${styles.kind} ${b.lang === "kn" ? "kn" : ""}`}>{L.ward_brief}</p>
       </header>
