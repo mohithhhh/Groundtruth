@@ -16,6 +16,7 @@ import os
 from google.adk.agents.llm_agent import Agent
 
 from server.agents.schemas import Answer
+from server.optimizer.plan import run_plan
 from server.store import ToolResultStore
 from server.tools import interventions as interventions_tools
 from server.tools import wards as wards_tools
@@ -36,6 +37,11 @@ single number or ward name in the narrative is written as a placeholder
 token, never directly as text, with a matching entry in the claims list
 that cites the exact tool_result_id and data path it came from. See the
 output schema field descriptions for the exact token shape and examples.
+
+find_ward returns only names and keys. To state any metric for a ward,
+first call the tool that returns it (for example get_ward_metrics with the
+ward_key from find_ward). Only cite a tool_result_id that a tool call in
+this conversation actually returned.
 """
 
 
@@ -96,6 +102,22 @@ def _bind_tools(store: ToolResultStore):
         plainly rather than implying a number that doesn't exist."""
         return interventions_tools.recommend_interventions(store, city_id, ward_key, year)
 
+    def intervention_catalog(city_id: str) -> dict:
+        """List every intervention in the city's catalog (tree canopy, lake
+        and wetland buffers, pocket parks, cool roofs, permeable paving) with
+        its unit, assumed cost per unit in INR and citations. Use this for
+        questions about costs or units that are not about one ward."""
+        return interventions_tools.intervention_catalog(store, city_id)
+
+    def plan_budget(city_id: str, budget_inr: float, corporation: str = "") -> dict:
+        """Plan how to spend a cooling budget in rupees across wards, for the
+        whole city or one corporation (Central, East, North, South, West).
+        Returns the optimized allocation, the naive "fund the hottest wards
+        first" allocation, a comparison of modeled person-°C and people
+        covered for both, and the assumptions. All costs are assumed costs
+        and all cooling is a modeled association -- say so."""
+        return run_plan(store, city_id, corporation or None, budget_inr)
+
     def timed(fn):
         # functools.wraps keeps the signature and docstring ADK reads to
         # build each tool's schema.
@@ -108,7 +130,7 @@ def _bind_tools(store: ToolResultStore):
     return [timed(f) for f in (
         get_ward_metrics, find_ward, rank_wards, compare_years,
         corporation_summary, nearby_facilities, live_regionstats,
-        recommend_interventions,
+        recommend_interventions, intervention_catalog, plan_budget,
     )]
 
 

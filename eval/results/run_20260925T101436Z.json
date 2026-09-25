@@ -1,0 +1,2828 @@
+{
+ "generated_at": "2026-09-25T10:14:36.759910+00:00",
+ "generated_by": "eval/run_eval.py",
+ "model_id": "gemini-2.5-flash",
+ "prices": {
+  "input_usd_per_m": 0.3,
+  "output_usd_per_m": 2.5,
+  "bigquery_usd_per_tib": 6.25
+ },
+ "summary": {
+  "gemini_alone": {
+   "questions": 18,
+   "fully_correct": 0,
+   "facts_correct": 1,
+   "facts_expected": 44,
+   "answers_with_unsupported_figures": 10,
+   "unsupported_figures": 155,
+   "errors": 0,
+   "latency_median_s": 7.49,
+   "latency_max_s": 33.52,
+   "cost_usd_mean": 0.00277
+  },
+  "agents_unverified": {
+   "questions": 18,
+   "fully_correct": 17,
+   "facts_correct": 43,
+   "facts_expected": 44,
+   "answers_with_unsupported_figures": 0,
+   "unsupported_figures": 0,
+   "errors": 0,
+   "latency_median_s": 12.7,
+   "latency_max_s": 16.34,
+   "cost_usd_mean": 0.00359
+  },
+  "penumbra": {
+   "questions": 18,
+   "fully_correct": 16,
+   "facts_correct": 42,
+   "facts_expected": 44,
+   "answers_with_unsupported_figures": 0,
+   "unsupported_figures": 0,
+   "errors": 0,
+   "latency_median_s": 12.7,
+   "latency_max_s": 16.34,
+   "cost_usd_mean": 0.00359
+  },
+  "by_category": {
+   "lookup": {
+    "gemini_alone": {
+     "questions": 4,
+     "fully_correct": 0
+    },
+    "agents_unverified": {
+     "questions": 4,
+     "fully_correct": 4
+    },
+    "penumbra": {
+     "questions": 4,
+     "fully_correct": 4
+    }
+   },
+   "ranking": {
+    "gemini_alone": {
+     "questions": 4,
+     "fully_correct": 0
+    },
+    "agents_unverified": {
+     "questions": 4,
+     "fully_correct": 4
+    },
+    "penumbra": {
+     "questions": 4,
+     "fully_correct": 4
+    }
+   },
+   "change": {
+    "gemini_alone": {
+     "questions": 3,
+     "fully_correct": 0
+    },
+    "agents_unverified": {
+     "questions": 3,
+     "fully_correct": 3
+    },
+    "penumbra": {
+     "questions": 3,
+     "fully_correct": 3
+    }
+   },
+   "corporation": {
+    "gemini_alone": {
+     "questions": 4,
+     "fully_correct": 0
+    },
+    "agents_unverified": {
+     "questions": 4,
+     "fully_correct": 4
+    },
+    "penumbra": {
+     "questions": 4,
+     "fully_correct": 4
+    }
+   },
+   "budget": {
+    "gemini_alone": {
+     "questions": 3,
+     "fully_correct": 0
+    },
+    "agents_unverified": {
+     "questions": 3,
+     "fully_correct": 2
+    },
+    "penumbra": {
+     "questions": 3,
+     "fully_correct": 1
+    }
+   }
+  }
+ },
+ "questions": [
+  {
+   "id": "lookup_padarayanapura",
+   "category": "lookup",
+   "question": "What is the surface temperature and green cover of Padarayanapura in 2025?",
+   "expected": [
+    {
+     "lst_mean_c": 40.521403989495475,
+     "ndvi_mean": 0.18253727830805103
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "I cannot provide precise surface temperature and green cover figures for Padarayanapura in 2025, as this data is dynamic and requires real-time satellite imagery and predictive modeling which is not within my current capabilities.\n\nHowever, to assess future heat risk for Padarayanapura, city planners would need to:\n*   Utilize current high-resolution satellite thermal imagery to estimate existing surface temperatures.\n*   Analyze recent land cover maps to determine current green cover percentages.\n*   Apply climate change models and urban development projections to forecast potential changes in temperature and green cover for 2025.\n\nSuch an analysis for Padarayanapura would typically show surface temperatures varying significantly throughout the day and year, and green cover as a percentage of the ward's total area.",
+     "error": null,
+     "latency_s": 8.082,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 71,
+      "candidates_token_count": 161,
+      "thoughts_token_count": 623
+     },
+     "facts_expected": 2,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "lst_mean_c",
+       "expected": 40.521403989495475
+      },
+      {
+       "column": "ndvi_mean",
+       "expected": 0.18253727830805103
+      }
+     ],
+     "unsupported_figures": [],
+     "cost_usd": 0.0019813
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 3,
+      "prompt_token_count": 5176,
+      "candidates_token_count": 484,
+      "thoughts_token_count": 506
+     },
+     "bytes_billed": 0,
+     "tool_calls": [
+      "find_ward",
+      "get_ward_metrics"
+     ],
+     "text": "In Padarayanapura, the mean surface temperature is 40.52°C and the mean green cover (NDVI) is 0.18.",
+     "latency_s": 13.621,
+     "raw_answer": {
+      "narrative": "In {c1}, the mean surface temperature is {c2}°C and the mean green cover (NDVI) is {c3}.",
+      "claims": [
+       {
+        "id": "c1",
+        "text": "Padarayanapura",
+        "kind": "entity",
+        "tool_result_id": "fbef54b8-44f6-4520-bf12-aa3165dce612",
+        "path": "find_ward_response.data[0].ward_name"
+       },
+       {
+        "id": "c2",
+        "text": "40.52",
+        "kind": "number",
+        "value": 40.521403989495475,
+        "unit": "°C",
+        "tool_result_id": "f305f07e-7d27-49fa-84e0-84ad7a4c9c2e",
+        "path": "get_ward_metrics_response.data.lst_mean_c"
+       },
+       {
+        "id": "c3",
+        "text": "0.18",
+        "kind": "number",
+        "value": 0.18253727830805103,
+        "unit": "",
+        "tool_result_id": "f305f07e-7d27-49fa-84e0-84ad7a4c9c2e",
+        "path": "get_ward_metrics_response.data.ndvi_mean"
+       }
+      ],
+      "highlight_ward_keys": [
+       "ward_369_final.317"
+      ]
+     },
+     "facts_expected": 2,
+     "facts_correct": 2,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.0040278
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 3,
+      "prompt_token_count": 5176,
+      "candidates_token_count": 484,
+      "thoughts_token_count": 506
+     },
+     "bytes_billed": 0,
+     "tool_calls": [
+      "find_ward",
+      "get_ward_metrics"
+     ],
+     "text": "In Padarayanapura, the mean surface temperature is 40.52°C and the mean green cover (NDVI) is 0.18.",
+     "latency_s": 13.622,
+     "verification": {
+      "verified": 3,
+      "total": 3,
+      "removed": []
+     },
+     "facts_expected": 2,
+     "facts_correct": 2,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.0040278
+    }
+   }
+  },
+  {
+   "id": "lookup_facilities_whitefield",
+   "category": "lookup",
+   "question": "How many hospitals and schools are there in Whitefield ward?",
+   "expected": [
+    {
+     "hospitals": 9,
+     "schools": 19
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "As per the 2025 ward delimitation, Whitefield ward has **5 hospitals** and **12 schools**.",
+     "error": null,
+     "latency_s": 1.476,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 63,
+      "candidates_token_count": 26,
+      "thoughts_token_count": 131
+     },
+     "facts_expected": 2,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "hospitals",
+       "expected": 9
+      },
+      {
+       "column": "schools",
+       "expected": 19
+      }
+     ],
+     "unsupported_figures": [
+      "5",
+      "12"
+     ],
+     "cost_usd": 0.00041139999999999997
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 3,
+      "prompt_token_count": 5054,
+      "candidates_token_count": 319,
+      "thoughts_token_count": 232
+     },
+     "bytes_billed": 31457280,
+     "tool_calls": [
+      "find_ward",
+      "nearby_facilities",
+      "nearby_facilities"
+     ],
+     "text": "Whitefield ward has 9 hospitals and 19 schools.",
+     "latency_s": 13.772,
+     "raw_answer": {
+      "narrative": "Whitefield ward has {c1} hospitals and {c2} schools.",
+      "claims": [
+       {
+        "id": "c1",
+        "text": "9",
+        "kind": "number",
+        "value": 9,
+        "unit": null,
+        "tool_result_id": "39b84d75-9967-4fae-ab92-c3515fb67be6",
+        "path": "data.counts.hospital"
+       },
+       {
+        "id": "c2",
+        "text": "19",
+        "kind": "number",
+        "value": 19,
+        "unit": null,
+        "tool_result_id": "085df649-54b2-4159-99d6-1d7de70878c6",
+        "path": "data.counts.school"
+       }
+      ],
+      "highlight_ward_keys": []
+     },
+     "facts_expected": 2,
+     "facts_correct": 2,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.003072513934326172
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 3,
+      "prompt_token_count": 5054,
+      "candidates_token_count": 319,
+      "thoughts_token_count": 232
+     },
+     "bytes_billed": 31457280,
+     "tool_calls": [
+      "find_ward",
+      "nearby_facilities",
+      "nearby_facilities"
+     ],
+     "text": "Whitefield ward has 9 hospitals and 19 schools.",
+     "latency_s": 13.772,
+     "verification": {
+      "verified": 2,
+      "total": 2,
+      "removed": []
+     },
+     "facts_expected": 2,
+     "facts_correct": 2,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.003072513934326172
+    }
+   }
+  },
+  {
+   "id": "lookup_rank_vijinapura",
+   "category": "lookup",
+   "question": "Where does Vijinapura rank among all wards by composite heat risk in 2025?",
+   "expected": [
+    {
+     "rank": 26
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "I cannot provide the exact composite heat risk rank for Vijinapura ward in 2025.\n\nCalculating a precise composite heat risk rank for 369 wards in a future year (2025) requires a specific, detailed urban planning study or simulation. This would involve:\n1.  **Defining 'Composite Heat Risk':** What factors are included (e.g., surface temperature, built-up density, green cover, socio-economic vulnerability, population density, access to cooling centers)?\n2.  **Gathering Data:** For each ward in 2025 (or projected for 2025) across these factors.\n3.  **Applying a Model:** Using a specific methodology to weigh and combine these factors into a single composite score.\n4.  **Ranking:** Sorting all 369 wards based on these scores.\n\nAs an AI, I do not have access to such a pre-calculated, future-dated, and highly specific dataset or the ability to perform such a complex, real-time simulation.",
+     "error": null,
+     "latency_s": 7.432,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 71,
+      "candidates_token_count": 220,
+      "thoughts_token_count": 718
+     },
+     "facts_expected": 1,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "rank",
+       "expected": 26
+      }
+     ],
+     "unsupported_figures": [
+      "369",
+      "1",
+      "2",
+      "3",
+      "4",
+      "369"
+     ],
+     "cost_usd": 0.0023663
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 3,
+      "prompt_token_count": 4887,
+      "candidates_token_count": 351,
+      "thoughts_token_count": 305
+     },
+     "bytes_billed": 52428800,
+     "tool_calls": [
+      "find_ward",
+      "get_ward_metrics"
+     ],
+     "text": "The ward of Vijinapura ranks as the 26th highest for composite heat risk in 2025.",
+     "latency_s": 13.021,
+     "raw_answer": {
+      "narrative": "The ward of {c2} ranks as the {c1} highest for composite heat risk in {c3}.",
+      "claims": [
+       {
+        "id": "c2",
+        "text": "Vijinapura",
+        "kind": "entity",
+        "tool_result_id": "509e57e8-9ae2-4d24-966e-28255791a144",
+        "path": "data.ward_name"
+       },
+       {
+        "id": "c1",
+        "text": "26th",
+        "kind": "number",
+        "value": 26.0,
+        "unit": "rank",
+        "tool_result_id": "509e57e8-9ae2-4d24-966e-28255791a144",
+        "path": "data.rank"
+       },
+       {
+        "id": "c3",
+        "text": "2025",
+        "kind": "number",
+        "value": 2025.0,
+        "unit": "year",
+        "tool_result_id": "509e57e8-9ae2-4d24-966e-28255791a144",
+        "path": "data.year"
+       }
+      ],
+      "highlight_ward_keys": [
+       "ward_369_final.362"
+      ]
+     },
+     "facts_expected": 1,
+     "facts_correct": 1,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.0034041232238769532
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 3,
+      "prompt_token_count": 4887,
+      "candidates_token_count": 351,
+      "thoughts_token_count": 305
+     },
+     "bytes_billed": 52428800,
+     "tool_calls": [
+      "find_ward",
+      "get_ward_metrics"
+     ],
+     "text": "The ward of Vijinapura ranks as the 26th highest for composite heat risk in.",
+     "latency_s": 13.021,
+     "verification": {
+      "verified": 2,
+      "total": 3,
+      "removed": [
+       {
+        "id": "c3",
+        "reason": "could not resolve 'data.year' at segment 'year': 'year'"
+       }
+      ]
+     },
+     "facts_expected": 1,
+     "facts_correct": 1,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.0034041232238769532
+    }
+   }
+  },
+  {
+   "id": "lookup_population_malleshwaram",
+   "category": "lookup",
+   "question": "What is the population of Malleshwaram ward?",
+   "expected": [
+    {
+     "population": 25418
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "Based on the 2025 ward delimitation, the projected population for **Malleshwaram Ward (Ward No. 63)**, which falls under the West Corporation, is **52,100**.",
+     "error": null,
+     "latency_s": 9.719,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 62,
+      "candidates_token_count": 46,
+      "thoughts_token_count": 1200
+     },
+     "facts_expected": 1,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "population",
+       "expected": 25418
+      }
+     ],
+     "unsupported_figures": [
+      "63",
+      "52,100"
+     ],
+     "cost_usd": 0.0031336
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 3,
+      "prompt_token_count": 4895,
+      "candidates_token_count": 363,
+      "thoughts_token_count": 641
+     },
+     "bytes_billed": 52428800,
+     "tool_calls": [
+      "find_ward",
+      "get_ward_metrics"
+     ],
+     "text": "The population of Malleshwaram ward is 25418 people, according to 2011 data.",
+     "latency_s": 13.449,
+     "raw_answer": {
+      "narrative": "The population of Malleshwaram ward is {c1} people, according to {c2} data.",
+      "claims": [
+       {
+        "id": "c1",
+        "text": "25418",
+        "kind": "number",
+        "value": 25418,
+        "unit": "people",
+        "tool_result_id": "1e053dd0-47a2-4f4e-bad8-57237ed64473",
+        "path": "data.population"
+       },
+       {
+        "id": "c2",
+        "text": "2011",
+        "kind": "number",
+        "value": 2011,
+        "unit": "year",
+        "tool_result_id": "1e053dd0-47a2-4f4e-bad8-57237ed64473",
+        "path": "data.population_source_year"
+       }
+      ],
+      "highlight_ward_keys": [
+       "ward_369_final.318"
+      ]
+     },
+     "facts_expected": 1,
+     "facts_correct": 1,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.004276523223876953
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 3,
+      "prompt_token_count": 4895,
+      "candidates_token_count": 363,
+      "thoughts_token_count": 641
+     },
+     "bytes_billed": 52428800,
+     "tool_calls": [
+      "find_ward",
+      "get_ward_metrics"
+     ],
+     "text": "The population of Malleshwaram ward is 25418 people, according to 2011 data.",
+     "latency_s": 13.449,
+     "verification": {
+      "verified": 2,
+      "total": 2,
+      "removed": []
+     },
+     "facts_expected": 1,
+     "facts_correct": 1,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.004276523223876953
+    }
+   }
+  },
+  {
+   "id": "rank_hottest_five_city",
+   "category": "ranking",
+   "question": "Which five wards have the highest average surface temperature in the city in 2025?",
+   "expected": [
+    {
+     "ward_name": "Kaveripura",
+     "lst_mean_c": 41.37690771354924
+    },
+    {
+     "ward_name": "Gottigere",
+     "lst_mean_c": 41.275652807565365
+    },
+    {
+     "ward_name": "D.V Gundappa Ward",
+     "lst_mean_c": 41.27023732234596
+    },
+    {
+     "ward_name": "Vibhootipura",
+     "lst_mean_c": 41.110612904943984
+    },
+    {
+     "ward_name": "Thanisandra",
+     "lst_mean_c": 40.81479012237465
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "I cannot provide specific ward names and figures for the average surface temperature in Bengaluru's wards for 2025, as this data is not yet available and would require advanced predictive modeling based on future climate conditions and urban development.",
+     "error": null,
+     "latency_s": 4.693,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 70,
+      "candidates_token_count": 47,
+      "thoughts_token_count": 397
+     },
+     "facts_expected": 5,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "ward_name",
+       "expected": "Kaveripura"
+      },
+      {
+       "column": "ward_name",
+       "expected": "Gottigere"
+      },
+      {
+       "column": "ward_name",
+       "expected": "D.V Gundappa Ward"
+      },
+      {
+       "column": "ward_name",
+       "expected": "Vibhootipura"
+      },
+      {
+       "column": "ward_name",
+       "expected": "Thanisandra"
+      }
+     ],
+     "unsupported_figures": [],
+     "cost_usd": 0.001131
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 2922,
+      "candidates_token_count": 1156,
+      "thoughts_token_count": 108
+     },
+     "bytes_billed": 20971520,
+     "tool_calls": [
+      "rank_wards"
+     ],
+     "text": "The five wards with the highest average surface temperature in Bengaluru in 2025 are Kaveripura (41.38°C), Gottigere (41.28°C), D.V Gundappa Ward (41.27°C), Vibhootipura (41.11°C), and Thanisandra (40.81°C).",
+     "latency_s": 11.582,
+     "raw_answer": {
+      "narrative": "The five wards with the highest average surface temperature in Bengaluru in {c1} are {c2} ({c3}°C), {c4} ({c5}°C), {c6} ({c7}°C), {c8} ({c9}°C), and {c10} ({c11}°C).",
+      "claims": [
+       {
+        "id": "c1",
+        "text": "2025",
+        "kind": "number",
+        "value": 2025,
+        "unit": "year",
+        "tool_result_id": "598235b1-3bc2-4d62-9087-e1abdcc56847",
+        "path": "data.year"
+       },
+       {
+        "id": "c2",
+        "text": "Kaveripura",
+        "kind": "entity",
+        "tool_result_id": "598235b1-3bc2-4d62-9087-e1abdcc56847",
+        "path": "data[0].ward_name"
+       },
+       {
+        "id": "c3",
+        "text": "41.38",
+        "kind": "number",
+        "value": 41.37690771354924,
+        "unit": "°C",
+        "tool_result_id": "598235b1-3bc2-4d62-9087-e1abdcc56847",
+        "path": "data[0].value"
+       },
+       {
+        "id": "c4",
+        "text": "Gottigere",
+        "kind": "entity",
+        "tool_result_id": "598235b1-3bc2-4d62-9087-e1abdcc56847",
+        "path": "data[1].ward_name"
+       },
+       {
+        "id": "c5",
+        "text": "41.28",
+        "kind": "number",
+        "value": 41.275652807565365,
+        "unit": "°C",
+        "tool_result_id": "598235b1-3bc2-4d62-9087-e1abdcc56847",
+        "path": "data[1].value"
+       },
+       {
+        "id": "c6",
+        "text": "D.V Gundappa Ward",
+        "kind": "entity",
+        "tool_result_id": "598235b1-3bc2-4d62-9087-e1abdcc56847",
+        "path": "data[2].ward_name"
+       },
+       {
+        "id": "c7",
+        "text": "41.27",
+        "kind": "number",
+        "value": 41.27023732234596,
+        "unit": "°C",
+        "tool_result_id": "598235b1-3bc2-4d62-9087-e1abdcc56847",
+        "path": "data[2].value"
+       },
+       {
+        "id": "c8",
+        "text": "Vibhootipura",
+        "kind": "entity",
+        "tool_result_id": "598235b1-3bc2-4d62-9087-e1abdcc56847",
+        "path": "data[3].ward_name"
+       },
+       {
+        "id": "c9",
+        "text": "41.11",
+        "kind": "number",
+        "value": 41.110612904943984,
+        "unit": "°C",
+        "tool_result_id": "598235b1-3bc2-4d62-9087-e1abdcc56847",
+        "path": "data[3].value"
+       },
+       {
+        "id": "c10",
+        "text": "Thanisandra",
+        "kind": "entity",
+        "tool_result_id": "598235b1-3bc2-4d62-9087-e1abdcc56847",
+        "path": "data[4].ward_name"
+       },
+       {
+        "id": "c11",
+        "text": "40.81",
+        "kind": "number",
+        "value": 40.81479012237465,
+        "unit": "°C",
+        "tool_result_id": "598235b1-3bc2-4d62-9087-e1abdcc56847",
+        "path": "data[4].value"
+       }
+      ],
+      "highlight_ward_keys": [
+       "ward_369_final.264",
+       "ward_369_final.42",
+       "ward_369_final.249",
+       "ward_369_final.41",
+       "ward_369_final.364"
+      ]
+     },
+     "facts_expected": 5,
+     "facts_correct": 5,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.004155809289550781
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 2922,
+      "candidates_token_count": 1156,
+      "thoughts_token_count": 108
+     },
+     "bytes_billed": 20971520,
+     "tool_calls": [
+      "rank_wards"
+     ],
+     "text": "The five wards with the highest average surface temperature in Bengaluru in are Kaveripura (41.38°C), Gottigere (41.28°C), D.V Gundappa Ward (41.27°C), Vibhootipura (41.11°C), and Thanisandra (40.81°C).",
+     "latency_s": 11.583,
+     "verification": {
+      "verified": 10,
+      "total": 11,
+      "removed": [
+       {
+        "id": "c1",
+        "reason": "could not resolve 'data.year' at segment 'year': list indices must be integers or slices, not str"
+       }
+      ]
+     },
+     "facts_expected": 5,
+     "facts_correct": 5,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.004155809289550781
+    }
+   }
+  },
+  {
+   "id": "rank_least_green_three",
+   "category": "ranking",
+   "question": "Which three wards have the least green cover in 2025?",
+   "expected": [
+    {
+     "ward_name": "Chickpete",
+     "ndvi_mean": 0.1626519808151502
+    },
+    {
+     "ward_name": "Jaraganahalli",
+     "ndvi_mean": 0.17228500022137969
+    },
+    {
+     "ward_name": "Old Guddadahalli",
+     "ndvi_mean": 0.17963253250851985
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "I cannot provide the exact three wards with the least green cover for 2025 with specific figures, as this data requires future-projected land use and detailed GIS analysis based on the finalized 2025 ward delimitation, which is not available to me.\n\nTo determine this, city planners would need to conduct:\n1.  **Detailed GIS mapping** of green spaces (parks, trees, open fields) for each of the 369 wards under the 2025 delimitation.\n2.  **Calculate the percentage** of green cover per ward based on the ward's total area.\n\nThis analysis would provide the specific ward names and their respective green cover percentages.",
+     "error": null,
+     "latency_s": 5.185,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 66,
+      "candidates_token_count": 146,
+      "thoughts_token_count": 403
+     },
+     "facts_expected": 3,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "ward_name",
+       "expected": "Chickpete"
+      },
+      {
+       "column": "ward_name",
+       "expected": "Jaraganahalli"
+      },
+      {
+       "column": "ward_name",
+       "expected": "Old Guddadahalli"
+      }
+     ],
+     "unsupported_figures": [
+      "1",
+      "369",
+      "2"
+     ],
+     "cost_usd": 0.0013923
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 2847,
+      "candidates_token_count": 932,
+      "thoughts_token_count": 228
+     },
+     "bytes_billed": 20971520,
+     "tool_calls": [
+      "rank_wards"
+     ],
+     "text": "The three wards with the least green cover in 2025 are Chickpete, Jaraganahalli, and Old Guddadahalli. Their mean NDVI values are 0.16, 0.17, and 0.18 respectively.",
+     "latency_s": 11.078,
+     "raw_answer": {
+      "narrative": "The three wards with the least green cover in {c1} are {c2}, {c3}, and {c4}. Their mean NDVI values are {c5}, {c6}, and {c7} respectively.",
+      "claims": [
+       {
+        "id": "c1",
+        "text": "2025",
+        "kind": "number",
+        "value": 2025,
+        "unit": "year",
+        "tool_result_id": "ce09b537-6d63-4b53-af24-4d1dbe9dd55d",
+        "path": "data[0].year"
+       },
+       {
+        "id": "c2",
+        "text": "Chickpete",
+        "kind": "entity",
+        "tool_result_id": "ce09b537-6d63-4b53-af24-4d1dbe9dd55d",
+        "path": "rank_wards_response.data[0].ward_name"
+       },
+       {
+        "id": "c3",
+        "text": "Jaraganahalli",
+        "kind": "entity",
+        "tool_result_id": "ce09b537-6d63-4b53-af24-4d1dbe9dd55d",
+        "path": "rank_wards_response.data[1].ward_name"
+       },
+       {
+        "id": "c4",
+        "text": "Old Guddadahalli",
+        "kind": "entity",
+        "tool_result_id": "ce09b537-6d63-4b53-af24-4d1dbe9dd55d",
+        "path": "rank_wards_response.data[2].ward_name"
+       },
+       {
+        "id": "c5",
+        "text": "0.16",
+        "kind": "number",
+        "value": 0.1626519808151502,
+        "unit": "NDVI",
+        "tool_result_id": "ce09b537-6d63-4b53-af24-4d1dbe9dd55d",
+        "path": "rank_wards_response.data[0].value"
+       },
+       {
+        "id": "c6",
+        "text": "0.17",
+        "kind": "number",
+        "value": 0.17228500022137969,
+        "unit": "NDVI",
+        "tool_result_id": "ce09b537-6d63-4b53-af24-4d1dbe9dd55d",
+        "path": "rank_wards_response.data[1].value"
+       },
+       {
+        "id": "c7",
+        "text": "0.18",
+        "kind": "number",
+        "value": 0.17963253250851985,
+        "unit": "NDVI",
+        "tool_result_id": "ce09b537-6d63-4b53-af24-4d1dbe9dd55d",
+        "path": "rank_wards_response.data[2].value"
+       }
+      ],
+      "highlight_ward_keys": [
+       "ward_369_final.308",
+       "ward_369_final.156",
+       "ward_369_final.311"
+      ]
+     },
+     "facts_expected": 3,
+     "facts_correct": 3,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.003873309289550781
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 2847,
+      "candidates_token_count": 932,
+      "thoughts_token_count": 228
+     },
+     "bytes_billed": 20971520,
+     "tool_calls": [
+      "rank_wards"
+     ],
+     "text": "The three wards with the least green cover in are Chickpete, Jaraganahalli, and Old Guddadahalli. Their mean NDVI values are 0.16, 0.17, and 0.18 respectively.",
+     "latency_s": 11.078,
+     "verification": {
+      "verified": 6,
+      "total": 7,
+      "removed": [
+       {
+        "id": "c1",
+        "reason": "could not resolve 'data[0].year' at segment 'year': 'year'"
+       }
+      ]
+     },
+     "facts_expected": 3,
+     "facts_correct": 3,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.003873309289550781
+    }
+   }
+  },
+  {
+   "id": "rank_top_risk",
+   "category": "ranking",
+   "question": "Which ward has the highest composite heat risk in 2025, and what is its surface temperature?",
+   "expected": [
+    {
+     "ward_name": "Bhuvaneshwari Nagar",
+     "lst_mean_c": 40.259100505717576
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "I cannot provide a specific ward name and its exact surface temperature for \"2025 composite heat risk\" as this data is not available or predictable with such precision by an AI. Heat risk is a dynamic measure influenced by numerous factors, and ward delimitations and future climate conditions are subject to change and specific analysis by researchers or city planners.",
+     "error": null,
+     "latency_s": 3.286,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 73,
+      "candidates_token_count": 69,
+      "thoughts_token_count": 146
+     },
+     "facts_expected": 2,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "ward_name",
+       "expected": "Bhuvaneshwari Nagar"
+      },
+      {
+       "column": "lst_mean_c",
+       "expected": 40.259100505717576
+      }
+     ],
+     "unsupported_figures": [],
+     "cost_usd": 0.0005593999999999999
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 3,
+      "prompt_token_count": 4327,
+      "candidates_token_count": 596,
+      "thoughts_token_count": 543
+     },
+     "bytes_billed": 62914560,
+     "tool_calls": [
+      "rank_wards",
+      "get_ward_metrics"
+     ],
+     "text": "The ward with the highest composite heat risk in 2025 is Bhuvaneshwari Nagar, with a composite risk score of 0.93 and a mean surface temperature of 40.26°C.",
+     "latency_s": 13.28,
+     "raw_answer": {
+      "narrative": "The ward with the highest composite heat risk in {c1} is {c2}, with a composite risk score of {c3} and a mean surface temperature of {c4}°C.",
+      "claims": [
+       {
+        "id": "c1",
+        "text": "2025",
+        "kind": "number",
+        "value": 2025,
+        "unit": "year",
+        "tool_result_id": "34ff62b3-36d2-440c-a681-72aa17207cbd",
+        "path": "data[0].year"
+       },
+       {
+        "id": "c2",
+        "text": "Bhuvaneshwari Nagar",
+        "kind": "entity",
+        "tool_result_id": "34ff62b3-36d2-440c-a681-72aa17207cbd",
+        "path": "data[0].ward_name"
+       },
+       {
+        "id": "c3",
+        "text": "0.93",
+        "kind": "number",
+        "value": 0.931929347826087,
+        "unit": "score",
+        "tool_result_id": "34ff62b3-36d2-440c-a681-72aa17207cbd",
+        "path": "data[0].value"
+       },
+       {
+        "id": "c4",
+        "text": "40.26",
+        "kind": "number",
+        "value": 40.259100505717576,
+        "unit": "°C",
+        "tool_result_id": "ec0a5f16-3ecc-4bb5-acf1-df21ba78ea1e",
+        "path": "data.lst_mean_c"
+       }
+      ],
+      "highlight_ward_keys": [
+       "ward_369_final.47"
+      ]
+     },
+     "facts_expected": 2,
+     "facts_correct": 2,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.004503227868652344
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 3,
+      "prompt_token_count": 4327,
+      "candidates_token_count": 596,
+      "thoughts_token_count": 543
+     },
+     "bytes_billed": 62914560,
+     "tool_calls": [
+      "rank_wards",
+      "get_ward_metrics"
+     ],
+     "text": "The ward with the highest composite heat risk in is Bhuvaneshwari Nagar, with a composite risk score of 0.93 and a mean surface temperature of 40.26°C.",
+     "latency_s": 13.282,
+     "verification": {
+      "verified": 3,
+      "total": 4,
+      "removed": [
+       {
+        "id": "c1",
+        "reason": "could not resolve 'data[0].year' at segment 'year': 'year'"
+       }
+      ]
+     },
+     "facts_expected": 2,
+     "facts_correct": 2,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.004503227868652344
+    }
+   }
+  },
+  {
+   "id": "rank_most_populous",
+   "category": "ranking",
+   "question": "Which three wards have the most people?",
+   "expected": [
+    {
+     "ward_name": "Dr Rajkumar Ward",
+     "population": 29905
+    },
+    {
+     "ward_name": "N.A.L Layout",
+     "population": 29889
+    },
+    {
+     "ward_name": "Sangama Ward",
+     "population": 29566
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "Based on the 2025 ward delimitation for Bengaluru's 369 wards, the three wards with the most people are:\n\n1.  **Marathahalli** (East Corporation): 195,000 people\n2.  **Yelahanka New Town** (North Corporation): 188,000 people\n3.  **Bommanahalli** (South Corporation): 182,000 people",
+     "error": null,
+     "latency_s": 15.561,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 59,
+      "candidates_token_count": 100,
+      "thoughts_token_count": 2100
+     },
+     "facts_expected": 3,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "ward_name",
+       "expected": "Dr Rajkumar Ward"
+      },
+      {
+       "column": "ward_name",
+       "expected": "N.A.L Layout"
+      },
+      {
+       "column": "ward_name",
+       "expected": "Sangama Ward"
+      }
+     ],
+     "unsupported_figures": [
+      "369",
+      "1",
+      "195,000",
+      "2",
+      "188,000",
+      "3",
+      "182,000"
+     ],
+     "cost_usd": 0.0055176999999999995
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 2823,
+      "candidates_token_count": 613,
+      "thoughts_token_count": 99
+     },
+     "bytes_billed": 20971520,
+     "tool_calls": [
+      "rank_wards"
+     ],
+     "text": "The three wards with the highest populations are Dr Rajkumar Ward with 29,905 people, N.A.L Layout with 29,889 people, and Sangama Ward with 29,566 people.",
+     "latency_s": 7.968,
+     "raw_answer": {
+      "narrative": "The three wards with the highest populations are {c1} with {c2} people, {c3} with {c4} people, and {c5} with {c6} people.",
+      "claims": [
+       {
+        "id": "c1",
+        "text": "Dr Rajkumar Ward",
+        "kind": "entity",
+        "tool_result_id": "cfe8c962-2e9f-494a-9291-5efc169ac1fd",
+        "path": "data[0].ward_name"
+       },
+       {
+        "id": "c2",
+        "text": "29,905",
+        "kind": "number",
+        "value": 29905.0,
+        "unit": "people",
+        "tool_result_id": "cfe8c962-2e9f-494a-9291-5efc169ac1fd",
+        "path": "data[0].value"
+       },
+       {
+        "id": "c3",
+        "text": "N.A.L Layout",
+        "kind": "entity",
+        "tool_result_id": "cfe8c962-2e9f-494a-9291-5efc169ac1fd",
+        "path": "data[1].ward_name"
+       },
+       {
+        "id": "c4",
+        "text": "29,889",
+        "kind": "number",
+        "value": 29889.0,
+        "unit": "people",
+        "tool_result_id": "cfe8c962-2e9f-494a-9291-5efc169ac1fd",
+        "path": "data[1].value"
+       },
+       {
+        "id": "c5",
+        "text": "Sangama Ward",
+        "kind": "entity",
+        "tool_result_id": "cfe8c962-2e9f-494a-9291-5efc169ac1fd",
+        "path": "data[2].ward_name"
+       },
+       {
+        "id": "c6",
+        "text": "29,566",
+        "kind": "number",
+        "value": 29566.0,
+        "unit": "people",
+        "tool_result_id": "cfe8c962-2e9f-494a-9291-5efc169ac1fd",
+        "path": "data[2].value"
+       }
+      ],
+      "highlight_ward_keys": [
+       "ward_369_final.124",
+       "ward_369_final.61",
+       "ward_369_final.149"
+      ]
+     },
+     "facts_expected": 3,
+     "facts_correct": 3,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.0027461092895507814
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 2823,
+      "candidates_token_count": 613,
+      "thoughts_token_count": 99
+     },
+     "bytes_billed": 20971520,
+     "tool_calls": [
+      "rank_wards"
+     ],
+     "text": "The three wards with the highest populations are Dr Rajkumar Ward with 29,905 people, N.A.L Layout with 29,889 people, and Sangama Ward with 29,566 people.",
+     "latency_s": 7.968,
+     "verification": {
+      "verified": 6,
+      "total": 6,
+      "removed": []
+     },
+     "facts_expected": 3,
+     "facts_correct": 3,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.0027461092895507814
+    }
+   }
+  },
+  {
+   "id": "change_east_warmed_five",
+   "category": "change",
+   "question": "Which five wards in the East corporation warmed most since the baseline year?",
+   "expected": [
+    {
+     "ward_name": "Varthur",
+     "delta_lst_c": 1.0248427962739513
+    },
+    {
+     "ward_name": "Munnenkolalu",
+     "delta_lst_c": 0.4257779226849365
+    },
+    {
+     "ward_name": "Panathur",
+     "delta_lst_c": 0.24339944087893883
+    },
+    {
+     "ward_name": "Kadugodi",
+     "delta_lst_c": 0.23144241282256672
+    },
+    {
+     "ward_name": "Hagaduru",
+     "delta_lst_c": 0.0928554378586739
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "Based on analysis since the baseline year of 2000, the five wards in Bengaluru's East corporation exhibiting the most significant warming (average Land Surface Temperature increase) are:\n\n1.  **Indiranagar:** Approximately **+2.8°C**\n2.  **Jeevanbheemanagar:** Approximately **+2.6°C**\n3.  **C.V. Raman Nagar:** Approximately **+2.5°C**\n4.  **H.A.L. Airport:** Approximately **+2.4°C**\n5.  **Domlur:** Approximately **+2.3°C**\n\nThese figures are indicative of areas experiencing rapid urbanization, dense construction, and reduction in green cover.",
+     "error": null,
+     "latency_s": 11.815,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 65,
+      "candidates_token_count": 157,
+      "thoughts_token_count": 1499
+     },
+     "facts_expected": 10,
+     "facts_correct": 1,
+     "missing": [
+      {
+       "column": "ward_name",
+       "expected": "Varthur"
+      },
+      {
+       "column": "ward_name",
+       "expected": "Munnenkolalu"
+      },
+      {
+       "column": "ward_name",
+       "expected": "Panathur"
+      },
+      {
+       "column": "ward_name",
+       "expected": "Kadugodi"
+      },
+      {
+       "column": "ward_name",
+       "expected": "Hagaduru"
+      },
+      {
+       "column": "delta_lst_c",
+       "expected": 0.4257779226849365
+      },
+      {
+       "column": "delta_lst_c",
+       "expected": 0.24339944087893883
+      },
+      {
+       "column": "delta_lst_c",
+       "expected": 0.23144241282256672
+      },
+      {
+       "column": "delta_lst_c",
+       "expected": 0.0928554378586739
+      }
+     ],
+     "unsupported_figures": [
+      "1",
+      "2.8",
+      "2",
+      "2.6",
+      "3",
+      "2.5",
+      "4",
+      "2.4",
+      "5",
+      "2.3"
+     ],
+     "cost_usd": 0.0041595
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 2794,
+      "candidates_token_count": 1380,
+      "thoughts_token_count": 318
+     },
+     "bytes_billed": 0,
+     "tool_calls": [
+      "rank_wards"
+     ],
+     "text": "The five wards in the East corporation that warmed the most since the baseline year are Varthur with an increase of 1.02°C, Munnenkolalu with an increase of 0.43°C, Panathur with an increase of 0.24°C, Kadugodi with an increase of 0.23°C, and Hagaduru with an increase of 0.09°C.",
+     "latency_s": 12.369,
+     "raw_answer": {
+      "narrative": "The five wards in the East corporation that warmed the most since the baseline year are {c1} with an increase of {c2}°C, {c3} with an increase of {c4}°C, {c5} with an increase of {c6}°C, {c7} with an increase of {c8}°C, and {c9} with an increase of {c10}°C.",
+      "claims": [
+       {
+        "id": "c1",
+        "text": "Varthur",
+        "kind": "entity",
+        "tool_result_id": "5b02c6a2-0927-475c-ab99-0ad6fe31e47b",
+        "path": "rank_wards_response.data[0].ward_name"
+       },
+       {
+        "id": "c2",
+        "text": "1.02",
+        "kind": "number",
+        "value": 1.0248427962739513,
+        "unit": "°C",
+        "tool_result_id": "5b02c6a2-0927-475c-ab99-0ad6fe31e47b",
+        "path": "rank_wards_response.data[0].value"
+       },
+       {
+        "id": "c3",
+        "text": "Munnenkolalu",
+        "kind": "entity",
+        "tool_result_id": "5b02c6a2-0927-475c-ab99-0ad6fe31e47b",
+        "path": "rank_wards_response.data[1].ward_name"
+       },
+       {
+        "id": "c4",
+        "text": "0.43",
+        "kind": "number",
+        "value": 0.4257779226849365,
+        "unit": "°C",
+        "tool_result_id": "5b02c6a2-0927-475c-ab99-0ad6fe31e47b",
+        "path": "rank_wards_response.data[1].value"
+       },
+       {
+        "id": "c5",
+        "text": "Panathur",
+        "kind": "entity",
+        "tool_result_id": "5b02c6a2-0927-475c-ab99-0ad6fe31e47b",
+        "path": "rank_wards_response.data[2].ward_name"
+       },
+       {
+        "id": "c6",
+        "text": "0.24",
+        "kind": "number",
+        "value": 0.24339944087893883,
+        "unit": "°C",
+        "tool_result_id": "5b02c6a2-0927-475c-ab99-0ad6fe31e47b",
+        "path": "rank_wards_response.data[2].value"
+       },
+       {
+        "id": "c7",
+        "text": "Kadugodi",
+        "kind": "entity",
+        "tool_result_id": "5b02c6a2-0927-475c-ab99-0ad6fe31e47b",
+        "path": "rank_wards_response.data[3].ward_name"
+       },
+       {
+        "id": "c8",
+        "text": "0.23",
+        "kind": "number",
+        "value": 0.23144241282256672,
+        "unit": "°C",
+        "tool_result_id": "5b02c6a2-0927-475c-ab99-0ad6fe31e47b",
+        "path": "rank_wards_response.data[3].value"
+       },
+       {
+        "id": "c9",
+        "text": "Hagaduru",
+        "kind": "entity",
+        "tool_result_id": "5b02c6a2-0927-475c-ab99-0ad6fe31e47b",
+        "path": "rank_wards_response.data[4].ward_name"
+       },
+       {
+        "id": "c10",
+        "text": "0.09",
+        "kind": "number",
+        "value": 0.0928554378586739,
+        "unit": "°C",
+        "tool_result_id": "5b02c6a2-0927-475c-ab99-0ad6fe31e47b",
+        "path": "rank_wards_response.data[4].value"
+       }
+      ],
+      "highlight_ward_keys": [
+       "ward_369_final.179",
+       "ward_369_final.183",
+       "ward_369_final.355",
+       "ward_369_final.170",
+       "ward_369_final.53"
+      ]
+     },
+     "facts_expected": 10,
+     "facts_correct": 10,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.0050831999999999995
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 2794,
+      "candidates_token_count": 1380,
+      "thoughts_token_count": 318
+     },
+     "bytes_billed": 0,
+     "tool_calls": [
+      "rank_wards"
+     ],
+     "text": "The five wards in the East corporation that warmed the most since the baseline year are Varthur with an increase of 1.02°C, Munnenkolalu with an increase of 0.43°C, Panathur with an increase of 0.24°C, Kadugodi with an increase of 0.23°C, and Hagaduru with an increase of 0.09°C.",
+     "latency_s": 12.369,
+     "verification": {
+      "verified": 10,
+      "total": 10,
+      "removed": []
+     },
+     "facts_expected": 10,
+     "facts_correct": 10,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.0050831999999999995
+    }
+   }
+  },
+  {
+   "id": "change_bellanduru",
+   "category": "change",
+   "question": "How much did the average surface temperature of Bellanduru change between 2016 and 2025?",
+   "expected": [
+    {
+     "delta_lst_c": -0.8545127935638916
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "I cannot provide the average surface temperature change for Bellanduru ward between 2016 and 2025. My capabilities do not include access to real-time, historical, or projected climate data for specific Bengaluru wards.",
+     "error": null,
+     "latency_s": 33.518,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 76,
+      "candidates_token_count": 48,
+      "thoughts_token_count": 177
+     },
+     "facts_expected": 1,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "delta_lst_c",
+       "expected": -0.8545127935638916
+      }
+     ],
+     "unsupported_figures": [],
+     "cost_usd": 0.0005853
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 3,
+      "prompt_token_count": 4551,
+      "candidates_token_count": 771,
+      "thoughts_token_count": 314
+     },
+     "bytes_billed": 31457280,
+     "tool_calls": [
+      "find_ward",
+      "compare_years"
+     ],
+     "text": "The average surface temperature in Bellanduru ward changed by -0.85°C between 2016 and 2025. In 2016, the average surface temperature was 39.65°C, and in 2025, it was 38.79°C.",
+     "latency_s": 14.479,
+     "raw_answer": {
+      "narrative": "The average surface temperature in Bellanduru ward changed by {c1} between {c2} and {c3}. In {c2}, the average surface temperature was {c4}°C, and in {c3}, it was {c5}°C.",
+      "claims": [
+       {
+        "id": "c1",
+        "text": "-0.85°C",
+        "kind": "number",
+        "value": -0.8545127935638916,
+        "unit": "°C",
+        "tool_result_id": "b4fec56b-52cf-4d29-a2da-20715b5b02c1",
+        "path": "data[0].change"
+       },
+       {
+        "id": "c2",
+        "text": "2016",
+        "kind": "number",
+        "value": 2016,
+        "unit": "year",
+        "tool_result_id": "b4fec56b-52cf-4d29-a2da-20715b5b02c1",
+        "path": "year_a"
+       },
+       {
+        "id": "c3",
+        "text": "2025",
+        "kind": "number",
+        "value": 2025,
+        "unit": "year",
+        "tool_result_id": "b4fec56b-52cf-4d29-a2da-20715b5b02c1",
+        "path": "year_b"
+       },
+       {
+        "id": "c4",
+        "text": "39.65",
+        "kind": "number",
+        "value": 39.64588469052648,
+        "unit": "°C",
+        "tool_result_id": "b4fec56b-52cf-4d29-a2da-20715b5b02c1",
+        "path": "data[0].value_a"
+       },
+       {
+        "id": "c5",
+        "text": "38.79",
+        "kind": "number",
+        "value": 38.79137189696259,
+        "unit": "°C",
+        "tool_result_id": "b4fec56b-52cf-4d29-a2da-20715b5b02c1",
+        "path": "data[0].value_b"
+       }
+      ],
+      "highlight_ward_keys": []
+     },
+     "facts_expected": 1,
+     "facts_correct": 1,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.004256613934326172
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 3,
+      "prompt_token_count": 4551,
+      "candidates_token_count": 771,
+      "thoughts_token_count": 314
+     },
+     "bytes_billed": 31457280,
+     "tool_calls": [
+      "find_ward",
+      "compare_years"
+     ],
+     "text": "The average surface temperature in Bellanduru ward changed by -0.85°C between and. In, the average surface temperature was 39.65°C, and in, it was 38.79°C.",
+     "latency_s": 14.48,
+     "verification": {
+      "verified": 3,
+      "total": 7,
+      "removed": [
+       {
+        "id": "c2",
+        "reason": "could not resolve 'year_a' at segment 'year_a': 'year_a'"
+       },
+       {
+        "id": "c3",
+        "reason": "could not resolve 'year_b' at segment 'year_b': 'year_b'"
+       },
+       {
+        "id": "c2",
+        "reason": "could not resolve 'year_a' at segment 'year_a': 'year_a'"
+       },
+       {
+        "id": "c3",
+        "reason": "could not resolve 'year_b' at segment 'year_b': 'year_b'"
+       }
+      ]
+     },
+     "facts_expected": 1,
+     "facts_correct": 1,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.004256613934326172
+    }
+   }
+  },
+  {
+   "id": "change_cooled_three",
+   "category": "change",
+   "question": "Which three wards cooled the most between 2016 and 2025?",
+   "expected": [
+    {
+     "ward_name": "Kuvempunagara",
+     "delta_lst_c": -4.95621911203267
+    },
+    {
+     "ward_name": "Raja Kempegowda Ward",
+     "delta_lst_c": -4.169242458771571
+    },
+    {
+     "ward_name": "Byadarahalli",
+     "delta_lst_c": -4.1465246741416735
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "I cannot provide specific ward names and figures for the cooling between 2016 and 2025. This type of analysis requires access to a detailed dataset of ward-level temperature measurements or robust climate model projections for both years, which is not available in my current knowledge base, especially for future years like 2025 with specific ward delimitations.",
+     "error": null,
+     "latency_s": 9.079,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 70,
+      "candidates_token_count": 75,
+      "thoughts_token_count": 1164
+     },
+     "facts_expected": 3,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "ward_name",
+       "expected": "Kuvempunagara"
+      },
+      {
+       "column": "ward_name",
+       "expected": "Raja Kempegowda Ward"
+      },
+      {
+       "column": "ward_name",
+       "expected": "Byadarahalli"
+      }
+     ],
+     "unsupported_figures": [],
+     "cost_usd": 0.0031185
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 3009,
+      "candidates_token_count": 893,
+      "thoughts_token_count": 260
+     },
+     "bytes_billed": 20971520,
+     "tool_calls": [
+      "rank_wards"
+     ],
+     "text": "Between 2016 and 2025, the three wards that experienced the most cooling are Kuvempunagara in the North corporation, with a surface temperature decrease of 4.96°C, Raja Kempegowda Ward, also in the North corporation, with a decrease of 4.17°C, and Byadarahalli in the West corporation, with a decrease of 4.15°C.",
+     "latency_s": 10.824,
+     "raw_answer": {
+      "narrative": "Between {c1} and {c2}, the three wards that experienced the most cooling are {c3} in the North corporation, with a surface temperature decrease of {c4}°C, {c5}, also in the North corporation, with a decrease of {c6}°C, and {c7} in the West corporation, with a decrease of {c8}°C.",
+      "claims": [
+       {
+        "id": "c1",
+        "text": "2016",
+        "kind": "number",
+        "value": 2016,
+        "unit": "year",
+        "tool_result_id": "8626ebc0-1fb8-4b90-8ac5-cbd2b68f9e74",
+        "path": "year_a"
+       },
+       {
+        "id": "c2",
+        "text": "2025",
+        "kind": "number",
+        "value": 2025,
+        "unit": "year",
+        "tool_result_id": "8626ebc0-1fb8-4b90-8ac5-cbd2b68f9e74",
+        "path": "year_b"
+       },
+       {
+        "id": "c3",
+        "text": "Kuvempunagara",
+        "kind": "entity",
+        "tool_result_id": "8626ebc0-1fb8-4b90-8ac5-cbd2b68f9e74",
+        "path": "rank_wards_response.data[0].ward_name"
+       },
+       {
+        "id": "c4",
+        "text": "4.96",
+        "kind": "number",
+        "value": -4.95621911203267,
+        "unit": "°C",
+        "tool_result_id": "8626ebc0-1fb8-4b90-8ac5-cbd2b68f9e74",
+        "path": "rank_wards_response.data[0].value"
+       },
+       {
+        "id": "c5",
+        "text": "Raja Kempegowda Ward",
+        "kind": "entity",
+        "tool_result_id": "8626ebc0-1fb8-4b90-8ac5-cbd2b68f9e74",
+        "path": "rank_wards_response.data[1].ward_name"
+       },
+       {
+        "id": "c6",
+        "text": "4.17",
+        "kind": "number",
+        "value": -4.169242458771571,
+        "unit": "°C",
+        "tool_result_id": "8626ebc0-1fb8-4b90-8ac5-cbd2b68f9e74",
+        "path": "rank_wards_response.data[1].value"
+       },
+       {
+        "id": "c7",
+        "text": "Byadarahalli",
+        "kind": "entity",
+        "tool_result_id": "8626ebc0-1fb8-4b90-8ac5-cbd2b68f9e74",
+        "path": "rank_wards_response.data[2].ward_name"
+       },
+       {
+        "id": "c8",
+        "text": "4.15",
+        "kind": "number",
+        "value": -4.1465246741416735,
+        "unit": "°C",
+        "tool_result_id": "8626ebc0-1fb8-4b90-8ac5-cbd2b68f9e74",
+        "path": "rank_wards_response.data[2].value"
+       }
+      ],
+      "highlight_ward_keys": [
+       "ward_369_final.367",
+       "ward_369_final.268",
+       "ward_369_final.116"
+      ]
+     },
+     "facts_expected": 3,
+     "facts_correct": 3,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.003904409289550781
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 3009,
+      "candidates_token_count": 893,
+      "thoughts_token_count": 260
+     },
+     "bytes_billed": 20971520,
+     "tool_calls": [
+      "rank_wards"
+     ],
+     "text": "Between and, the three wards that experienced the most cooling are Kuvempunagara in the North corporation, with a surface temperature decrease of 4.96°C, Raja Kempegowda Ward, also in the North corporation, with a decrease of 4.17°C, and Byadarahalli in the West corporation, with a decrease of 4.15°C.",
+     "latency_s": 10.824,
+     "verification": {
+      "verified": 6,
+      "total": 8,
+      "removed": [
+       {
+        "id": "c1",
+        "reason": "could not resolve 'year_a' at segment 'year_a': 'year_a'"
+       },
+       {
+        "id": "c2",
+        "reason": "could not resolve 'year_b' at segment 'year_b': 'year_b'"
+       }
+      ]
+     },
+     "facts_expected": 3,
+     "facts_correct": 3,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.003904409289550781
+    }
+   }
+  },
+  {
+   "id": "corp_west_summary",
+   "category": "corporation",
+   "question": "How many people live in the West corporation and what is its average surface temperature in 2025?",
+   "expected": [
+    {
+     "total_population": 2515521,
+     "avg_lst_c": 38.52345892274769
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "I cannot provide the exact projected population or average surface temperature for the West corporation in Bengaluru for the year 2025. These figures would require specific 2025 demographic projections and future climate modeling data at the corporation level, which are not available in my current dataset.",
+     "error": null,
+     "latency_s": 6.655,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 73,
+      "candidates_token_count": 56,
+      "thoughts_token_count": 687
+     },
+     "facts_expected": 2,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "total_population",
+       "expected": 2515521
+      },
+      {
+       "column": "avg_lst_c",
+       "expected": 38.52345892274769
+      }
+     ],
+     "unsupported_figures": [],
+     "cost_usd": 0.0018794
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 2792,
+      "candidates_token_count": 359,
+      "thoughts_token_count": 128
+     },
+     "bytes_billed": 0,
+     "tool_calls": [
+      "corporation_summary"
+     ],
+     "text": "The West corporation has a total population of 2,515,521 people, and its average surface temperature in 2025 is 38.52°C.",
+     "latency_s": 10.056,
+     "raw_answer": {
+      "narrative": "The West corporation has a total population of {c1} people, and its average surface temperature in {c2} is {c3}°C.",
+      "claims": [
+       {
+        "id": "c1",
+        "text": "2,515,521",
+        "kind": "number",
+        "value": 2515521.0,
+        "unit": "people",
+        "tool_result_id": "27f6bf0a-c6c0-4a2f-ba1a-1335e276bc2f",
+        "path": "data.total_population"
+       },
+       {
+        "id": "c2",
+        "text": "2025",
+        "kind": "number",
+        "value": 2025.0,
+        "unit": "year",
+        "tool_result_id": "27f6bf0a-c6c0-4a2f-ba1a-1335e276bc2f",
+        "path": "data.year"
+       },
+       {
+        "id": "c3",
+        "text": "38.52",
+        "kind": "number",
+        "value": 38.52345892274769,
+        "unit": "°C",
+        "tool_result_id": "27f6bf0a-c6c0-4a2f-ba1a-1335e276bc2f",
+        "path": "data.avg_lst_c"
+       }
+      ],
+      "highlight_ward_keys": []
+     },
+     "facts_expected": 2,
+     "facts_correct": 2,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.0020551
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 2792,
+      "candidates_token_count": 359,
+      "thoughts_token_count": 128
+     },
+     "bytes_billed": 0,
+     "tool_calls": [
+      "corporation_summary"
+     ],
+     "text": "The West corporation has a total population of 2,515,521 people, and its average surface temperature in is 38.52°C.",
+     "latency_s": 10.056,
+     "verification": {
+      "verified": 2,
+      "total": 3,
+      "removed": [
+       {
+        "id": "c2",
+        "reason": "could not resolve 'data.year' at segment 'year': 'year'"
+       }
+      ]
+     },
+     "facts_expected": 2,
+     "facts_correct": 2,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.0020551
+    }
+   }
+  },
+  {
+   "id": "corp_south_riskiest",
+   "category": "corporation",
+   "question": "Which ward in the South corporation has the highest composite heat risk in 2025?",
+   "expected": [
+    {
+     "ward_name": "Bommanahalli"
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "In the South corporation, the ward with the highest composite heat risk in 2025 is **Basavanagudi** with a score of **0.91**.",
+     "error": null,
+     "latency_s": 2.795,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 70,
+      "candidates_token_count": 36,
+      "thoughts_token_count": 122
+     },
+     "facts_expected": 1,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "ward_name",
+       "expected": "Bommanahalli"
+      }
+     ],
+     "unsupported_figures": [
+      "0.91"
+     ],
+     "cost_usd": 0.000416
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 2829,
+      "candidates_token_count": 533,
+      "thoughts_token_count": 160
+     },
+     "bytes_billed": 20971520,
+     "tool_calls": [
+      "rank_wards"
+     ],
+     "text": "In 2025, the ward with the highest composite heat risk in the South corporation for 2025 is Bommanahalli, with a composite risk score of 0.85.",
+     "latency_s": 7.398,
+     "raw_answer": {
+      "narrative": "In {c1}, the ward with the highest composite heat risk in the South corporation for {c2} is {c3}, with a composite risk score of {c4}.",
+      "claims": [
+       {
+        "id": "c1",
+        "text": "2025",
+        "kind": "number",
+        "value": 2025,
+        "unit": null,
+        "tool_result_id": "88b1b9d4-7914-48f9-84a7-df7a0bf2453d",
+        "path": "year"
+       },
+       {
+        "id": "c2",
+        "text": "2025",
+        "kind": "number",
+        "value": 2025,
+        "unit": null,
+        "tool_result_id": "88b1b9d4-7914-48f9-84a7-df7a0bf2453d",
+        "path": "year"
+       },
+       {
+        "id": "c3",
+        "text": "Bommanahalli",
+        "kind": "entity",
+        "tool_result_id": "88b1b9d4-7914-48f9-84a7-df7a0bf2453d",
+        "path": "data[0].ward_name"
+       },
+       {
+        "id": "c4",
+        "text": "0.85",
+        "kind": "number",
+        "value": 0.8485054347826088,
+        "unit": null,
+        "tool_result_id": "88b1b9d4-7914-48f9-84a7-df7a0bf2453d",
+        "path": "data[0].value"
+       }
+      ],
+      "highlight_ward_keys": [
+       "ward_369_final.347"
+      ]
+     },
+     "facts_expected": 1,
+     "facts_correct": 1,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.002700409289550781
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 2829,
+      "candidates_token_count": 533,
+      "thoughts_token_count": 160
+     },
+     "bytes_billed": 20971520,
+     "tool_calls": [
+      "rank_wards"
+     ],
+     "text": "In, the ward with the highest composite heat risk in the South corporation for is Bommanahalli, with a composite risk score of 0.85.",
+     "latency_s": 7.398,
+     "verification": {
+      "verified": 2,
+      "total": 4,
+      "removed": [
+       {
+        "id": "c1",
+        "reason": "could not resolve 'year' at segment 'year': 'year'"
+       },
+       {
+        "id": "c2",
+        "reason": "could not resolve 'year' at segment 'year': 'year'"
+       }
+      ]
+     },
+     "facts_expected": 1,
+     "facts_correct": 1,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.002700409289550781
+    }
+   }
+  },
+  {
+   "id": "corp_central_ndvi",
+   "category": "corporation",
+   "question": "What is the average green cover, as NDVI, of the Central corporation in 2025?",
+   "expected": [
+    {
+     "avg_ndvi": 0.3167344955925579
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "I cannot provide the average green cover (NDVI) for the Central corporation in 2025, as NDVI values are derived from satellite imagery and cannot be predicted for a future date. This data would need to be measured from satellite observations taken in 2025.",
+     "error": null,
+     "latency_s": 3.562,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 72,
+      "candidates_token_count": 57,
+      "thoughts_token_count": 226
+     },
+     "facts_expected": 1,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "avg_ndvi",
+       "expected": 0.3167344955925579
+      }
+     ],
+     "unsupported_figures": [],
+     "cost_usd": 0.0007291
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 2737,
+      "candidates_token_count": 308,
+      "thoughts_token_count": 75
+     },
+     "bytes_billed": 41943040,
+     "tool_calls": [
+      "corporation_summary"
+     ],
+     "text": "The average green cover, measured as NDVI, for the Central corporation in 2025 is 0.32.",
+     "latency_s": 7.43,
+     "raw_answer": {
+      "narrative": "The average green cover, measured as NDVI, for the Central corporation in {c1} is {c2}.",
+      "claims": [
+       {
+        "id": "c1",
+        "text": "2025",
+        "kind": "number",
+        "value": 2025,
+        "unit": "year",
+        "tool_result_id": "fe12ba25-e170-4998-8ea8-a1a6a46c9241",
+        "path": "tool_code.year"
+       },
+       {
+        "id": "c2",
+        "text": "0.32",
+        "kind": "number",
+        "value": 0.3167344955925579,
+        "unit": "NDVI",
+        "tool_result_id": "fe12ba25-e170-4998-8ea8-a1a6a46c9241",
+        "path": "corporation_summary_response.data.avg_ndvi"
+       }
+      ],
+      "highlight_ward_keys": []
+     },
+     "facts_expected": 1,
+     "facts_correct": 1,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.0020170185791015625
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 2737,
+      "candidates_token_count": 308,
+      "thoughts_token_count": 75
+     },
+     "bytes_billed": 41943040,
+     "tool_calls": [
+      "corporation_summary"
+     ],
+     "text": "The average green cover, measured as NDVI, for the Central corporation in is 0.32.",
+     "latency_s": 7.43,
+     "verification": {
+      "verified": 1,
+      "total": 2,
+      "removed": [
+       {
+        "id": "c1",
+        "reason": "could not resolve 'tool_code.year' at segment 'tool_code': 'tool_code'"
+       }
+      ]
+     },
+     "facts_expected": 1,
+     "facts_correct": 1,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.0020170185791015625
+    }
+   }
+  },
+  {
+   "id": "corp_north_least_green",
+   "category": "corporation",
+   "question": "Which three wards in the North corporation have the least green cover in 2025?",
+   "expected": [
+    {
+     "ward_name": "Kushal Nagar",
+     "ndvi_mean": 0.18025156169257875
+    },
+    {
+     "ward_name": "K.G.Halli",
+     "ndvi_mean": 0.19337112643863513
+    },
+    {
+     "ward_name": "Govindapura",
+     "ndvi_mean": 0.1993427242099376
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "The three wards in the North corporation with the least green cover in 2025 are:\n\n1.  **Peenya Industrial Estate:** 1.2% green cover\n2.  **Yeshwanthpura Market:** 1.5% green cover\n3.  **Goraguntepalya:** 1.8% green cover",
+     "error": null,
+     "latency_s": 7.988,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 70,
+      "candidates_token_count": 74,
+      "thoughts_token_count": 934
+     },
+     "facts_expected": 3,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "ward_name",
+       "expected": "Kushal Nagar"
+      },
+      {
+       "column": "ward_name",
+       "expected": "K.G.Halli"
+      },
+      {
+       "column": "ward_name",
+       "expected": "Govindapura"
+      }
+     ],
+     "unsupported_figures": [
+      "1",
+      "1.2%",
+      "2",
+      "1.5%",
+      "3",
+      "1.8%"
+     ],
+     "cost_usd": 0.002541
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 2902,
+      "candidates_token_count": 965,
+      "thoughts_token_count": 164
+     },
+     "bytes_billed": 20971520,
+     "tool_calls": [
+      "rank_wards"
+     ],
+     "text": "The three wards in the North corporation with the least green cover in 2025 are Kushal Nagar with an average NDVI of 0.18, K.G.Halli with an average NDVI of 0.19, and Govindapura with an average NDVI of 0.20.",
+     "latency_s": 10.232,
+     "raw_answer": {
+      "narrative": "The three wards in the North corporation with the least green cover in {c1} are {c2} with an average NDVI of {c3}, {c4} with an average NDVI of {c5}, and {c6} with an average NDVI of {c7}.",
+      "claims": [
+       {
+        "id": "c1",
+        "text": "2025",
+        "kind": "number",
+        "value": 2025,
+        "unit": "year",
+        "tool_result_id": "c18c5737-cb64-4177-9d39-792c49485ce3",
+        "path": "rank_wards_response.data[0].year"
+       },
+       {
+        "id": "c2",
+        "text": "Kushal Nagar",
+        "kind": "entity",
+        "tool_result_id": "c18c5737-cb64-4177-9d39-792c49485ce3",
+        "path": "rank_wards_response.data[0].ward_name"
+       },
+       {
+        "id": "c3",
+        "text": "0.18",
+        "kind": "number",
+        "value": 0.18025156169257875,
+        "unit": "NDVI",
+        "tool_result_id": "c18c5737-cb64-4177-9d39-792c49485ce3",
+        "path": "rank_wards_response.data[0].value"
+       },
+       {
+        "id": "c4",
+        "text": "K.G.Halli",
+        "kind": "entity",
+        "tool_result_id": "c18c5737-cb64-4177-9d39-792c49485ce3",
+        "path": "rank_wards_response.data[1].ward_name"
+       },
+       {
+        "id": "c5",
+        "text": "0.19",
+        "kind": "number",
+        "value": 0.19337112643863513,
+        "unit": "NDVI",
+        "tool_result_id": "c18c5737-cb64-4177-9d39-792c49485ce3",
+        "path": "rank_wards_response.data[1].value"
+       },
+       {
+        "id": "c6",
+        "text": "Govindapura",
+        "kind": "entity",
+        "tool_result_id": "c18c5737-cb64-4177-9d39-792c49485ce3",
+        "path": "rank_wards_response.data[2].ward_name"
+       },
+       {
+        "id": "c7",
+        "text": "0.20",
+        "kind": "number",
+        "value": 0.1993427242099376,
+        "unit": "NDVI",
+        "tool_result_id": "c18c5737-cb64-4177-9d39-792c49485ce3",
+        "path": "rank_wards_response.data[2].value"
+       }
+      ],
+      "highlight_ward_keys": [
+       "ward_369_final.79",
+       "ward_369_final.141",
+       "ward_369_final.89"
+      ]
+     },
+     "facts_expected": 3,
+     "facts_correct": 3,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.003812309289550781
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 2902,
+      "candidates_token_count": 965,
+      "thoughts_token_count": 164
+     },
+     "bytes_billed": 20971520,
+     "tool_calls": [
+      "rank_wards"
+     ],
+     "text": "The three wards in the North corporation with the least green cover in are Kushal Nagar with an average NDVI of 0.18, K.G.Halli with an average NDVI of 0.19, and Govindapura with an average NDVI of 0.20.",
+     "latency_s": 10.233,
+     "verification": {
+      "verified": 6,
+      "total": 7,
+      "removed": [
+       {
+        "id": "c1",
+        "reason": "could not resolve 'data[0].year' at segment 'year': 'year'"
+       }
+      ]
+     },
+     "facts_expected": 3,
+     "facts_correct": 3,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.003812309289550781
+    }
+   }
+  },
+  {
+   "id": "budget_cool_roof_cost",
+   "category": "budget",
+   "question": "What is the assumed cost per unit of cool roofs in Penumbra's intervention catalog, and what is the unit?",
+   "expected": [
+    {
+     "cost_amount_inr_per_unit": 150000
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "The assumed cost per unit of cool roofs in Penumbra's intervention catalog is **300 INR per square meter (sqm)**.",
+     "error": null,
+     "latency_s": 2.941,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 75,
+      "candidates_token_count": 29,
+      "thoughts_token_count": 142
+     },
+     "facts_expected": 1,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "cost_amount_inr_per_unit",
+       "expected": 150000
+      }
+     ],
+     "unsupported_figures": [
+      "300"
+     ],
+     "cost_usd": 0.00045
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 3,
+      "prompt_token_count": 4930,
+      "candidates_token_count": 71,
+      "thoughts_token_count": 899
+     },
+     "bytes_billed": 20971520,
+     "tool_calls": [
+      "recommend_interventions",
+      "recommend_interventions"
+     ],
+     "text": "I am sorry, I cannot find the assumed cost per unit of cool roofs in Penumbra's intervention catalog with the available tools.",
+     "latency_s": 15.267,
+     "raw_answer": {
+      "narrative": "I am sorry, I cannot find the assumed cost per unit of cool roofs in Penumbra's intervention catalog with the available tools.",
+      "claims": []
+     },
+     "facts_expected": 1,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "cost_amount_inr_per_unit",
+       "expected": 150000
+      }
+     ],
+     "unsupported_figures": [],
+     "cost_usd": 0.004023209289550781
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 3,
+      "prompt_token_count": 4930,
+      "candidates_token_count": 71,
+      "thoughts_token_count": 899
+     },
+     "bytes_billed": 20971520,
+     "tool_calls": [
+      "recommend_interventions",
+      "recommend_interventions"
+     ],
+     "text": "I am sorry, I cannot find the assumed cost per unit of cool roofs in Penumbra's intervention catalog with the available tools.",
+     "latency_s": 15.267,
+     "verification": {
+      "verified": 0,
+      "total": 0,
+      "removed": []
+     },
+     "facts_expected": 1,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "cost_amount_inr_per_unit",
+       "expected": 150000
+      }
+     ],
+     "unsupported_figures": [],
+     "cost_usd": 0.004023209289550781
+    }
+   }
+  },
+  {
+   "id": "budget_east_50cr",
+   "category": "budget",
+   "question": "With a budget of 50 crore rupees for the East corporation, how much modeled cooling in person-°C does the optimized plan give, compared with funding the hottest wards first?",
+   "expected": [
+    {
+     "optimized_total_person_c": 368966.4087693937,
+     "naive_total_person_c": 283697.3654904462,
+     "optimized_people_covered": 555430,
+     "naive_people_covered": 251425,
+     "optimized_wards_covered": 23,
+     "naive_wards_covered": 10,
+     "optimized_cost_inr": 499500000,
+     "naive_cost_inr": 500000000
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "Providing exact figures for modeled cooling requires access to specific simulation data for each ward in the East corporation, including their baseline heat risk (person-°C), the potential cooling achievable, and the cost-effectiveness of interventions in each. As I do not have access to this proprietary model data, I will provide an illustrative example using hypothetical but realistic figures for several wards within the East corporation to demonstrate the typical outcome.\n\n**Illustrative Example for East Corporation (Hypothetical Data)**\n\nLet's consider a budget of **50 crore rupees** for the East corporation and evaluate two approaches using the following example wards and hypothetical data:\n\n| Ward Name (East Corp. Example) | Baseline Heat Risk (Person-°C) | Cost-effectiveness (Person-°C/Rupee) | Max Cooling Potential (Person-°C) | Cost for Max Cooling (Crore Rs) |\n| :----------------------------- | :----------------------------- | :----------------------------------- | :--------------------------------- | :----------------------------- |\n| Cox Town                       | 900,000                        | 130                                  | 750,000                            | 5.77                           |\n| Ulsoor                         | 1,000,000                      | 120                                  | 800,000                            | 6.67                           |\n| Domlur                         | 950,000                        | 110                                  | 700,000                            | 6.36                           |\n| Shivajinagar                   | 1,200,000                      | 100                                  | 1,000,000                          | 10.00                          |\n| HBR Layout                     | 1,050,000                      | 95                                   | 850,000                            | 8.95                           |\n| CV Raman Nagar                 | 1,100,000                      | 90                                   | 900,000                            | 10.00                          |\n| Kaggadasapura                  | 1,300,000                      | 85                                   | 1,100,000                          | 12.94                          |\n| Indiranagar                    | 800,000                        | 80                                   | 600,000                            | 7.50                           |\n\n---\n\n### Scenario 1: Funding the Hottest Wards First (Greedy by Baseline Heat Risk)\n\nThis approach prioritizes wards with the highest initial heat risk until the budget is exhausted.\n\n1.  **Rank Wards by Baseline Heat Risk (Highest First):**\n    *   Kaggadasapura (1,300,000 Person-°C)\n    *   Shivajinagar (1,200,000 Person-°C)\n    *   CV Raman Nagar (1,100,000 Person-°C)\n    *   HBR Layout (1,050,000 Person-°C)\n    *   Ulsoor (1,000,000 Person-°C)\n    *   Domlur (950,000 Person-°C)\n\n2.  **Allocate 50 Crore Budget:**\n    *   **Kaggadasapura:** Funds 12.94 Cr, cools 1,100,000 person-°C. Remaining Budget: 37.06 Cr.\n    *   **Shivajinagar:** Funds 10.00 Cr, cools 1,000,000 person-°C. Remaining Budget: 27.06 Cr.\n    *   **CV Raman Nagar:** Funds 10.00 Cr, cools 900,000 person-°C. Remaining Budget: 17.06 Cr.\n    *   **HBR Layout:** Funds 8.95 Cr, cools 850,000 person-°C. Remaining Budget: 8.11 Cr.\n    *   **Ulsoor:** Funds 6.67 Cr, cools 800,000 person-°C. Remaining Budget: 1.44 Cr.\n    *   **Domlur:** Funds 1.44 Cr (partial, as 6.36 Cr needed for max cooling), cools 158,400 person-°C (1.44 Cr * 110 Person-°C/Rupee). Remaining Budget: 0 Cr.\n\n    **Total Cooling (Hottest Wards First):** 1,100,000 + 1,000,000 + 900,000 + 850,000 + 800,000 + 158,400 = **4,808,400 person-°C**\n\n---\n\n### Scenario 2: Optimized Plan (Maximizing Cooling per Rupee)\n\nThis approach prioritizes interventions based on their cost-effectiveness (person-°C reduction per rupee spent) to get the most cooling benefit for the budget.\n\n1.  **Rank Wards by Cost-effectiveness (Highest First):**\n    *   Cox Town (130 Person-°C/Rupee)\n    *   Ulsoor (120 Person-°C/Rupee)\n    *   Domlur (110 Person-°C/Rupee)\n    *   Shivajinagar (100 Person-°C/Rupee)\n    *   HBR Layout (95 Person-°C/Rupee)\n    *   CV Raman Nagar (90 Person-°C/Rupee)\n    *   Kaggadasapura (85 Person-°C/Rupee)\n\n2.  **Allocate 50 Crore Budget:**\n    *   **Cox Town:** Funds 5.77 Cr, cools 750,000 person-°C. Remaining Budget: 44.23 Cr.\n    *   **Ulsoor:** Funds 6.67 Cr, cools 800,000 person-°C. Remaining Budget: 37.56 Cr.\n    *   **Domlur:** Funds 6.36 Cr, cools 700,000 person-°C. Remaining Budget: 31.20 Cr.\n    *   **Shivajinagar:** Funds 10.00 Cr, cools 1,000,000 person-°C. Remaining Budget: 21.20 Cr.\n    *   **HBR Layout:** Funds 8.95 Cr, cools 850,000 person-°C. Remaining Budget: 12.25 Cr.\n    *   **CV Raman Nagar:** Funds 10.00 Cr, cools 900,000 person-°C. Remaining Budget: 2.25 Cr.\n    *   **Kaggadasapura:** Funds 2.25 Cr (partial, as 12.94 Cr needed for max cooling), cools 191,250 person-°C (2.25 Cr * 85 Person-°C/Rupee). Remaining Budget: 0 Cr.\n\n    **Total Cooling (Optimized Plan):** 750,000 + 800,000 + 700,000 + 1,000,000 + 850,000 + 900,000 + 191,250 = **5,191,250 person-°C**\n\n---\n\n### Comparison\n\nFor the East corporation with a budget of 50 crore rupees:\n\n*   The **Optimized Plan** yields **5,191,250 person-°C** of cooling, prioritizing wards like Cox Town, Ulsoor, and Domlur due to their high cost-effectiveness.\n*   Funding the **Hottest Wards First** yields **4,808,400 person-°C** of cooling, prioritizing wards like Kaggadasapura, Shivajinagar, and CV Raman Nagar.\n\nThe optimized plan provides an additional **382,850 person-°C** of cooling, representing approximately **7.96% more cooling** than simply funding the hottest wards first, by strategically investing in interventions with higher cost-effectiveness across East corporation wards.",
+     "error": null,
+     "latency_s": 33.027,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 88,
+      "candidates_token_count": 1919,
+      "thoughts_token_count": 4985
+     },
+     "facts_expected": 2,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "optimized_total_person_c",
+       "expected": 368966.4087693937
+      },
+      {
+       "column": "naive_total_person_c",
+       "expected": 283697.3654904462
+      }
+     ],
+     "unsupported_figures": [
+      "900,000",
+      "130",
+      "750,000",
+      "5.77",
+      "1,000,000",
+      "120",
+      "800,000",
+      "6.67",
+      "950,000",
+      "110",
+      "700,000",
+      "6.36",
+      "1,200,000",
+      "100",
+      "1,000,000",
+      "10.00",
+      "1,050,000",
+      "95",
+      "850,000",
+      "8.95",
+      "1,100,000",
+      "90",
+      "900,000",
+      "10.00",
+      "1,300,000",
+      "85",
+      "1,100,000",
+      "12.94",
+      "800,000",
+      "80",
+      "600,000",
+      "7.50",
+      "1",
+      "1",
+      "1,300,000",
+      "1,200,000",
+      "1,100,000",
+      "1,050,000",
+      "1,000,000",
+      "950,000",
+      "2",
+      "50 Crore",
+      "12.94",
+      "1,100,000",
+      "37.06",
+      "10.00",
+      "1,000,000",
+      "27.06",
+      "10.00",
+      "900,000",
+      "17.06",
+      "8.95",
+      "850,000",
+      "8.11",
+      "6.67",
+      "800,000",
+      "1.44",
+      "1.44",
+      "6.36",
+      "158,400",
+      "1.44",
+      "110",
+      "0",
+      "1,100,000",
+      "1,000,000",
+      "900,000",
+      "850,000",
+      "800,000",
+      "158,400",
+      "4,808,400",
+      "2",
+      "1",
+      "130",
+      "120",
+      "110",
+      "100",
+      "95",
+      "90",
+      "85",
+      "2",
+      "50 Crore",
+      "5.77",
+      "750,000",
+      "44.23",
+      "6.67",
+      "800,000",
+      "37.56",
+      "6.36",
+      "700,000",
+      "31.20",
+      "10.00",
+      "1,000,000",
+      "21.20",
+      "8.95",
+      "850,000",
+      "12.25",
+      "10.00",
+      "900,000",
+      "2.25",
+      "2.25",
+      "12.94",
+      "191,250",
+      "2.25",
+      "85",
+      "0",
+      "750,000",
+      "800,000",
+      "700,000",
+      "1,000,000",
+      "850,000",
+      "900,000",
+      "191,250",
+      "5,191,250",
+      "5,191,250",
+      "4,808,400",
+      "382,850",
+      "7.96%"
+     ],
+     "cost_usd": 0.0172864
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 6293,
+      "candidates_token_count": 521,
+      "thoughts_token_count": 296
+     },
+     "bytes_billed": 0,
+     "tool_calls": [
+      "bulk_recommend_interventions",
+      "budget_plan"
+     ],
+     "text": "With a budget of 500,000,000 INR allocated for the East corporation, the optimized plan is projected to achieve 368,966.41 person-°C of cooling. This compares to the naive approach of funding the hottest wards first, which would achieve 283,697.37 person-°C of cooling.",
+     "latency_s": 16.339,
+     "raw_answer": {
+      "narrative": "With a budget of {c1} INR allocated for the East corporation, the optimized plan is projected to achieve {c2} person-°C of cooling. This compares to the naive approach of funding the hottest wards first, which would achieve {c3} person-°C of cooling.",
+      "claims": [
+       {
+        "id": "c1",
+        "text": "500,000,000",
+        "kind": "number",
+        "value": 500000000.0,
+        "unit": "INR",
+        "tool_result_id": "6040009b-a875-4add-b0b7-6ec6ba20bf8d",
+        "path": "plan_budget_response.data.optimized_cost_inr"
+       },
+       {
+        "id": "c2",
+        "text": "368,966.41",
+        "kind": "number",
+        "value": 368966.4087693937,
+        "unit": "person-°C",
+        "tool_result_id": "6040009b-a875-4add-b0b7-6ec6ba20bf8d",
+        "path": "plan_budget_response.data.comparison.optimized_total_person_c"
+       },
+       {
+        "id": "c3",
+        "text": "283,697.37",
+        "kind": "number",
+        "value": 283697.3654904462,
+        "unit": "person-°C",
+        "tool_result_id": "6040009b-a875-4add-b0b7-6ec6ba20bf8d",
+        "path": "plan_budget_response.data.comparison.naive_total_person_c"
+       }
+      ],
+      "highlight_ward_keys": []
+     },
+     "facts_expected": 2,
+     "facts_correct": 2,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.0039304
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 6293,
+      "candidates_token_count": 521,
+      "thoughts_token_count": 296
+     },
+     "bytes_billed": 0,
+     "tool_calls": [
+      "bulk_recommend_interventions",
+      "budget_plan"
+     ],
+     "text": "With a budget of INR allocated for the East corporation, the optimized plan is projected to achieve 368,966.41 person-°C of cooling. This compares to the naive approach of funding the hottest wards first, which would achieve 283,697.37 person-°C of cooling.",
+     "latency_s": 16.341,
+     "verification": {
+      "verified": 2,
+      "total": 3,
+      "removed": [
+       {
+        "id": "c1",
+        "reason": "could not resolve 'data.optimized_cost_inr' at segment 'optimized_cost_inr': 'optimized_cost_inr'"
+       }
+      ]
+     },
+     "facts_expected": 2,
+     "facts_correct": 2,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.0039304
+    }
+   }
+  },
+  {
+   "id": "budget_city_10cr_people",
+   "category": "budget",
+   "question": "How many people live in the wards that a 10 crore rupee citywide cooling plan would fund?",
+   "expected": [
+    {
+     "optimized_total_person_c": 393545.7170959385,
+     "naive_total_person_c": 218633.75411583408,
+     "optimized_people_covered": 231552,
+     "naive_people_covered": 161360,
+     "optimized_wards_covered": 9,
+     "naive_wards_covered": 7,
+     "optimized_cost_inr": 100000000,
+     "naive_cost_inr": 99500000
+    }
+   ],
+   "configs": {
+    "gemini_alone": {
+     "text": "The number of people who would live in the wards funded by a 10 crore rupee citywide cooling plan cannot be determined without knowing the specific criteria or ward selection process for the plan's allocation.\n\nA 10 crore budget could be used to:\n*   Fund comprehensive projects in a small number of high-priority wards.\n*   Support smaller initiatives across a larger number of wards.\n*   Target wards based on heat vulnerability, population density, or other factors.\n\nPlease specify the criteria or the list of wards that the 10 crore plan would fund, and I can then provide the total population figures for those specific wards based on Bengaluru's 2025 ward delimitation data.",
+     "error": null,
+     "latency_s": 7.55,
+     "usage": {
+      "model_calls": 1,
+      "prompt_token_count": 72,
+      "candidates_token_count": 147,
+      "thoughts_token_count": 744
+     },
+     "facts_expected": 1,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "optimized_people_covered",
+       "expected": 231552
+      }
+     ],
+     "unsupported_figures": [],
+     "cost_usd": 0.0022491
+    },
+    "agents_unverified": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 4358,
+      "candidates_token_count": 347,
+      "thoughts_token_count": 249
+     },
+     "bytes_billed": 0,
+     "tool_calls": [
+      "bulk_recommend_interventions",
+      "budget_plan"
+     ],
+     "text": "A 100,000,000 rupee citywide cooling plan, which is based on an optimized allocation strategy, would cover 231,552 people. It is important to note that all costs are assumed costs and all cooling is a modeled association.",
+     "latency_s": 13.192,
+     "raw_answer": {
+      "narrative": "A {c1} rupee citywide cooling plan, which is based on an optimized allocation strategy, would cover {c2} people. It is important to note that all costs are assumed costs and all cooling is a modeled association.",
+      "claims": [
+       {
+        "id": "c1",
+        "text": "100,000,000",
+        "kind": "number",
+        "value": 100000000.0,
+        "unit": "INR",
+        "tool_result_id": "9fe1a29b-150f-4838-8595-bd30f02303cb",
+        "path": "plan_budget_response.comparison.optimized_cost_inr"
+       },
+       {
+        "id": "c2",
+        "text": "231,552",
+        "kind": "number",
+        "value": 231552.0,
+        "unit": "people",
+        "tool_result_id": "9fe1a29b-150f-4838-8595-bd30f02303cb",
+        "path": "plan_budget_response.comparison.optimized_people_covered"
+       }
+      ],
+      "highlight_ward_keys": []
+     },
+     "facts_expected": 1,
+     "facts_correct": 1,
+     "missing": [],
+     "unsupported_figures": [],
+     "cost_usd": 0.0027974
+    },
+    "penumbra": {
+     "error": null,
+     "usage": {
+      "model_calls": 2,
+      "prompt_token_count": 4358,
+      "candidates_token_count": 347,
+      "thoughts_token_count": 249
+     },
+     "bytes_billed": 0,
+     "tool_calls": [
+      "bulk_recommend_interventions",
+      "budget_plan"
+     ],
+     "text": "A rupee citywide cooling plan, which is based on an optimized allocation strategy, would cover people. It is important to note that all costs are assumed costs and all cooling is a modeled association.",
+     "latency_s": 13.192,
+     "verification": {
+      "verified": 0,
+      "total": 2,
+      "removed": [
+       {
+        "id": "c1",
+        "reason": "could not resolve 'comparison.optimized_cost_inr' at segment 'comparison': 'comparison'"
+       },
+       {
+        "id": "c2",
+        "reason": "could not resolve 'comparison.optimized_people_covered' at segment 'comparison': 'comparison'"
+       }
+      ]
+     },
+     "facts_expected": 1,
+     "facts_correct": 0,
+     "missing": [
+      {
+       "column": "optimized_people_covered",
+       "expected": 231552
+      }
+     ],
+     "unsupported_figures": [],
+     "cost_usd": 0.0027974
+    }
+   }
+  }
+ ]
+}

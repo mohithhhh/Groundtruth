@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-24T20:39:00.150316+00:00",
+ "generated_at": "2026-09-25T11:01:44.820424+00:00",
  "generated_by": "pipeline/10_export_results.py",
  "coverage": {
   "source": "pipeline/03_zonal_stats.sql -> ward_metrics",
@@ -298,5 +298,358 @@
    "total_cost_inr": 500000000
   }
  },
- "evaluation": null
+ "evaluation": {
+  "source": "eval/run_eval.py over eval/questions.yaml, model gemini-2.5-flash",
+  "generated_at": "2026-09-25T11:00:26.044689+00:00",
+  "summary": {
+   "gemini_alone": {
+    "questions": 18,
+    "fully_correct": 0,
+    "facts_correct": 1,
+    "facts_expected": 44,
+    "answers_with_unsupported_figures": 13,
+    "unsupported_figures": 46,
+    "errors": 0,
+    "latency_median_s": 7.5,
+    "latency_max_s": 16.16,
+    "cost_usd_mean": 0.00233
+   },
+   "agents_unverified": {
+    "questions": 18,
+    "fully_correct": 16,
+    "facts_correct": 40,
+    "facts_expected": 44,
+    "answers_with_unsupported_figures": 0,
+    "unsupported_figures": 0,
+    "errors": 2,
+    "latency_median_s": 11.51,
+    "latency_max_s": 45.03,
+    "cost_usd_mean": 0.00306
+   },
+   "penumbra": {
+    "questions": 18,
+    "fully_correct": 16,
+    "facts_correct": 40,
+    "facts_expected": 44,
+    "answers_with_unsupported_figures": 0,
+    "unsupported_figures": 0,
+    "errors": 2,
+    "latency_median_s": 11.51,
+    "latency_max_s": 45.03,
+    "cost_usd_mean": 0.00306
+   }
+  },
+  "verifier": {
+   "claims": 75,
+   "verified": 74
+  },
+  "questions": [
+   {
+    "id": "lookup_padarayanapura",
+    "category": "lookup",
+    "question": "What is the surface temperature and green cover of Padarayanapura in 2025?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 3
+    },
+    "agents_unverified": {
+     "correct": true,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": true,
+     "unsupported": 0
+    }
+   },
+   {
+    "id": "lookup_facilities_whitefield",
+    "category": "lookup",
+    "question": "How many hospitals and schools are there in Whitefield ward?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 2
+    },
+    "agents_unverified": {
+     "correct": true,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": true,
+     "unsupported": 0
+    }
+   },
+   {
+    "id": "lookup_rank_vijinapura",
+    "category": "lookup",
+    "question": "Where does Vijinapura rank among all wards by composite heat risk in 2025?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 2
+    },
+    "agents_unverified": {
+     "correct": false,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": false,
+     "unsupported": 0
+    }
+   },
+   {
+    "id": "lookup_population_malleshwaram",
+    "category": "lookup",
+    "question": "What is the population of Malleshwaram ward?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 3
+    },
+    "agents_unverified": {
+     "correct": true,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": true,
+     "unsupported": 0
+    }
+   },
+   {
+    "id": "rank_hottest_five_city",
+    "category": "ranking",
+    "question": "Which five wards have the highest average surface temperature in the city in 2025?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 4
+    },
+    "agents_unverified": {
+     "correct": true,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": true,
+     "unsupported": 0
+    }
+   },
+   {
+    "id": "rank_least_green_three",
+    "category": "ranking",
+    "question": "Which three wards have the least green cover in 2025?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 0
+    },
+    "agents_unverified": {
+     "correct": true,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": true,
+     "unsupported": 0
+    }
+   },
+   {
+    "id": "rank_top_risk",
+    "category": "ranking",
+    "question": "Which ward has the highest composite heat risk in 2025, and what is its surface temperature?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 2
+    },
+    "agents_unverified": {
+     "correct": true,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": true,
+     "unsupported": 0
+    }
+   },
+   {
+    "id": "rank_most_populous",
+    "category": "ranking",
+    "question": "Which three wards have the most people?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 1
+    },
+    "agents_unverified": {
+     "correct": true,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": true,
+     "unsupported": 0
+    }
+   },
+   {
+    "id": "change_east_warmed_five",
+    "category": "change",
+    "question": "Which five wards in the East corporation warmed most since the baseline year?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 10
+    },
+    "agents_unverified": {
+     "correct": true,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": true,
+     "unsupported": 0
+    }
+   },
+   {
+    "id": "change_bellanduru",
+    "category": "change",
+    "question": "How much did the average surface temperature of Bellanduru change between 2016 and 2025?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 0
+    },
+    "agents_unverified": {
+     "correct": true,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": true,
+     "unsupported": 0
+    }
+   },
+   {
+    "id": "change_cooled_three",
+    "category": "change",
+    "question": "Which three wards cooled the most between 2016 and 2025?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 7
+    },
+    "agents_unverified": {
+     "correct": true,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": true,
+     "unsupported": 0
+    }
+   },
+   {
+    "id": "corp_west_summary",
+    "category": "corporation",
+    "question": "How many people live in the West corporation and what is its average surface temperature in 2025?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 0
+    },
+    "agents_unverified": {
+     "correct": true,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": true,
+     "unsupported": 0
+    }
+   },
+   {
+    "id": "corp_south_riskiest",
+    "category": "corporation",
+    "question": "Which ward in the South corporation has the highest composite heat risk in 2025?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 0
+    },
+    "agents_unverified": {
+     "correct": true,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": true,
+     "unsupported": 0
+    }
+   },
+   {
+    "id": "corp_central_ndvi",
+    "category": "corporation",
+    "question": "What is the average green cover, as NDVI, of the Central corporation in 2025?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 0
+    },
+    "agents_unverified": {
+     "correct": true,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": true,
+     "unsupported": 0
+    }
+   },
+   {
+    "id": "corp_north_least_green",
+    "category": "corporation",
+    "question": "Which three wards in the North corporation have the least green cover in 2025?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 6
+    },
+    "agents_unverified": {
+     "correct": false,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": false,
+     "unsupported": 0
+    }
+   },
+   {
+    "id": "budget_cool_roof_cost",
+    "category": "budget",
+    "question": "What is the assumed cost per unit of cool roofs in Penumbra's intervention catalog, and what is the unit?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 1
+    },
+    "agents_unverified": {
+     "correct": true,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": true,
+     "unsupported": 0
+    }
+   },
+   {
+    "id": "budget_east_50cr",
+    "category": "budget",
+    "question": "With a budget of 50 crore rupees for the East corporation, how much modeled cooling in person-°C does the optimized plan give, compared with funding the hottest wards first?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 3
+    },
+    "agents_unverified": {
+     "correct": true,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": true,
+     "unsupported": 0
+    }
+   },
+   {
+    "id": "budget_city_10cr_people",
+    "category": "budget",
+    "question": "How many people live in the wards that a 10 crore rupee citywide cooling plan would fund?",
+    "gemini_alone": {
+     "correct": false,
+     "unsupported": 2
+    },
+    "agents_unverified": {
+     "correct": true,
+     "unsupported": 0
+    },
+    "penumbra": {
+     "correct": true,
+     "unsupported": 0
+    }
+   }
+  ]
+ }
 }

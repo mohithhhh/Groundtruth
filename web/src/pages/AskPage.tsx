@@ -11,18 +11,26 @@ import { classify } from "../lib/bins";
 import { useCorporationShapes, useWardShapes, useWards } from "../lib/data";
 import { splitTemplate } from "../lib/narrative";
 import { BASELINE_YEAR, CURRENT_YEAR, usePrefs } from "../lib/prefs";
+import { type Results, useResults } from "../lib/results";
 import { mapViews } from "../lib/views";
 import styles from "./AskPage.module.css";
 
-// Real questions, each answered end to end with every figure verified in
-// live tests of the deployed service (see docs/NOTES.md, Phase 2). The first
-// keeps its tested wording: naming the year in the question tempts the model
-// to cite the year itself, which the verifier then removes.
-const SUGGESTED = [
+// Suggestions come from the evaluation set (eval/questions.yaml): these
+// three, shown only if full Penumbra answered each correctly in the latest
+// run (results.json). Otherwise fall back to questions verified in live
+// tests (docs/NOTES.md).
+const FALLBACK_SUGGESTED = [
   "Which five wards in the East corporation warmed most since the baseline year?",
   `What is the surface temperature and green cover of Padarayanapura in ${CURRENT_YEAR}?`,
   `How many people live in the West corporation and what is its average surface temperature in ${CURRENT_YEAR}?`,
 ];
+const SUGGESTED_IDS = ["change_east_warmed_five", "corp_west_summary", "budget_east_50cr"];
+
+function suggestedFrom(r: Results | undefined): string[] {
+  const qs = r?.evaluation?.questions ?? [];
+  const picked = SUGGESTED_IDS.map((id) => qs.find((q) => q.id === id && q.penumbra.correct)?.question).filter((q): q is string => !!q);
+  return picked.length === SUGGESTED_IDS.length ? picked : FALLBACK_SUGGESTED;
+}
 
 interface Turn {
   id: number;
@@ -76,6 +84,7 @@ export function AskPage() {
   const shapes = useWardShapes();
   const corps = useCorporationShapes();
   const wards = useWards(CURRENT_YEAR);
+  const suggested = suggestedFrom(useResults().data);
   const view = useMemo(() => mapViews(BASELINE_YEAR).risk, []);
   const values = useMemo(() => (wards.data ?? []).map(view.value), [wards.data, view]);
   const classification = useMemo(() => view.classify(values), [view, values]);
@@ -129,7 +138,7 @@ export function AskPage() {
           {turns.length === 0 && (
             <EmptyState title={`Ask about any ward, corporation or change since ${BASELINE_YEAR}. Try one of these.`}>
               <ul className={styles.suggestions}>
-                {SUGGESTED.map((q) => (
+                {suggested.map((q) => (
                   <li key={q}>
                     <button type="button" className={styles.suggestion} onClick={() => void ask(q)}>
                       {q}

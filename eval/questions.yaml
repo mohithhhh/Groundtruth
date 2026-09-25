@@ -1,0 +1,202 @@
+# Evaluation set for eval/run_eval.py.
+#
+# No expected answer is written by hand. Each question has either
+# expected_sql (run directly against BigQuery, with {T} replaced by the
+# dataset) or expected_plan (the deterministic budget optimizer, called
+# directly -- a greedy allocation has no SQL form). `expect` names the
+# columns of the expected rows that an answer must state: every value of an
+# entity column (case-insensitive substring) and every value of a number
+# column (within abs_tol if given, else 0.5% or the answer's displayed
+# precision).
+
+questions:
+  # ---- Lookup ----
+  - id: lookup_padarayanapura
+    category: lookup
+    question: What is the surface temperature and green cover of Padarayanapura in 2025?
+    expected_sql: |
+      SELECT m.lst_mean_c, m.ndvi_mean
+      FROM `{T}.ward_metrics` m JOIN `{T}.wards_clean` w USING (ward_key)
+      WHERE w.ward_name = 'Padarayanapura' AND m.year = 2025
+    expect:
+      - {column: lst_mean_c, kind: number, abs_tol: 0.05}
+      - {column: ndvi_mean, kind: number, abs_tol: 0.005}
+
+  - id: lookup_facilities_whitefield
+    category: lookup
+    question: How many hospitals and schools are there in Whitefield ward?
+    expected_sql: |
+      SELECT COUNTIF(i.type = 'hospital') AS hospitals, COUNTIF(i.type = 'school') AS schools
+      FROM `{T}.wards_clean` w LEFT JOIN `{T}.infra_points` i USING (ward_key)
+      WHERE w.ward_name = 'Whitefield'
+    expect:
+      - {column: hospitals, kind: number, abs_tol: 0}
+      - {column: schools, kind: number, abs_tol: 0}
+
+  - id: lookup_rank_vijinapura
+    category: lookup
+    question: Where does Vijinapura rank among all wards by composite heat risk in 2025?
+    expected_sql: |
+      SELECT r.rank
+      FROM `{T}.ward_risk` r JOIN `{T}.wards_clean` w USING (ward_key)
+      WHERE w.ward_name = 'Vijinapura' AND r.year = 2025
+    expect:
+      - {column: rank, kind: number, abs_tol: 0}
+
+  - id: lookup_population_malleshwaram
+    category: lookup
+    question: What is the population of Malleshwaram ward?
+    expected_sql: |
+      SELECT p.population
+      FROM `{T}.ward_population` p JOIN `{T}.wards_clean` w USING (ward_key)
+      WHERE w.ward_name = 'Malleshwaram'
+    expect:
+      - {column: population, kind: number}
+
+  # ---- Ranking ----
+  - id: rank_hottest_five_city
+    category: ranking
+    question: Which five wards have the highest average surface temperature in the city in 2025?
+    expected_sql: |
+      SELECT w.ward_name, m.lst_mean_c
+      FROM `{T}.ward_metrics` m JOIN `{T}.wards_clean` w USING (ward_key)
+      WHERE m.year = 2025 ORDER BY m.lst_mean_c DESC LIMIT 5
+    expect:
+      - {column: ward_name, kind: entity}
+
+  - id: rank_least_green_three
+    category: ranking
+    question: Which three wards have the least green cover in 2025?
+    expected_sql: |
+      SELECT w.ward_name, m.ndvi_mean
+      FROM `{T}.ward_metrics` m JOIN `{T}.wards_clean` w USING (ward_key)
+      WHERE m.year = 2025 ORDER BY m.ndvi_mean ASC LIMIT 3
+    expect:
+      - {column: ward_name, kind: entity}
+
+  - id: rank_top_risk
+    category: ranking
+    question: Which ward has the highest composite heat risk in 2025, and what is its surface temperature?
+    expected_sql: |
+      SELECT w.ward_name, m.lst_mean_c
+      FROM `{T}.ward_risk` r JOIN `{T}.wards_clean` w USING (ward_key)
+      JOIN `{T}.ward_metrics` m ON m.ward_key = r.ward_key AND m.year = r.year
+      WHERE r.year = 2025 ORDER BY r.rank ASC LIMIT 1
+    expect:
+      - {column: ward_name, kind: entity}
+      - {column: lst_mean_c, kind: number, abs_tol: 0.05}
+
+  - id: rank_most_populous
+    category: ranking
+    question: Which three wards have the most people?
+    expected_sql: |
+      SELECT w.ward_name, p.population
+      FROM `{T}.ward_population` p JOIN `{T}.wards_clean` w USING (ward_key)
+      ORDER BY p.population DESC LIMIT 3
+    expect:
+      - {column: ward_name, kind: entity}
+
+  # ---- Change over time ----
+  - id: change_east_warmed_five
+    category: change
+    question: Which five wards in the East corporation warmed most since the baseline year?
+    expected_sql: |
+      SELECT w.ward_name, r.delta_lst_c
+      FROM `{T}.ward_risk` r JOIN `{T}.wards_clean` w USING (ward_key)
+      WHERE r.year = 2025 AND w.corporation = 'East'
+      ORDER BY r.delta_lst_c DESC LIMIT 5
+    expect:
+      - {column: ward_name, kind: entity}
+      - {column: delta_lst_c, kind: number, abs_tol: 0.05}
+
+  - id: change_bellanduru
+    category: change
+    question: How much did the average surface temperature of Bellanduru change between 2016 and 2025?
+    expected_sql: |
+      SELECT r.delta_lst_c
+      FROM `{T}.ward_risk` r JOIN `{T}.wards_clean` w USING (ward_key)
+      WHERE w.ward_name = 'Bellanduru' AND r.year = 2025
+    expect:
+      - {column: delta_lst_c, kind: number, abs_tol: 0.05}
+
+  - id: change_cooled_three
+    category: change
+    question: Which three wards cooled the most between 2016 and 2025?
+    expected_sql: |
+      SELECT w.ward_name, r.delta_lst_c
+      FROM `{T}.ward_risk` r JOIN `{T}.wards_clean` w USING (ward_key)
+      WHERE r.year = 2025 ORDER BY r.delta_lst_c ASC LIMIT 3
+    expect:
+      - {column: ward_name, kind: entity}
+
+  # ---- Corporation filter ----
+  - id: corp_west_summary
+    category: corporation
+    question: How many people live in the West corporation and what is its average surface temperature in 2025?
+    expected_sql: |
+      SELECT SUM(p.population) AS total_population, AVG(m.lst_mean_c) AS avg_lst_c
+      FROM `{T}.wards_clean` w
+      JOIN `{T}.ward_metrics` m ON m.ward_key = w.ward_key AND m.year = 2025
+      LEFT JOIN `{T}.ward_population` p ON p.ward_key = w.ward_key
+      WHERE w.corporation = 'West'
+    expect:
+      - {column: total_population, kind: number}
+      - {column: avg_lst_c, kind: number, abs_tol: 0.05}
+
+  - id: corp_south_riskiest
+    category: corporation
+    question: Which ward in the South corporation has the highest composite heat risk in 2025?
+    expected_sql: |
+      SELECT w.ward_name
+      FROM `{T}.ward_risk` r JOIN `{T}.wards_clean` w USING (ward_key)
+      WHERE r.year = 2025 AND w.corporation = 'South'
+      ORDER BY r.composite_risk DESC LIMIT 1
+    expect:
+      - {column: ward_name, kind: entity}
+
+  - id: corp_central_ndvi
+    category: corporation
+    question: What is the average green cover, as NDVI, of the Central corporation in 2025?
+    expected_sql: |
+      SELECT AVG(m.ndvi_mean) AS avg_ndvi
+      FROM `{T}.wards_clean` w JOIN `{T}.ward_metrics` m ON m.ward_key = w.ward_key AND m.year = 2025
+      WHERE w.corporation = 'Central'
+    expect:
+      - {column: avg_ndvi, kind: number, abs_tol: 0.005}
+
+  - id: corp_north_least_green
+    category: corporation
+    question: Which three wards in the North corporation have the least green cover in 2025?
+    expected_sql: |
+      SELECT w.ward_name, m.ndvi_mean
+      FROM `{T}.ward_metrics` m JOIN `{T}.wards_clean` w USING (ward_key)
+      WHERE m.year = 2025 AND w.corporation = 'North'
+      ORDER BY m.ndvi_mean ASC LIMIT 3
+    expect:
+      - {column: ward_name, kind: entity}
+
+  # ---- Budget ----
+  - id: budget_cool_roof_cost
+    category: budget
+    question: What is the assumed cost per unit of cool roofs in Penumbra's intervention catalog, and what is the unit?
+    expected_sql: |
+      SELECT cost_amount_inr_per_unit
+      FROM `{T}.intervention_catalog`
+      WHERE city_id = 'bengaluru' AND intervention_id = 'cool_roofs'
+    expect:
+      - {column: cost_amount_inr_per_unit, kind: number}
+
+  - id: budget_east_50cr
+    category: budget
+    question: With a budget of 50 crore rupees for the East corporation, how much modeled cooling in person-°C does the optimized plan give, compared with funding the hottest wards first?
+    expected_plan: {corporation: East, budget_inr: 500000000}
+    expect:
+      - {column: optimized_total_person_c, kind: number}
+      - {column: naive_total_person_c, kind: number}
+
+  - id: budget_city_10cr_people
+    category: budget
+    question: How many people live in the wards that a 10 crore rupee citywide cooling plan would fund?
+    expected_plan: {corporation: null, budget_inr: 100000000}
+    expect:
+      - {column: optimized_people_covered, kind: number}

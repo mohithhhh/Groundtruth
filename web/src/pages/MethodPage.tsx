@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { ErrorState, Loading } from "../components/States";
-import { celsius, dateTime, people, percent, personC, rupeesShort, signedCelsius } from "../lib/format";
+import { celsius, dateTime, people, percent, personC, rupeesShort, seconds, signedCelsius } from "../lib/format";
 import { BASELINE_YEAR, CURRENT_YEAR } from "../lib/prefs";
-import { type Results, useResults } from "../lib/results";
+import { type EvalConfig, type Evaluation, type Results, useResults } from "../lib/results";
 import styles from "./MethodPage.module.css";
 
 const SOURCES = [
@@ -195,7 +195,7 @@ function Body({ r }: { r: Results }) {
       <section className={styles.section}>
         <h2 className={styles.h2}>Evaluation</h2>
         {r.evaluation ? (
-          <pre className={styles.pre}>{JSON.stringify(r.evaluation, null, 2)}</pre>
+          <EvaluationResults e={r.evaluation} />
         ) : (
           <p>
             The comparison of Gemini alone, the agents without verification, and full Penumbra has not been run yet. Its results will appear here from the evaluation run,
@@ -219,6 +219,88 @@ function Body({ r }: { r: Results }) {
       <p className={styles.generated}>
         Figures on this page come from {r.generated_by}, generated {dateTime(r.generated_at)}.
       </p>
+    </>
+  );
+}
+
+const CONFIG_NAMES: Record<EvalConfig, string> = {
+  gemini_alone: "Gemini alone, no data",
+  agents_unverified: "Agents without verification",
+  penumbra: "Full Penumbra",
+};
+const CONFIGS = Object.keys(CONFIG_NAMES) as EvalConfig[];
+
+function usd(v: number): string {
+  return `$${v < 0.01 ? v.toFixed(4) : v.toFixed(3)}`;
+}
+
+function EvaluationResults({ e }: { e: Evaluation }) {
+  const n = e.summary.penumbra.questions;
+  return (
+    <>
+      <p>
+        {n} planning questions were answered three ways: by Gemini on its own, by Penumbra's agents with their data tools but no checking, and by full Penumbra, where the
+        verifier removes any figure it cannot trace. The right answer to each question is computed fresh from the database, or from the budget planner, when the
+        evaluation runs. An answer counts as correct only if it states every expected ward and figure. A figure is unsupported if it matches no value that any data tool
+        returned for that question.
+      </p>
+      <div className={styles.scroll}>
+        <table className={`${styles.table} ${styles.wide}`}>
+          <caption>Results over {n} questions, same model for all three</caption>
+          <thead>
+            <tr>
+              <th scope="col">Configuration</th>
+              <th scope="col" className={styles.r}>Correct answers</th>
+              <th scope="col" className={styles.r}>Answers with unsupported figures</th>
+              <th scope="col" className={styles.r}>Median time</th>
+              <th scope="col" className={styles.r}>Cost per question</th>
+            </tr>
+          </thead>
+          <tbody>
+            {CONFIGS.map((c) => {
+              const s = e.summary[c];
+              return (
+                <tr key={c}>
+                  <th scope="row">{CONFIG_NAMES[c]}</th>
+                  <td className={styles.r}>
+                    {s.fully_correct} of {s.questions}
+                  </td>
+                  <td className={styles.r}>
+                    {s.answers_with_unsupported_figures} of {s.questions}
+                  </td>
+                  <td className={styles.r}>{seconds(s.latency_median_s)}</td>
+                  <td className={styles.r}>{usd(s.cost_usd_mean)}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Across these answers the agents cited {e.verifier.claims} figures and ward names. The verifier traced {e.verifier.verified} of them to the data and removed{" "}
+        {e.verifier.claims - e.verifier.verified}, each for a citation it could not trace or a value that did not match.
+        {e.summary.penumbra.errors > 0 &&
+          ` ${e.summary.penumbra.errors === 1 ? "One agent run" : `${e.summary.penumbra.errors} agent runs`} hit the 45-second limit, which counts as incorrect for both agent configurations.`}
+      </p>
+      <p className={styles.caveat}>
+        Agents without verification and full Penumbra share each agent run, so the gap between them is exactly what the verifier changed. The verifier can also remove a
+        correct figure that the agent cited from the wrong place, which counts against full Penumbra here. Cost is Gemini tokens at list price plus BigQuery bytes
+        billed.
+      </p>
+      <details className={styles.details}>
+        <summary>Every question and how each configuration did</summary>
+        <ul className={styles.qlist}>
+          {e.questions.map((q) => (
+            <li key={q.id}>
+              {q.question}
+              <span className={styles.meta}>
+                {CONFIGS.map((c) => `${CONFIG_NAMES[c]}: ${q[c].correct ? "correct" : "incomplete"}${q[c].unsupported ? `, ${q[c].unsupported} unsupported` : ""}`).join("; ")}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </details>
+      <Source text={`${e.source}, run ${dateTime(e.generated_at)}`} />
     </>
   );
 }

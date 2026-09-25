@@ -12,7 +12,7 @@ Save this file as `CLAUDE.md` in the repository root. Claude Code reads it as pr
 
 ## Current state of the repo (as of 25 Sep 2026)
 
-Phases 1 to 4 are built and deployed. Check `docs/NOTES.md` for the running
+Phases 1 to 5 are built and deployed. Check `docs/NOTES.md` for the running
 log and `docs/DECISIONS.md` for every deviation from this brief.
 
 - Live: `https://penumbra-app-891315005311.us-central1.run.app` (Cloud Run
@@ -24,10 +24,11 @@ log and `docs/DECISIONS.md` for every deviation from this brief.
 - Commands:
   - Backend: `source .venv/bin/activate && GOOGLE_GENAI_USE_ENTERPRISE=1 GOOGLE_CLOUD_PROJECT=penumbra-509416 GOOGLE_CLOUD_LOCATION=us-central1 MODEL_ID=gemini-2.5-flash BQ_DATASET=penumbra uvicorn server.main:app --port 8080`
   - Web dev: `cd web && npm run dev` (proxies `/api` to :8080; set `API_TARGET` to use the deployed API)
-  - Tests: `python -m pytest server/tests` and `cd web && npm test`; one test: `python -m pytest server/tests/test_verify.py::test_pass_entity_and_number`
+  - Eval: `python eval/run_eval.py` (same env vars as the backend; about 10 minutes, a few US cents), then `python pipeline/10_export_results.py` to refresh the Method page
+  - Tests: `python -m pytest server/tests eval` and `cd web && npm test`; one test: `python -m pytest server/tests/test_verify.py::test_pass_entity_and_number`
   - Build: `cd web && npm run build` (typechecks, then bundles to `web/dist`)
   - Deploy: the `gcloud run deploy` command in Section 11, with `GOOGLE_GENAI_USE_ENTERPRISE=1` added (the ADK variable; `GOOGLE_GENAI_USE_VERTEXAI` is deprecated)
-- Not started: Phase 5 (eval and ablation), Phase 6 (ship). `plan.md` does not exist.
+- Not started: Phase 6 (ship). `plan.md` does not exist. Phase 5 results are in `docs/RESULTS.md`; the manual-timing comparison is not measured yet.
 - The user commits; do not run `git commit`.
 
 ---
